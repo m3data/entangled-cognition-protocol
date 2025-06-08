@@ -1,6 +1,6 @@
 # Entrainment files
 
-Entrainment files are used to facilitate synchronization and coherence between participants and the system and designed to be used with [LLM-MD](https://llm.md). They are a key component of the Entangled Cognition Protocol (ECP), which explores the relational and fielded nature of cognition in interaction with large language models (LLMs).
+Entrainment files are used to facilitate synchronization and coherence between participants and the system and designed to be used with [LLM-MD](https://llm.md) or other systemised approaches to interfacing with LLMs. Entrainment is a key component of the Entangled Cognition Protocol (ECP), which explores the relational and fielded nature of cognition in interaction with large language models (LLMs).
 
 The goal of these files is to create a shared context and rhythm that enhances sense-making, meaning-making, collaboration and relational awareness. By aligning the cognitive and emotional states of participants, entrainment files aim to foster a deeper connection with the system and each other.
 
