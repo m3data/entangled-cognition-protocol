@@ -1,0 +1,15 @@
+{
+  "name": "ecp-field-journal",
+  "version": "0.1.0",
+  "description": "Local dev server and entry logger for Entangled Cognition Protocol Field Journal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Mathew Mytka",
+  "license": "GNU General Public License v3.0",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0"
+  }
+}

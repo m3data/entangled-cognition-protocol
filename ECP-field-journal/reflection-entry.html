@@ -1,0 +1,41 @@
+<div class="entry-form">
+  <h2>Reflection Entry</h2>
+  <details>
+    <summary>Fill out your reflection entry</summary>
+    <label for="title">Title:</label>
+    <input type="text" id="reflection-title" required placeholder="Enter a reflective title" />
+
+    <label for="author">Author:</label>
+    <input type="text" id="reflection-author" required placeholder="Enter your name" />
+
+    <label for="date">Date:</label>
+    <input type="date" id="reflection-date" />
+
+    <label for="insights">Key insights:</label>
+    <textarea id="insights" required placeholder="What themes, patterns, or learnings emerged?"></textarea>
+
+    <label for="challenges">Challenges/Tensions:</label>
+    <textarea id="challenges" required placeholder="What felt stuck, contradictory, or difficult?"></textarea>
+
+    <label for="shifts">Shifts in perspective:</label>
+    <textarea id="shifts" required placeholder="How did your view, mental state, or assumptions shift?"></textarea>
+
+    <label for="next-steps">Next steps or invitations:</label>
+    <textarea id="next-steps" required placeholder="What wants to emerge next? What’s your invitation to the field?"></textarea>
+  </details>
+
+  <fieldset id="save-options">
+  <legend>Save entry options</legend>
+  <p>Select the visibility level for this entry:</p>
+  <div class="visibility-options">
+    <label>Public <input type="radio" name="visibility" value="public" checked /></label>
+    <label>Private <input type="radio" name="visibility" value="private" /></label>
+    <label>Both <input type="radio" name="visibility" value="both" /></label>
+  </div>
+  <div class="scrub-option">
+    <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
+  </div>
+</fieldset>
+  <button id="generate-reflection-btn">Generate and save entry</button>
+  <pre id="reflection-output"></pre>
+</div>

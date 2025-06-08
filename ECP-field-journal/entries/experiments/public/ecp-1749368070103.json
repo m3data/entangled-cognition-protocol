@@ -1,0 +1,51 @@
+{
+  "experiment_id": "",
+  "timestamp_start": "",
+  "timestamp_end": "",
+  "author": "",
+  "human": {
+    "cognitive_mode": "",
+    "ontological_orientation": "",
+    "orientation_strength": 0,
+    "affective_tone": "",
+    "ingested_modulators": {
+      "caffeine": 0,
+      "psilocybin": 0,
+      "alcohol": 0,
+      "nicotine": 0,
+      "tetrahydrocannabinol": 0,
+      "dmt": 0
+    },
+    "environment": {
+      "weather": "",
+      "temperature": 0,
+      "meal_state": "",
+      "last_meal": ""
+    },
+    "ritual_preparation": [],
+    "delay_before_prompt": 0
+  },
+  "machine": {
+    "model": "",
+    "thinking_mode": "",
+    "entrainment_protocol": "",
+    "prompt_type": "",
+    "prompt_tone": [],
+    "conversation_style": "",
+    "response_length": ""
+  },
+  "relational_field": {
+    "location": "",
+    "noted_presence_of_earthian_kin": [],
+    "lighting": "",
+    "interaction_pace": ""
+  },
+  "output": {
+    "felt_response_quality": 0,
+    "symbolic_density": 0,
+    "unexpected_resonance": "",
+    "observed_collapse_event": "yes",
+    "collapse_event_details": "",
+    "emergent_insights": []
+  }
+}

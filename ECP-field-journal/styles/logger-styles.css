@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter&display=swap');
+
+:root {
+  --background-light: #f4f1ee;
+  --background-dark: #2e2d25;
+  --text-color: #3a3a3a;
+  --accent-color: #8b5e3c;
+  --highlight-color: #e5dac1;
+  --green-soft: #7da26d;
+  --font-title: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  max-width: 720px;
+  margin: auto;
+  padding: 2.5em;
+  background: var(--background-light);
+  color: var(--text-color);
+  line-height: 1.6;
+  background-image: radial-gradient(circle at top left, #faf7f5, #f0edea);
+}
+
+h1 {
+  font-family: var(--font-title);
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  color: var(--accent-color);
+  text-align: center;
+}
+
+input,
+select,
+textarea,
+button {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.75em;
+  margin-bottom: 2em;
+  font-size: 1em;
+  padding: 0.7em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.emphasis {
+  font-weight: bold;
+  color: var(--text-color);
+  background-color: white;
+  padding: 0.2em;
+  -webkit-animation: 1.5s highlight 1.5s 1 normal forwards;
+          animation: 1.5s highlight 1.5s 1 normal forwards;
+  background-color: none;
+  background: linear-gradient(90deg, #c15cff 50%, rgba(255, 255, 255, 0) 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+}
+
+@-webkit-keyframes highlight {
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes highlight {
+  to {
+    background-position: 0 0;
+  }
+}
+
+label {
+  margin-top: -0.8em;
+  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1.1em;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: semibold;
+  margin-top: 2em;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--green-soft);
+  color: #1e1f2f;
+}
+
+pre {
+  background: #f5f2eb;
+  padding: 1em;
+  white-space: pre-wrap;
+  margin-top: 2em;
+  border-radius: 6px;
+  font-family: monospace;
+  border: 1px dashed var(--accent-color);
+}
+
+hr {
+  border: 0;
+  border-top: 1px dashed var(--accent-color);
+  margin: 2em 0;
+}
+
+metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-bottom: 2em;
+  font-size: x-small;
+  font-style: italic;
+}
+
+fieldset {
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+legend {
+  font-family: var(--font-title);
+  font-weight: bold;
+  font-size: 1.2em;
+  color: var(--accent-color);
+  padding: 0 0.5em;
+}
+
+quote {
+  font-style: italic;
+  color: var(--text-color);
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1em;
+  margin: 1.5em 0;
+}
+
+blockquote {
+  font-style: italic;
+  color: var(--text-color);
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1em;
+  margin: 1.5em 0;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(20px);
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.hidden {
+  display: none;
+}
+
+nav.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+nav.nav-buttons button {
+  flex: 1 1 auto;
+  max-width: 200px;
+  padding: 0.75em 1.5em;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+nav.nav-buttons button:hover {
+  background-color: var(--green-soft);
+  color: #1e1f2f;
+}
+nav.nav-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(132, 0, 227, 0.815);
+}
+nav.nav-buttons button:active {
+  background-color: var(--green-soft);
+  color: white;
+}
+nav.nav-buttons button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+fieldset#save-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+#save-options .visibility-options {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+#save-options .visibility-options label {
+  display: flex;
+  align-items: normal;
+  gap: 0.5rem;
+}
+
+#save-options .scrub-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-left: 0.25rem;
+}
+
+#save-options .scrub-option input[type="checkbox"] {
+  margin: 0;
+  padding: 0;
+}
+
+#save-options .scrub-option label {
+  margin: 0;
+  white-space: nowrap;
+}
+details {
+  padding: 0.5rem 1rem;
+  border-radius: 0%  0.5rem;
+  margin-bottom: 1rem;
+  background-color: #faf8f5;
+}
+
+details[open] {
+  background-color: #f5f1eb;
+}
+
+details summary {
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--accent-color);
+  cursor: pointer;
+  margin: 0.5rem 0;
+}

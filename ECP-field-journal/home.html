@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECP Field Journal v0.1</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
+</head>
+<body>
+  <h1 class="title">ECP Field Journal Interface</h1>
+
+  <nav class="nav-buttons">
+  <button data-nav="about">Home / About</button>
+  <button data-nav="experiment">Experiment Entry</button>
+  <button data-nav="reflection">Reflection Entry</button>
+</nav>
+
+  <p class="quote">
+      "We hold that the map is not the territory, and that the territory is a map of the field, and <span class="emphasis">playing</span> with the difference makes all the difference." - <em>Entangled Cognition Protocol</em>
+  </p>
+
+  <div id="panel-container"></div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module">
+  import { showPanel, generateExperimentJSON, generateReflectionMarkdown } from './js/main.js';
+
+  document.querySelector('[data-nav="about"]').onclick = () => showPanel('about.html');
+
+  document.querySelector('[data-nav="experiment"]').onclick = () => {
+    showPanel('experiment-entry.html').then(() => {
+      const genBtn = document.getElementById('generate-entry-btn');
+      if (genBtn) genBtn.addEventListener('click', generateExperimentJSON);
+    });
+  };
+
+  document.querySelector('[data-nav="reflection"]').onclick = () => {
+    showPanel('reflection-entry.html').then(() => {
+      const refBtn = document.getElementById('generate-reflection-btn');
+      if (refBtn) refBtn.addEventListener('click', generateReflectionMarkdown);
+    });
+  };
+
+  window.onload = () => showPanel('about.html');
+</script>
+</body>
+</html>

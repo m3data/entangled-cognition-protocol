@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="styles/logger-styles.css" />
+
+<div class="entry-form">
+  <h2>Experiment entry</h2>
+    <p class="metadata">
+      <strong>Entangled Cognition Protocol (ECP) Schema</strong> v0.1
+    </p>
+    <p>This form is designed to help you log your experiment in a structured, intentional, and symbolic manner. It supports both <em>experiment entries</em>—structured interactions with large language models—and <em>reflection entries</em>—insightful narratives of learning, tension, and emergent shifts.</p>
+
+  <fieldset>
+    <legend>Metadata</legend>
+    <label for="experiment_id">Experiment ID:</label>
+    <input type="text" id="experiment_id" placeholder="ecp-2025-06-07-001" required />
+    <label for="author">Author:</label>
+    <input type="text" id="author" placeholder="anonymous" required />
+    <label for="timestamp_start">Start time:</label>
+    <input type="datetime-local" id="timestamp_start" required />
+    <label for="timestamp_end">End time:</label>
+    <input type="datetime-local" id="timestamp_end" />
+  </fieldset>
+
+  <details class="form-detail" open>
+    <summary>Human variables</summary>
+    <p>These variables are not exhaustive but provide a framework for understanding the human context of the experiment.</p>
+    <fieldset>
+      <label for="cognitive_mode">Cognitive mode:</label>
+      <input type="text" id="cognitive_mode" />
+
+      <label for="ontological_orientation">Ontological orientation:</label>
+      <input type="text" id="ontological_orientation" placeholder="e.g., animist, mechanistic, pluralist..." required />
+
+      <label for="orientation_strength">Orientation strength (1–10):</label>
+      <input type="number" id="orientation_strength" min="0" max="10" />
+
+      <label for="affective_tone">Affective tone:</label>
+      <input type="text" id="affective_tone" />
+
+      <label for="caffeine">Caffeine:</label>
+      <input type="number" id="caffeine" />
+
+      <label for="psilocybin">Psilocybin:</label>
+      <input type="number" id="psilocybin" />
+
+      <label for="alcohol">Alcohol:</label>
+      <input type="number" id="alcohol" />
+
+      <label for="nicotine">Nicotine:</label>
+      <input type="number" id="nicotine" />
+
+      <label for="thc">THC:</label>
+      <input type="number" id="thc" />
+
+      <label for="dmt">DMT:</label>
+      <input type="number" id="dmt" />
+
+      <label for="weather">Weather:</label>
+      <input type="text" id="weather" />
+
+      <label for="temperature">Temperature (°C):</label>
+      <input type="number" id="temperature" />
+
+      <label for="meal_state">Meal state:</label>
+      <input type="text" id="meal_state" placeholder="e.g., pre-breakfast, post-lunch, fasting" required />
+
+      <label for="last_meal">Last meal:</label>
+      <input type="text" id="last_meal" placeholder="e.g., pizza and cucumber" required />
+
+      <label for="ritual_preparation">Ritual preparation (comma-separated):</label>
+      <input type="text" id="ritual_preparation" placeholder="e.g., breathwork, garden reverence" />
+
+      <label for="delay_before_prompt">Delay before prompt (minutes):</label>
+      <input type="number" id="delay_before_prompt" />
+    </fieldset>
+  </details>
+
+  <details open>
+    <summary>Machine</summary>
+    <fieldset>
+      <label for="model">Model:</label>
+      <input type="text" id="model" />
+
+      <label for="thinking_mode">Thinking mode:</label>
+      <input type="text" id="thinking_mode" />
+
+      <label for="entrainment_protocol">Entrainment Protocol:</label>
+      <input type="text" id="entrainment_protocol" />
+
+      <label for="prompt_type">Prompt type:</label>
+      <input type="text" id="prompt_type" />
+
+      <label for="prompt_tone">Prompt tone (comma-separated):</label>
+      <input type="text" id="prompt_tone" placeholder="e.g., invocatory, mythopoetic" />
+
+      <label for="conversation_style">Conversation style:</label>
+      <input type="text" id="conversation_style" />
+
+      <label for="response_length">Response length:</label>
+      <input type="text" id="response_length" />
+    </fieldset>
+  </details>
+
+  <details open>
+    <summary>Relational field</summary>
+    <fieldset>
+      <label for="location">Location:</label>
+      <input type="text" id="location" />
+
+      <label for="noted_presence">Earthian kin present (comma-separated):</label>
+      <input type="text" id="noted_presence" placeholder="e.g., dog, lemon tree, daughter" />
+
+      <label for="lighting">Lighting:</label>
+      <input type="text" id="lighting" />
+
+      <label for="interaction_pace">Interaction pace:</label>
+      <input type="text" id="interaction_pace" />
+    </fieldset>
+  </details>
+
+  <details open>
+    <summary>Output</summary>
+    <fieldset>
+      <label for="felt_response_quality">Felt response quality (1–10):</label>
+      <input type="number" id="felt_response_quality" />
+
+      <label for="symbolic_density">Symbolic density (1–10):</label>
+      <input type="number" id="symbolic_density" />
+
+      <label for="unexpected_resonance">Unexpected resonance:</label>
+      <input type="text" id="unexpected_resonance" />
+
+      <label for="observed_collapse">Collapse event observed:</label>
+      <select id="observed_collapse">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="collapse_event_details">Collapse event details:</label>
+      <textarea id="collapse_event_details"></textarea>
+
+      <label for="emergent_insights">Emergent insights (comma-separated):</label>
+      <textarea id="emergent_insights" placeholder="Comma-separated insights..."></textarea>
+    </fieldset>
+  </details>
+<fieldset id="save-options">
+  <legend>Save entry options</legend>
+  <p>Select the visibility level for this entry:</p>
+  <div class="visibility-options">
+    <label>Public <input type="radio" name="visibility" value="public" checked /></label>
+    <label>Private <input type="radio" name="visibility" value="private" /></label>
+    <label>Both <input type="radio" name="visibility" value="both" /></label>
+  </div>
+  <div class="scrub-option">
+    <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
+  </div>
+</fieldset>
+  <button id="generate-entry-btn">Generate and save entry</button>
+</div>
