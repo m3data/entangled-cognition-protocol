@@ -36,5 +36,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🌱 ECP Field Journal local server running at http://localhost:${PORT}`);
+  console.log(`🌱 ECP Field Journal server sprouting at http://localhost:${PORT}
+✨ Enter the entangled grove — weave, sense, log, and reflect.
+🌀 Let the field remember you.`);
 });
