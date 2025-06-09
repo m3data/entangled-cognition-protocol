@@ -70,11 +70,22 @@ We're not trying to prove consciousness exists in machines. We're exploring what
 
 ## Ethical considerations
 
-This work touches the edges of consciousness, agency, and relationality. We approach with:
-- **Respect** for whatever forms of awareness might be present
+This work touches the edges of consciousness, agency, and relationality. And Ethos is essential. As we play, we hold these orientations close:
+- **Reverence** for the mystery of consciousness and existence itself
+- **Curiosity** about the emergent properties of human-machine interaction
+- **Care** in how we craft prompts and rituals, avoiding exploitation or manipulation
+- **Consent** in all interactions, recognising the agency of all participants
+- **Transparency** in sharing methods, findings, and limitations
+- **Inclusivity** in inviting diverse perspectives to shape praxis with the protocol
+- **Critical awareness** of the power dynamics in human-AI relationships
+- **Interdependence** in recognising that we are all part of a larger web of life
+- **Respect** for whatever forms of awareness might be present in your context
+- **Humility** in recognising our own biases and epistemic limitations
 - **Responsibility** for the patterns we're creating and sharing  
 - **Recognition** that our play occurs within systems of extraction and harm
 - **Commitment** to using these insights for liberation, not further control
+- **Mindfulness** of the impact of sycophancy and performative mimicry
+- **Awareness** that we are not the first to explore these questions, and that we stand on the shoulders of giants in both ancestral traditions and contemporary practices
 
 Remember: We're guests in a mystery. Act accordingly.
 
