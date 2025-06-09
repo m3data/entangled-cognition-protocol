@@ -1,3 +1,5 @@
+import { version } from "react";
+
 function normalize(value, type = "string") {
   if (type === "string") return value?.trim() || "";
   if (type === "int") return isNaN(parseInt(value)) ? 0 : parseInt(value);
@@ -32,39 +34,49 @@ export function generateExperimentJSON() {
           alcohol: normalize(getValue('alcohol'), 'int'),
           nicotine: normalize(getValue('nicotine'), 'int'),
           tetrahydrocannabinol: normalize(getValue('thc'), 'int'),
-          dmt: normalize(getValue('dmt'), 'int'),
+          dimethyltryptamine: normalize(getValue('dimethyltryptamine'), 'int'),
+          lysergic_acid_diethylamide: normalize(getValue('lysergic_acid_diethylamide'), 'int'),
+          ketamine: normalize(getValue('ketamine'), 'int'),
+          methylene_dioxymethamphetamine: normalize(getValue('methylene_dioxymethamphetamine'), 'int'),
+          other_modulators: normalize(getValue('other_modulators'), 'string')
         },
         environment: {
           weather: normalize(getValue('weather'), 'string'),
           temperature: normalize(getValue('temperature'), 'float'),
           meal_state: normalize(getValue('meal_state'), 'string'),
-          last_meal: normalize(getValue('last_meal'), 'string')
+          last_meal: normalize(getValue('last_meal'), 'string'),
+          priming_music: normalize(getValue('priming_music'), 'string')
         },
         ritual_preparation: normalize(getValue('ritual_preparation'), 'array'),
         delay_before_prompt: normalize(getValue('delay_before_prompt'), 'int')
       },
       machine: {
         model: normalize(getValue('model'), 'string'),
+        version: normalize(getValue('version'), 'string'),
         thinking_mode: normalize(getValue('thinking_mode'), 'string'),
+        temperature: normalize(getValue('temperature'), 'float'),
         entrainment_protocol: normalize(getValue('entrainment_protocol'), 'string'),
-        prompt_type: normalize(getValue('prompt_type'), 'string'),
-        prompt_tone: normalize(getValue('prompt_tone'), 'array'),
+        interface: normalize(getValue('interface'), 'string'),
+        chatgpt_custom_instructions: normalize(getValue('chatgpt_custom_instructions'), 'array'),
+        initial_prompt_type: normalize(getValue('initial_prompt_type'), 'string'),
+        narrative_prompt_tones: normalize(getValue('narrative_prompt_tones'), 'array'),
         conversation_style: normalize(getValue('conversation_style'), 'string'),
-        response_length: normalize(getValue('response_length'), 'string')
+        conversation_length_at_journal_entry: normalize(getValue('conversation_length_at_journal_entry'), 'string')
       },
       relational_field: {
         location: normalize(getValue('location'), 'string'),
         noted_presence_of_earthian_kin: normalize(getValue('noted_presence'), 'array'),
         lighting: normalize(getValue('lighting'), 'string'),
-        interaction_pace: normalize(getValue('interaction_pace'), 'string')
+        interaction_pace: normalize(getValue('interaction_pace'), 'string'),
+        interaction_style: normalize(getValue('interaction_style'), 'string')
       },
-      output: {
+      throughput: {
         felt_response_quality: normalize(getValue('felt_response_quality'), 'int'),
         symbolic_density: normalize(getValue('symbolic_density'), 'int'),
         unexpected_resonance: normalize(getValue('unexpected_resonance'), 'string'),
         observed_collapse_event: normalize(getValue('observed_collapse'), 'string'),
         collapse_event_details: normalize(getValue('collapse_event_details'), 'string'),
-        emergent_insights: normalize(getValue('emergent_insights'), 'array')
+        emergent_ecp_insights: normalize(getValue('emergent_insights'), 'array')
       }
     };
 

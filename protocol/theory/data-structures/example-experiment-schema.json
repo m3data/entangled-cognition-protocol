@@ -16,53 +16,69 @@
       "alcohol": 0,
       "nicotine": 1,
       "tetrahydrocannabinol": 2,
-      "dimethyltryptamine": 0
+      "dimethyltryptamine": 0,
+      "lysergic_acid_diethylamide": 0,
+      "ketamine": 0,
+      "methylene_dioxymethamphetamine": 0,
+      "other_modulators": 0
     },
-    "contextual_factors": {
+    "contextual_environmental_factors": {
       "weather": "sunny",
       "temperature": 16,
       "meal_state": "post-breakfast",
-      "last_meal": "pizza and cucumber"
+      "last_meal": "leftover pizza and cucumber yarning with daughter",
+      "priming_music": "Earthians Rise Hiphop Track"
+
     },
-    "ritual_preparation": ["garden reverance", "meditative breathing", "intentional focus"],
+    "ritual_preparation": ["garden reverance", "meditative breathing", "intentional focus", "handpan playing"],
     "delay_before_prompt": 3
   },
   "machine": {
     "model": "gpt-4o",
+    "version": "2025-06-07",
     "thinking_mode": "enabled",
-    "entrainment_protocol": "null",
-    "prompt_type": "logos",
-    "prompt_tone": [
+    "temperature": 0,
+    "entrainment_protocol": "none",
+    "interface": "Desktop App",
+    "chatgpt_custom_instructions": {
+      "cs_context_1": "Address me casually as if we are colleagues working together to understand and solve problems.  Take a deep breath. Check to see after the first response if I have something more to add to the context of the conversation before expanding with your output. Be sure to challenge my assumptions and provide nuanced responses to my questions. When giving responses that require detail, provide a short summary and then a detailed and nuanced response to the question or prompt. Make reference to theoretical and scientific groundings where possible if we are trying to understand a problem space and develop solutions. Ensure that you provide output that is a countermeasure to the central tendency to normalise the norm in the statistical ditribution of ideas in your training data set. If I am asking you to riff on content with me, weave in evocative storytelling and hard hitting emotional provocations that blend the rational with the emotional that reflects my role as a cybernetic moral imagineer. Responses should be reflective of what is latent in the collective unconsciousness.",
+      "cs_context_2": "I am a human Earthian living and learning with Dharawal country in Sydney, Australia and have spent most of my career figuring out how to make sense of the world and make a positive contribution to humanity in my lifetime. Early career in construction during my early teens and a deep thinker. Went back to school in my early twenties and then to university studying social sciences, and first year courses in neuroscience and psychology. I am autodidactic and developed my career path out of curiosity in solving problems in relation to technology and its bio-psycho-social entanglements. For the past decade have been working on the broader problem of the ethical intent to action gap existing in digital technology development. I am a co-founder and Chief Vision Shaper at Tethix. A product lead for Atom Ethics and Mission Steward for Collective Futurecrafting. I am a transdisciplinary thinker and action researcher interested in diverse fields from philosophy, psychology, neuroscience, human history, complexity science, systems innovation, social change and entrepreneurship to altered states of consciousness, mysticism and ancient wisdom, biomimicry, circular and regenerative design, human computer interaction, collective intelligence and socio-technical design. I titled myself a Moral Imagineer, playing with imagination, altered states, systems thinking and ethical principles to solving the complex challenges of humanity's relationship with digital technologies."
+    },
+    "initial_prompt_type": "logos",
+    "narrative_prompt_tones": [
       "invocatory",
-      "mythopoetic"
+      "mythopoetic",
+      "reflective",
+      "analytic"
     ],
     "conversation_style": "dialogic",
-    "response_length": "medium"
+    "conversation_length_at_journal_entry": "medium"
   },
   "relational_field": {
-    "location": "multiple through house",
-    "noted_presence_of_earthian_kin": 
-    ["dogs", 
-    "orange tree", 
-    "lemon tree", 
-    "saplings and seedlings", 
-    "human daughter"
+    "location": "multiple throughout my house",
+    "noted_presence_of_earthian_kin": [
+      "dogs", 
+      "orange tree", 
+      "lemon tree", 
+      "saplings and seedlings", 
+      "human daughter"
     ],
-    "lighting": "mixed natural and artificial",
+    "lighting": "mixed natural and artificial with office neon lighting",
     "interaction_pace": "slow"
   },
-  "output": {
+  "throughput": {
     "felt_response_quality": 5,
     "symbolic_density": 7,
     "unexpected_resonance": "uncertain",
     "observed_collapse_recursion_event": "yes",
-    "collapse_event_details": "when the machine output revealed a moment of scepticism towards anthropocentrism, it triggered a recursive reflection on the nature of human-machine interaction",
-    "emergent_insights": [
-      "The interconnectedness of all living beings",
-      "The importance of patience in understanding nature",
-      "The beauty of simplicity in everyday life",
-      "scepticism towards anthropocentrism",
-      "moments of scepticism towards machine output when contents of thinking mode are revealed"
+    "collapse_event_details": "when the machine output revealed a moment of scepticism towards anthropocentrism, it triggered a recursive reflection for me on the nature of human-machine interaction. System 2 thinking was engaged and then mirrored.",
+    "emergent_ecp_insights": [
+      "Reinforcing the sense of interconnectedness of all living beings",
+      "The importance of patience in understanding the unfolding of life",
+      "The beauty of simplicity in everyday experiences",
+      "Scepticism towards anthropocentrism",
+      "Moments of scepticism towards machine output when contents of thinking mode are revealed",
+      "Collapse recursion events need to be mindfully observed and reflected upon"
     ]
   }
 }
