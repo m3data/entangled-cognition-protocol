@@ -1,4 +1,3 @@
-import { version } from "react";
 
 function normalize(value, type = "string") {
   if (type === "string") return value?.trim() || "";

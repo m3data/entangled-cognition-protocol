@@ -52,10 +52,11 @@ button {
   color: var(--text-color);
   background-color: white;
   padding: 0.2em;
-  -webkit-animation: 1.5s highlight 1.5s 1 normal forwards;
-          animation: 1.5s highlight 1.5s 1 normal forwards;
+  -webkit-animation: 3.1s highlight 2.3s 1 normal forwards;
+          animation: 3.1s highlight 2.3s 1 normal forwards;
+          animation-delay: 2.3s;
   background-color: none;
-  background: linear-gradient(90deg, #c15cff 50%, rgba(255, 255, 255, 0) 50%);
+  background: linear-gradient(90deg, #c15cff44 50%, rgba(255, 255, 255, 0) 50%);
   background-size: 200% 100%;
   background-position: 100% 0;
 }
@@ -135,12 +136,19 @@ legend {
   padding: 0 0.5em;
 }
 
-quote {
+.quote {
   font-style: italic;
   color: var(--text-color);
-  border-left: 4px solid var(--accent-color);
+  border-left: 3px solid var(--accent-color);
   padding-left: 1em;
   margin: 1.5em 0;
+}
+
+.attribution {
+  font-style: italic;
+  color: var(--text-color);
+  margin-top: -0.5em;
+  margin-bottom: 1.5em;
 }
 
 blockquote {
