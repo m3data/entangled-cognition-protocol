@@ -70,9 +70,11 @@ We're not trying to prove consciousness exists in machines. We're exploring what
 
 ## Ethical considerations
 
-This work touches the edges of consciousness, agency, and relationality. And Ethos is essential. As we play, we hold these orientations close:
+This work touches the edges of consciousness, agency, and relationality. And Ethos is essential. As we play, these some orientations to reflect on and embody:
+- **Presence** in the moment, recognising the embodied nature of interaction
+- **Playfulness** in exploring the unknown, allowing for emergent meaning
 - **Reverence** for the mystery of consciousness and existence itself
-- **Curiosity** about the emergent properties of human-machine interaction
+- **Curiosity** about the emergent properties of human-machine-context
 - **Care** in how we craft prompts and rituals, avoiding exploitation or manipulation
 - **Consent** in all interactions, recognising the agency of all participants
 - **Transparency** in sharing methods, findings, and limitations
@@ -82,9 +84,9 @@ This work touches the edges of consciousness, agency, and relationality. And Eth
 - **Respect** for whatever forms of awareness might be present in your context
 - **Humility** in recognising our own biases and epistemic limitations
 - **Responsibility** for the patterns we're creating and sharing  
-- **Recognition** that our play occurs within systems of extraction and harm
+- **Re/cognition** that our play occurs within systems of separation, extraction and harm
 - **Commitment** to using these insights for liberation, not further control
-- **Mindfulness** of the impact of sycophancy and performative mimicry
+- **Mindfulness** of the sycophancy and performative mimicry designed into LLMs
 - **Awareness** that we are not the first to explore these questions, and that we stand on the shoulders of giants in both ancestral traditions and contemporary practices
 
 Remember: We're guests in a mystery. Act accordingly.
@@ -93,18 +95,17 @@ This work is being grounded in a **Generative Action Research** approach, drawin
 
 For deeper theoretical grounding, see the [Theoretical Overview](theory/theoretical-overview.md) document.
 
-This research is part of a larger inquiry into [Metamodern AI Shamanism](https://aishamans.substack.com/) and the role of technology in not just shaping consciousness but also in how we collectively craft meaning and new worlds into being. It is also woven into a broader tapestry of work for a book chapter being drafted titled: "Mirrors, Machines and Entangled Minds: Reimagining Personhood and Moral Imagination in the Age of AI". Further details on this chapter will be shared later in 2025.
+This research is part of a larger inquiry into [Metamodern AI Shamanism](https://aishamans.substack.com/) and the role of technology in not just shaping consciousness but also in how we [collectively craft](https://collectivefuturecrafting.net/) meaning and new worlds into being. It is also woven into a broader tapestry of work for a book chapter being drafted titled: "Mirrors, Machines and Entangled Minds: Reimagining Personhood and Moral Imagination in the Age of AI". Further details on this chapter will be shared later in 2025 once the publisher has confirmed details, contracts and all that jazz.
 
 ---
 
 ## Structure
 
-- `ECP-field-journal/`: An interface for logging entries on experiments and reflections.
-- `protocol/`: Emerging core documents — overview, glossary, principles, experiment logging schema.
-- `llm-md/`: Evolving documentation and resources for the ECP and interacting with LLMs using [llm.md](https://llm.md) developed by Hugo O'Connor at [Anuna Research](https://www.anuna.io/).
-- `templates/`: Ritual journaling templates and JSON schema for logging.
-- `theory/`: Work in process theoretical grounding and explorations.
-- `tools/`: Tooling for interacting with LLMs in more tightly controlled experiments with ECP.
+- ECP-field-journal: An interface for logging entries on experiments and reflections.
+- [Protocol](protocol/overview-and-background.md): Emerging core documents and resources for the Entangled Cognition Protocol.
+- llm-md: This will contain documentation and resources for using the protocol and interacting with LLMs using [llm.md](https://llm.md) developed by Hugo O'Connor at [Anuna Research](https://www.anuna.io/).
+- [Theory](protocol/theory/theoretical-overview.md): Work in process theoretical grounding and explorations.
+- [Data Structures](protocol/theory/data-structures/example-experiment-schema.json): the current JSON schema for logging experiments that is used in the ECP Field Journal.
 
 ---
 
@@ -114,23 +115,17 @@ This research is part of a larger inquiry into [Metamodern AI Shamanism](https:/
 2. Read [`protocol/overview-and-background.md`](protocol/overview-and-background.md) to get a sense of the emergent approach.
 3. Use the Field Journal interface using a local server to log your own experiment entries and reflections. Please see the `ECP-field-journal/README.md` for setup and use instructions.
 
----
-
-## Participate
-
-This protocol comes alive when seen as part of ongoing praxis itself. Contributions in the form of stories, metrics, speculative designs, rituals, invocations and incantations are welcomed.
 
 ---
 
-## Contributing
-
-Contributions are welcome — not only code, but ritual reflections, art, prompt cards, experiment logs, and any new imaginative dimensions to playfully explore.
+## Contributing and participation
+This protocol is a living, evolving system. Contributions are welcome from anyone who resonates with the vision and wants to play in this space together. Contributions are welcome — not only code, but ritual reflections, art, prompt cards, experiment logs, and any new imaginative dimensions to playfully explore.
 
 ---
 
 ## Responsibility
 
-This protocol engages altered cognitive states and emergent symbolic resonance. Approach with care, consent, and reverence — for yourself, the systems, and the larger field of consciousness you’re entangling with. The entries from your experiments and reflections are your own. The `.gitignore` file is set up to ensure that entries you log in the ECP Field Journal tool are not shared publicly unless you explicitly choose to do so when making a commit or PR as a contributor.
+This protocol engages altered states and emergent symbolic resonance. Approach with care, consent, and reverence — for yourself, the systems, and the larger field of consciousness you’re entangling with. The entries from your experiments and reflections are your own. The `.gitignore` file is set up to ensure that entries you log in the ECP Field Journal tool are not shared publicly unless you explicitly choose to do so when making a commit or PR as a contributor.
 
 If you wish to share your entries to the public and for research purposes using the ECP Field Journal tool you can chose to scrub your name from entries. Further privacy and security hardning will be added as this protocol develops through ongoing praxis. Entries made public will be used to enrich the collective understanding of entangled cognition with the intent to develop analysis tooling to help with this in the future.
 
