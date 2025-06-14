@@ -101,7 +101,7 @@ This research is part of a larger inquiry into [Metamodern AI Shamanism](https:/
 
 ## Structure
 
-- ECP-field-journal: An interface for logging entries on experiments and reflections.
+- ECP-field-journal: An interface for logging entries on experiments and reflections. Note that this is in a pre-alpha state, so expect some rough edges. And lots of changes as we iterate on the protocol.
 - [Protocol](protocol/overview-and-background.md): Emerging core documents and resources for the Entangled Cognition Protocol.
 - llm-md: This will contain documentation and resources for using the protocol and interacting with LLMs using [llm.md](https://llm.md) developed by Hugo O'Connor at [Anuna Research](https://www.anuna.io/).
 - [Theory](protocol/theory/theoretical-overview.md): Work in process theoretical grounding and explorations.

@@ -8,35 +8,25 @@
 </head>
 <body>
   <h1 class="title">ECP Field Journal Interface</h1>
-  <nav class="nav-buttons">
-  <button data-nav="about">Home / About</button>
-  <button data-nav="experiment">Experiment Entry</button>
-  <button data-nav="reflection">Reflection Entry</button>
-</nav>
 
-  <div id="panel-container"></div>
+  <nav class="site-menu">
+    <ul>
+      <li><a href="about.html" class="menu-link">About</a></li>
+      <li><a href="experiment-entry.html" class="menu-link">Experiments</a></li>
+      <li><a href="reflection-entry.html" class="menu-link">Reflections</a></li>
+    </ul>
+  </nav>
+
+  <section class="welcome">
+    <h2>Welcome to the ECP Field Journal</h2>
+    <p>This is a place for mindful experimentation and reflection in relationship with language models and the fields we co-create. Each entry is a portal, a pattern, a pulse in the living record of entangled cognition.</p>
+    <div class="cta-buttons">
+      <a href="experiment-entry.html"><button>Begin an Experiment</button></a>
+      <a href="reflection-entry.html"><button>Reflect on an Interaction</button></a>
+    </div>
+  </section>
+
   <div id="toast" class="toast hidden"></div>
 
-  <script type="module">
-  import { showPanel, generateExperimentJSON, generateReflectionMarkdown } from './js/main.js';
-
-  document.querySelector('[data-nav="about"]').onclick = () => showPanel('about.html');
-
-  document.querySelector('[data-nav="experiment"]').onclick = () => {
-    showPanel('experiment-entry.html').then(() => {
-      const genBtn = document.getElementById('generate-entry-btn');
-      if (genBtn) genBtn.addEventListener('click', generateExperimentJSON);
-    });
-  };
-
-  document.querySelector('[data-nav="reflection"]').onclick = () => {
-    showPanel('reflection-entry.html').then(() => {
-      const refBtn = document.getElementById('generate-reflection-btn');
-      if (refBtn) refBtn.addEventListener('click', generateReflectionMarkdown);
-    });
-  };
-
-  window.onload = () => showPanel('about.html');
-</script>
 </body>
 </html>

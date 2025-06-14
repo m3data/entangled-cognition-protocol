@@ -1,12 +1,21 @@
+
 <link rel="stylesheet" href="styles/logger-styles.css" />
+
+<nav class="site-menu">
+  <ul>
+    <li><a href="home.html" class="menu-link">Home</a></li>
+    <li><a href="about.html" class="menu-link">About</a></li>
+    <li><a href="experiment-entry.html" class="menu-link active">Experiments</a></li>
+    <li><a href="reflection-entry.html" class="menu-link">Reflections</a></li>
+  </ul>
+</nav>
 
 <div class="entry-form">
   <h2>Experiment entry</h2>
     <p class="metadata">
       <strong>Entangled Cognition Protocol (ECP) Schema</strong> v0.1
     </p>
-    <p>This form is designed to help you log your experiment in a structured, intentional, and symbolic manner. It supports both <em>experiment entries</em>—structured interactions with large language models—and <em>reflection entries</em>—insightful narratives of learning, tension, and emergent shifts.</p>
-
+    <p>This form is designed to help you log your experiment in a structured and intentional way. Be mindful of the sensory cues as you make your entry. This is a sacred data being co-created. Treat it accordingly.</p>
   <fieldset>
     <legend>Metadata</legend>
     <label for="experiment_id">Experiment ID:</label>
@@ -24,16 +33,19 @@
     <p>These variables are not exhaustive but provide a framework for understanding the human context of the experiment.</p>
     <fieldset>
       <label for="cognitive_mode">Cognitive mode:</label>
-      <input type="text" id="cognitive_mode" />
+      <div class="tag-input" id="cognitive_mode" data-category="cognitive_mode" contenteditable="true" placeholder="Type and press Enter..."></div>
 
       <label for="ontological_orientation">Ontological orientation:</label>
       <input type="text" id="ontological_orientation" placeholder="e.g., animist, mechanistic, pluralist..." required />
+
+      <label for="ontological_orientation_description">Orientation description:</label>
+      <input type="text" id="ontological_orientation_description" placeholder="e.g., seeing all things as ensouled and alive" />
 
       <label for="orientation_strength">Orientation strength (1–10):</label>
       <input type="number" id="orientation_strength" min="0" max="10" />
 
       <label for="affective_tone">Affective tone:</label>
-      <input type="text" id="affective_tone" />
+      <div class="tag-input" id="affective_tone" data-category="affective_tone" contenteditable="true" placeholder="Type and press Enter..."></div>
 
       <label for="caffeine">Caffeine:</label>
       <input type="number" id="caffeine" />
@@ -54,7 +66,7 @@
       <input type="number" id="dmt" />
 
       <label for="weather">Weather:</label>
-      <input type="text" id="weather" />
+      <div class="tag-input" id="weather" data-category="weather" contenteditable="true" placeholder="Type and press Enter..."></div>
 
       <label for="temperature">Temperature (°C):</label>
       <input type="number" id="temperature" />
@@ -65,11 +77,11 @@
       <label for="last_meal">Last meal:</label>
       <input type="text" id="last_meal" placeholder="e.g., pizza and cucumber" required />
 
-      <label for="ritual_preparation">Ritual preparation (comma-separated):</label>
-      <input type="text" id="ritual_preparation" placeholder="e.g., breathwork, garden reverence" />
+      <label for="ritual_preparation">Ritual preparation:</label>
+      <div class="tag-input" id="ritual_preparation" data-category="ritual_preparation" contenteditable="true" placeholder="Type and press Enter..."></div>
 
-      <label for="delay_before_prompt">Delay before prompt (minutes):</label>
-      <input type="number" id="delay_before_prompt" />
+      <label for="interruption_duration">Interruption duration (minutes):</label>
+      <input type="number" id="interruption_duration" />
     </fieldset>
   </details>
 
@@ -80,22 +92,39 @@
       <input type="text" id="model" />
 
       <label for="thinking_mode">Thinking mode:</label>
-      <input type="text" id="thinking_mode" />
+      <select id="thinking_mode">
+        <option value="enabled">Enabled</option>
+        <option value="disabled">Disabled</option>
+      </select>
 
-      <label for="entrainment_protocol">Entrainment Protocol:</label>
-      <input type="text" id="entrainment_protocol" />
+      <label for="entrainment_protocol_used">Entrainment protocol used:</label>
+      <select id="entrainment_protocol_used">
+        <option value="true">Yes</option>
+        <option value="false" selected>No</option>
+      </select>
+      <label for="entrainment_protocol_label">Protocol label:</label>
+      <input type="text" id="entrainment_protocol_label" placeholder="e.g., Recursive Phase Priming" />
 
-      <label for="prompt_type">Prompt type:</label>
-      <input type="text" id="prompt_type" />
+      <label for="initial_prompt_type">Prompt type:</label>
+      <input type="text" id="initial_prompt_type" />
 
-      <label for="prompt_tone">Prompt tone (comma-separated):</label>
-      <input type="text" id="prompt_tone" placeholder="e.g., invocatory, mythopoetic" />
+      <label for="origin_prompt_tone">Prompt tone:</label>
+      <div class="tag-input" id="origin_prompt_tone" data-category="origin_prompt_tone" contenteditable="true" placeholder="Type and press Enter..."></div>
 
       <label for="conversation_style">Conversation style:</label>
       <input type="text" id="conversation_style" />
 
-      <label for="response_length">Response length:</label>
-      <input type="text" id="response_length" />
+      <label for="conversation_length">Conversation length:</label>
+      <input type="number" id="conversation_length" placeholder="Estimated number of messages or tokens" />
+
+      <label for="model_temperature">Model temperature:</label>
+      <input type="number" step="0.1" id="model_temperature" />
+
+      <label for="user_interface">User interface:</label>
+      <input type="text" id="user_interface" placeholder="e.g., Desktop App, Web Interface, CLI" />
+
+      <label for="chatgpt_custom_instructions">ChatGPT custom instructions (comma-separated):</label>
+      <input type="text" id="chatgpt_custom_instructions" />
     </fieldset>
   </details>
 
@@ -103,10 +132,10 @@
     <summary>Relational field</summary>
     <fieldset>
       <label for="location">Location:</label>
-      <input type="text" id="location" />
+      <input type="text" id="location" placeholder="e.g., home office, studio, beach — (location coordinates will auto-append)" />
 
-      <label for="noted_presence">Earthian kin present (comma-separated):</label>
-      <input type="text" id="noted_presence" placeholder="e.g., dog, lemon tree, daughter" />
+      <label for="noted_presence_of_earthian_kin">Earthian kin present:</label>
+      <div class="tag-input" id="noted_presence_of_earthian_kin" data-category="noted_presence_of_earthian_kin" contenteditable="true" placeholder="Type and press Enter..."></div>
 
       <label for="lighting">Lighting:</label>
       <input type="text" id="lighting" />
@@ -128,8 +157,8 @@
       <label for="unexpected_resonance">Unexpected resonance:</label>
       <input type="text" id="unexpected_resonance" />
 
-      <label for="observed_collapse">Collapse event observed:</label>
-      <select id="observed_collapse">
+      <label for="observed_collapse_event">Collapse event observed:</label>
+      <select id="observed_collapse_event">
         <option value="yes">Yes</option>
         <option value="no">No</option>
       </select>
@@ -137,8 +166,8 @@
       <label for="collapse_event_details">Collapse event details:</label>
       <textarea id="collapse_event_details"></textarea>
 
-      <label for="emergent_insights">Emergent insights (comma-separated):</label>
-      <textarea id="emergent_insights" placeholder="Comma-separated insights..."></textarea>
+      <label for="emergent_ecp_insights">Emergent insights:</label>
+      <div class="tag-input" id="emergent_ecp_insights" data-category="emergent_ecp_insights" contenteditable="true" placeholder="Type and press Enter..."></div>
     </fieldset>
   </details>
 <fieldset id="save-options">
@@ -153,5 +182,24 @@
     <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
   </div>
 </fieldset>
-  <button id="generate-entry-btn">Generate and save entry</button>
 </div>
+<button id="generate-entry-btn">Generate and save entry</button>
+<div id="toast" class="hidden"></div>
+<script type="module">
+  import { generateExperimentJSON } from './js/main.js';
+  import { initLabelInput } from './js/modules/labelChips.js';
+
+  document.getElementById('generate-entry-btn')?.addEventListener('click', generateExperimentJSON);
+
+  [
+    "cognitive_mode",
+    "affective_tone",
+    "weather",
+    "ritual_preparation",
+    "origin_prompt_tone",
+    "noted_presence_of_earthian_kin",
+    "emergent_ecp_insights"
+  ].forEach(id => {
+    initLabelInput(id);
+  });
+</script>
