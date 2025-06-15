@@ -1,7 +1,4 @@
-
-
-
-/**
+/****
  * Initialize a tag input field with chip behavior.
  * Allows users to press Enter to add chips and click chips to remove them.
  *
@@ -13,13 +10,13 @@ export function initLabelInput(divId, category = "") {
   if (!container) return;
 
   container.classList.add("tag-input-initialized");
-  container.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  container.addEventListener("keyup", (e) => {
+    if ((e.key === "Enter" || e.key === ",") && !e.shiftKey) {
       e.preventDefault();
-      const text = getCaretText(container).trim();
+      const text = container.textContent.trim();
       if (text) {
-        addChip(container, text);
         clearCaret(container);
+        addChip(container, text);
       }
     }
   });
@@ -49,10 +46,42 @@ export function getChips(divId) {
  * @param {string} text - The label to convert into a chip.
  */
 function addChip(container, text) {
+  const existingChips = [...container.querySelectorAll('.tag-chip')]
+    .map(chip => chip.textContent.trim().toLowerCase());
+  if (existingChips.includes(text.toLowerCase())) return;
+
   const chip = document.createElement("span");
   chip.className = "tag-chip";
   chip.textContent = text;
-  container.appendChild(chip);
+  chip.addEventListener("click", () => chip.remove());
+
+  // Insert chip before any trailing space text node or at end
+  let inserted = false;
+  for (let i = container.childNodes.length - 1; i >= 0; i--) {
+    const node = container.childNodes[i];
+    if (node.nodeType === Node.TEXT_NODE && /^\s*$/.test(node.textContent)) {
+      container.insertBefore(chip, node);
+      inserted = true;
+      break;
+    }
+  }
+  if (!inserted) {
+    container.appendChild(chip);
+  }
+  const br = document.createElement("br");
+  container.appendChild(br);
+
+  const placeholder = document.createElement("span");
+  placeholder.className = "caret-placeholder";
+  placeholder.appendChild(document.createTextNode("\u200B")); // zero-width space
+  container.appendChild(placeholder);
+
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.setStart(placeholder.firstChild, 1);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
 
 /**
@@ -68,6 +97,9 @@ function getCaretText(container) {
  * Internal helper: Clear typed content after chip added.
  */
 function clearCaret(container) {
-  container.blur();
-  container.focus();
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+  let node;
+  while ((node = walker.nextNode())) {
+    node.remove();
+  }
 }

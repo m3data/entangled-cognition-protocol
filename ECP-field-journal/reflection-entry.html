@@ -19,12 +19,20 @@
     <input type="text" id="reflection-author" required placeholder="Enter your name" />
 
     <!-- Thematic framing -->
-    <label for="reflection-themes">Themes:</label>
-    <div class="tag-input" id="reflection-themes" data-category="reflection-themes" contenteditable="true" placeholder="Type a theme and press Enter..."></div>
+    <label for="reflection-themes_input">Themes:</label>
+    <div class="tag-input-wrapper" id="reflection-themes">
+      <ul class="chip-list">
+        <li><input type="text" id="reflection-themes_input" class="chip-entry-input" placeholder="add tag" /></li>
+      </ul>
+    </div>
 
     <!-- Symbolic imagery or metaphor extraction -->
-    <label for="reflection-symbols">Symbols/Metaphors:</label>
-    <div class="tag-input" id="reflection-symbols" data-category="reflection-symbols" contenteditable="true" placeholder="Type a symbol or metaphor and press Enter..."></div>
+    <label for="reflection-symbols_input">Symbols/Metaphors:</label>
+    <div class="tag-input-wrapper" id="reflection-symbols">
+      <ul class="chip-list">
+        <li><input type="text" id="reflection-symbols_input" class="chip-entry-input" placeholder="add tag" /></li>
+      </ul>
+    </div>
 
     <label for="date">Date:</label>
     <input type="date" id="reflection-date" />
@@ -70,58 +78,59 @@
    */
   import { generateReflectionMarkdown } from './js/modules/generateReflectionMarkdown.js';
   import { showToast } from './js/modules/ui.js';
-  import { initLabelInput, getChips } from './js/modules/labelChips.js';
+  import { initTagInput, getTags } from './js/modules/inputTags.js';
 
-  // Initialize the tag inputs on page load
-  initLabelInput("reflection-themes", "themes");
-  initLabelInput("reflection-symbols", "symbols");
+  document.addEventListener("DOMContentLoaded", () => {
+    initTagInput("reflection-themes");
+    initTagInput("reflection-symbols");
 
-  document.getElementById("generate-reflection-btn").addEventListener("click", () => {
-    const timestamp = new Date().toISOString(); // Capture current time
-    const title = document.getElementById("reflection-title").value.trim();
-    const author = document.getElementById("reflection-author").value.trim();
-    const themes = getChips("reflection-themes");
-    const symbols = getChips("reflection-symbols");
-    const tensions = document.getElementById("challenges").value.trim().split('\n').filter(Boolean);
-    const body = [
-      "## Insights",
-      document.getElementById("insights").value.trim(),
-      "",
-      "## Shifts",
-      document.getElementById("shifts").value.trim(),
-      "",
-      "## Next Steps",
-      document.getElementById("next-steps").value.trim()
-    ].join("\n"); // Combine content into markdown body
+    document.getElementById("generate-reflection-btn").addEventListener("click", () => {
+      const timestamp = new Date().toISOString();
+      const title = document.getElementById("reflection-title").value.trim();
+      const author = document.getElementById("reflection-author").value.trim();
+      const themes = getTags("reflection-themes");
+      const symbols = getTags("reflection-symbols");
+      const tensions = document.getElementById("challenges").value.trim().split('\n').filter(Boolean);
+      const body = [
+        "## Insights",
+        document.getElementById("insights").value.trim(),
+        "",
+        "## Shifts",
+        document.getElementById("shifts").value.trim(),
+        "",
+        "## Next Steps",
+        document.getElementById("next-steps").value.trim()
+      ].join("\n");
 
-    const visibility = document.querySelector('input[name="visibility"]:checked')?.value || "public";
-    const scrub = document.getElementById('scrub-author')?.checked;
+      const visibility = document.querySelector('input[name="visibility"]:checked')?.value || "public";
+      const scrub = document.getElementById('scrub-author')?.checked;
 
-    const targets = generateReflectionMarkdown({
-      title,
-      author,
-      timestamp,
-      themes,
-      tensions,
-      symbols,
-      body,
-      visibility
-    });
+      const targets = generateReflectionMarkdown({
+        title,
+        author,
+        timestamp,
+        themes,
+        tensions,
+        symbols,
+        body,
+        visibility
+      });
 
-    Promise.all(targets.map(({ path, content }) =>
-      fetch("/save-entry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path, content })
+      Promise.all(targets.map(({ path, content }) =>
+        fetch("/save-entry", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ path, content })
+        })
+      ))
+      .then(() => {
+        document.getElementById("reflection-output").textContent = targets.map(t => `Saved to: ${t.path}`).join("\n");
+        showToast("Reflection saved.");
       })
-    ))
-    .then(() => {
-      document.getElementById("reflection-output").textContent = targets.map(t => `Saved to: ${t.path}`).join("\n");
-      showToast("Reflection saved.");
-    })
-    .catch((err) => {
-      console.error("Save error:", err);
-      showToast("Error saving reflection.");
+      .catch((err) => {
+        console.error("Save error:", err);
+        showToast("Error saving reflection.");
+      });
     });
   });
 </script>

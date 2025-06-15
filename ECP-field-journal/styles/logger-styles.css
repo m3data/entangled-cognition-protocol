@@ -47,6 +47,12 @@ button {
   background: white;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--accent-color);
+}
+
 .emphasis {
   font-weight: bold;
   color: var(--text-color);
@@ -78,6 +84,7 @@ label {
   font-weight: 600;
   font-family: var(--font-body);
   font-size: 1.1em;
+  padding: 1em 0;
 }
 
 button {
@@ -271,38 +278,6 @@ details summary {
   margin: 0.5rem 0;
 }
 /* Tag input and chip styles for interactive label chips in experiment/reflection entries */
-.tag-input {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  min-height: 2.5em;
-  padding: 0.6em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: white;
-  cursor: text;
-}
-
-.tag-input:focus {
-  outline: 2px solid var(--accent-color);
-}
-
-.tag-chip {
-  background-color: var(--highlight-color);
-  color: var(--text-color);
-  padding: 0.3em 0.75em;
-  border-radius: 15px;
-  font-size: 0.9em;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.tag-chip:hover {
-  background-color: var(--green-soft);
-  color: #1e1f2f;
-}
 .site-menu {
   display: flex;
   justify-content: center;
@@ -342,4 +317,84 @@ details summary {
 .site-menu .menu-link.active {
   background-color: var(--green-soft);
   color: #1e1f2f;
+}
+.entry-form label {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+  font-weight: 500;
+}
+
+.entry-form input,
+.entry-form textarea,
+.entry-form select,
+.entry-form .tag-input {
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+.tag-input-wrapper {
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 0.5em;
+  background: white;
+}
+
+.chip-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin: 0;
+  padding: 0;
+}
+
+.chip-list li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--highlight-color);
+  color: var(--text-color);
+  padding: 0.6em 0.75em;
+  border-radius: 999px;
+  font-size: 0.9em;
+  gap: 0.5em;
+  line-height: 1;
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  width: 1em;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: inherit;
+}
+
+.chip-remove svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.chip-entry-input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.4em;
+  min-width: 120px;
 }
