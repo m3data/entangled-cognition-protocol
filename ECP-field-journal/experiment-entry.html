@@ -29,13 +29,13 @@
   </fieldset>
 
   <details class="form-detail" open>
-    <summary>Human variables</summary>
-    <p>These variables are not exhaustive but provide a framework for understanding the human context of the experiment.</p>
+    <summary>Human context</summary>
+    <p>These are not exhaustive but are simply a framework for understanding the human context of the experiment.</p>
     <fieldset>
       <label for="cognitive_mode_input">Cognitive mode:</label>
       <details>
-        <summary>What is this?</summary>
-        <p>Describe your cognitive mode, e.g., focused, diffuse, creative, analytical...</p>
+        <summary>View guidance</summary>
+        <p>This is about the cognitive style that was most present during the experiment. Like if you were focused, in creative flow, or had a analytical style of thinking. Just add some tags that you sense fit your experience best 😉</p>
       </details>
       <div class="tag-input-wrapper" id="cognitive_mode">
         <ul class="chip-list">
@@ -45,38 +45,87 @@
       </div>
 
       <label for="ontological_orientation">Ontological orientation:</label>
-      <input type="text" id="ontological_orientation" placeholder="e.g., animist, mechanistic, pluralist..." required />
-
-      <label for="ontological_orientation_description">Orientation description:</label>
-      <input type="text" id="ontological_orientation_description" placeholder="e.g., seeing all things as ensouled and alive" />
-
-      <label for="orientation_strength">Orientation strength (1–10):</label>
-      <input type="number" id="orientation_strength" min="0" max="10" />
-
-      <label for="affective_tone_input">Affective tone:</label>
-      <div class="tag-input-wrapper" id="affective_tone">
+      <details>
+        <summary>View guidance</summary>
+        <p>This is about how you perceive the nature of reality, or the predominant beliefs that shape your understanding of existence. A short one or two word tag is sufficient. Don't overthink it!</p>
+      </details>
+      <div class="tag-input-wrapper" id="ontological_orientation">
         <ul class="chip-list">
-          <li><input type="text" id="affective_tone_input" class="chip-entry-input" /></li>
+          <!-- Chips will be inserted here dynamically -->
+          <li><input type="text" id="ontological_orientation_input" class="chip-entry-input" placeholder="add tag" /></li>
         </ul>
       </div>
 
+      <label for="ontological_orientation_description">Ontological Orientation (Short description)</label>
+      <textarea id="ontological_orientation_description" rows="4" placeholder="Describe your ontological orientation entering this session..."></textarea>
+
+      <label for="orientation_strength">Orientation strength (1–10):</label>
+      <details>
+      <summary>View guidance</summary>
+      <p>This is about how strongly you felt aligned with your ontological orientation during the experiment. A simple 1–10 scale is sufficient. 1 being not aligned at all, and 10 being fully aligned.</p>
+      </details>
+      <input type="number" id="orientation_strength" min="0" max="10" />
+
+      <label for="affective_tone_input">Affective tone:</label>
+      <details>
+        <summary>View guidance</summary>
+        <p>This is about the emotional state or mood you were in before and during the experiment. You can add tags that describe your emotional state, like "calm", "excited", "anxious", etc.</p>
+      </details>
+      <div class="tag-input-wrapper" id="affective_tone">
+        <ul class="chip-list">
+          <li><input type="text" id="affective_tone_input" class="chip-entry-input" placeholder="add tag" /></li>
+        </ul>
+      </div>
+      <br />
+      <h3>Ingested substances</h3>
+      <p>These are substances that may have influenced your cognitive state and/or ontological orientation during the experiment. Please enter them as a simple none, low, medium, or high.</p>
       <label for="caffeine">Caffeine:</label>
-      <input type="number" id="caffeine" />
+      <select id="caffeine">
+        <option value="none">None</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
 
       <label for="psilocybin">Psilocybin:</label>
-      <input type="number" id="psilocybin" />
+      <select id="psilocybin">
+        <option value="none">None</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
 
       <label for="alcohol">Alcohol:</label>
-      <input type="number" id="alcohol" />
+      <select id="alcohol">
+        <option value="none">None</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
 
       <label for="nicotine">Nicotine:</label>
-      <input type="number" id="nicotine" />
+      <select id="nicotine">
+        <option value="none">None</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
 
       <label for="thc">THC:</label>
-      <input type="number" id="thc" />
+      <select id="thc">
+        <option value="none">None</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
 
       <label for="dmt">DMT:</label>
-      <input type="number" id="dmt" />
+      <select id="dmt">
+        <option value="none">None</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
 
       <label for="weather_input">Weather:</label>
       <div class="tag-input-wrapper" id="weather">
@@ -86,10 +135,26 @@
       </div>
 
       <label for="temperature">Temperature (°C):</label>
+      <details>
+        <summary>View guidance</summary>
+        <p>This is about the ambient temperature during the experiment. You can enter it as a simple number in degrees Celsius. Not about accuracy.</p>
+      </details>
       <input type="number" id="temperature" />
 
       <label for="meal_state">Meal state:</label>
-      <input type="text" id="meal_state" placeholder="e.g., pre-breakfast, post-lunch, fasting" required />
+      <details>
+        <summary>View guidance</summary>
+        <p>This is about your meal state before and during the experiment. Select the appropriate option from the dropdown menu.</p>
+      </details>
+      <select id="meal_state_input">
+        <option value="pre-breakfast">Pre-breakfast</option>
+        <option value="post-lunch">Post-lunch</option>
+        <option value="fasting">Fasting</option>
+        <option value="post-dinner">Post-dinner</option>
+        <option value="snacking">Snacking</option>
+        <option value="no-meal">No meal</option>
+        <option value="other">Other</option>
+      </select>
 
       <label for="last_meal">Last meal:</label>
       <input type="text" id="last_meal" placeholder="e.g., pizza and cucumber" required />
@@ -97,20 +162,29 @@
       <label for="ritual_preparation_input">Ritual preparation:</label>
       <div class="tag-input-wrapper" id="ritual_preparation">
         <ul class="chip-list">
-          <li><input type="text" id="ritual_preparation_input" class="chip-entry-input" /></li>
+          <li><input type="text" id="ritual_preparation_input" class="chip-entry-input" placeholder="add tag" /></li>
         </ul>
       </div>
 
-      <label for="interruption_duration">Interruption duration (minutes):</label>
+      <label for="interruption_duration">Time interruption duration (minutes):</label>
+      <details>
+      <summary>View guidance</summary>
+        <p>This is about any interruptions that occurred during the experiment. You can enter the duration of these interruptions in minutes. If there were no interruptions, you can leave this field empty.</p>
+      </details>
       <input type="number" id="interruption_duration" />
     </fieldset>
   </details>
-
   <details open>
     <summary>Machine</summary>
     <fieldset>
-      <label for="model">Model:</label>
-      <input type="text" id="model" />
+      <label for="provider">Provider</label>
+      <input type="text" id="provider" placeholder="e.g., OpenAI, Anthropic" />
+
+      <label for="api_version">API version</label>
+      <input type="text" id="api_version" placeholder="e.g., v1, 2024-05-01" />
+
+      <label for="model_family">Model family</label>
+      <input type="text" id="model_family" placeholder="e.g., gpt-4, claude-4" />
 
       <label for="thinking_mode">Thinking mode:</label>
       <select id="thinking_mode">
@@ -140,7 +214,11 @@
       <input type="text" id="conversation_style" />
 
       <label for="conversation_length">Conversation length:</label>
-      <input type="number" id="conversation_length" placeholder="Estimated number of messages or tokens" />
+      <select id="conversation_length">
+        <option value="short">Short (1-5 messages)</option>
+        <option value="medium">Medium (6-15 messages)</option>
+        <option value="long">Long (16+ messages)</option>
+      </select>
 
       <label for="model_temperature">Model temperature:</label>
       <input type="number" step="0.1" id="model_temperature" />
@@ -160,6 +238,10 @@
       <input type="text" id="location" placeholder="e.g., home office, studio, beach — (location coordinates will auto-append)" />
 
       <label for="noted_presence_of_earthian_kin_input">Earthian kin present:</label>
+      <details>
+        <summary>View guidance</summary>
+        <p>This is about any other humans or beings that were present before and during the experiment. You can add tags to describe their presence, like "friend", "colleague", "family", "tree" etc. If no Earthians were present, you can leave this field empty.</p>
+      </details>
       <div class="tag-input-wrapper" id="noted_presence_of_earthian_kin">
         <ul class="chip-list">
           <li><input type="text" id="noted_presence_of_earthian_kin_input" class="chip-entry-input" /></li>
