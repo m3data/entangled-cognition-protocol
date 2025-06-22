@@ -424,3 +424,61 @@ details summary {
 .autocomplete-item:hover {
   background-color: var(--highlight-color);
 }
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  background: #fefefe;
+  padding: 1rem 1rem 0.5rem 1rem;
+  z-index: 10;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-nav #step-indicator {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.sticky-nav .nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sticky-nav .nav-buttons button {
+  flex: 1 1 auto;
+  max-width: 200px;
+  padding: 0.75em 1.5em;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sticky-nav .nav-buttons button:hover {
+  background-color: var(--green-soft);
+  color: #1e1f2f;
+}
+
+.sticky-nav .nav-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(132, 0, 227, 0.815);
+}
+
+.sticky-nav .nav-buttons button:active {
+  background-color: var(--green-soft);
+  color: white;
+}
+
+.sticky-nav .nav-buttons button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}

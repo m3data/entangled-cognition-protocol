@@ -16,22 +16,35 @@
       <strong>Entangled Cognition Protocol (ECP) Schema</strong> v0.1
     </p>
     <p>This form is designed to help you log your experiment in a structured and intentional way. Be mindful of the sensory cues as you make your entry. This is a sacred data being co-created. Treat it accordingly.</p>
-  <fieldset>
-    <legend>Metadata</legend>
-    <label for="experiment_id">Experiment ID:</label>
-    <input type="text" id="experiment_id" placeholder="ecp-2025-06-07-001" required />
-    <label for="author">Author:</label>
-    <input type="text" id="author" placeholder="anonymous" required />
-    <label for="timestamp_start">Start time:</label>
-    <input type="datetime-local" id="timestamp_start" required />
-    <label for="timestamp_end">End time:</label>
-    <input type="datetime-local" id="timestamp_end" />
-  </fieldset>
-
-  <details class="form-detail" open>
-    <summary>Human context</summary>
-    <p>These are not exhaustive but are simply a framework for understanding the human context of the experiment.</p>
+  <div class="form-navigation">
+    <!-- Progress bar or step indicators and navigation buttons will go here -->
+  </div>
+  <div id="step-nav" class="sticky-nav">
+  <div id="step-indicator" style="text-align: center; margin-bottom: 0.5rem;">
+    Step 1 of 5: Metadata
+  </div>
+  <div class="nav-buttons" style="display: flex; justify-content: space-between;">
+    <button type="button" class="prev-step-btn">← Previous</button>
+    <button type="button" class="next-step-btn">Next →</button>
+  </div>
+</div>
+  <div class="form-step" data-step="1" style="display:block;">
     <fieldset>
+      <legend>Metadata</legend>
+      <label for="experiment_id">Experiment ID:</label>
+      <input type="text" id="experiment_id" placeholder="ecp-2025-06-07-001" required />
+      <label for="author">Author:</label>
+      <input type="text" id="author" placeholder="anonymous" required />
+      <label for="timestamp_start">Start time:</label>
+      <input type="datetime-local" id="timestamp_start" required />
+      <label for="timestamp_end">End time:</label>
+      <input type="datetime-local" id="timestamp_end" />
+    </fieldset>
+  </div>
+  <div class="form-step" data-step="2" style="display:none;">
+    <fieldset>
+      <legend>Human context</legend>
+      <p>These are not exhaustive but are simply a framework for understanding the human context of the experiment.</p>
       <label for="cognitive_mode_input">Cognitive mode:</label>
       <details>
         <summary>View guidance</summary>
@@ -173,10 +186,10 @@
       </details>
       <input type="number" id="interruption_duration" />
     </fieldset>
-  </details>
-  <details open>
-    <summary>Machine</summary>
+  </div>
+  <div class="form-step" data-step="3" style="display:none;">
     <fieldset>
+      <legend>Machine</legend>
       <label for="provider">Provider</label>
       <input type="text" id="provider" placeholder="e.g., OpenAI, Anthropic" />
 
@@ -229,11 +242,10 @@
       <label for="chatgpt_custom_instructions">ChatGPT custom instructions (comma-separated):</label>
       <input type="text" id="chatgpt_custom_instructions" />
     </fieldset>
-  </details>
-
-  <details open>
-    <summary>Relational field</summary>
+  </div>
+  <div class="form-step" data-step="4" style="display:none;">
     <fieldset>
+      <legend>Relational field</legend>
       <label for="location">Location:</label>
       <input type="text" id="location" placeholder="e.g., home office, studio, beach — (location coordinates will auto-append)" />
 
@@ -254,11 +266,14 @@
       <label for="interaction_pace">Interaction pace:</label>
       <input type="text" id="interaction_pace" />
     </fieldset>
-  </details>
-
-  <details open>
-    <summary>Output</summary>
+    <div class="form-step-buttons">
+      <button type="button" class="prev-step-btn">Previous</button>
+      <button type="button" class="next-step-btn">Next</button>
+    </div>
+  </div>
+  <div class="form-step" data-step="5" style="display:none;">
     <fieldset>
+      <legend>Throughput</legend>
       <label for="felt_response_quality">Felt response quality (1–10):</label>
       <input type="number" id="felt_response_quality" />
 
@@ -284,27 +299,64 @@
         </ul>
       </div>
     </fieldset>
-  </details>
-<fieldset id="save-options">
-  <legend>Save entry options</legend>
-  <p>Select the visibility level for this entry:</p>
-  <div class="visibility-options">
-    <label>Public <input type="radio" name="visibility" value="public" checked /></label>
-    <label>Private <input type="radio" name="visibility" value="private" /></label>
-    <label>Both <input type="radio" name="visibility" value="both" /></label>
+    <fieldset id="save-options">
+      <legend>Save entry options</legend>
+      <p>Select the visibility level for this entry:</p>
+      <div class="visibility-options">
+        <label>Public <input type="radio" name="visibility" value="public" checked /></label>
+        <label>Private <input type="radio" name="visibility" value="private" /></label>
+        <label>Both <input type="radio" name="visibility" value="both" /></label>
+      </div>
+      <div class="scrub-option">
+        <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
+      </div>
+    </fieldset>
+    <div class="form-step-buttons">
+      <button id="generate-entry-btn">Generate and save entry</button>
+    </div>
   </div>
-  <div class="scrub-option">
-    <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
-  </div>
-</fieldset>
 </div>
-<button id="generate-entry-btn">Generate and save entry</button>
 <div id="toast" class="hidden"></div>
 <script type="module">
   import { generateExperimentJSON } from './js/main.js';
   import { initTagInput } from './js/modules/inputTags.js';
+  import { initMultistepForm } from './js/modules/ui.js';
 
   document.addEventListener("DOMContentLoaded", () => {
+    // Sticky nav step logic
+    const stepIndicator = document.getElementById("step-indicator");
+    const updateStepIndicator = (currentStep, totalSteps) => {
+      const stepNames = ["Metadata", "Human Context", "Machine", "Relational Field", "Throughput"];
+      stepIndicator.textContent = `Step ${currentStep} of ${totalSteps}: ${stepNames[currentStep - 1]}`;
+    };
+
+    let currentStep = 1;
+    const steps = document.querySelectorAll(".form-step");
+    const totalSteps = steps.length;
+
+    const showStep = (step) => {
+      steps.forEach((el, idx) => {
+        el.style.display = (idx === step - 1) ? "block" : "none";
+      });
+      updateStepIndicator(step, totalSteps);
+    };
+
+    document.querySelector("#step-nav .next-step-btn").addEventListener("click", () => {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    document.querySelector("#step-nav .prev-step-btn").addEventListener("click", () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    showStep(currentStep); // Initialize
+
     [
       "cognitive_mode",
       "affective_tone",

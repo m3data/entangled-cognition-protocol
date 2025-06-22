@@ -1,5 +1,3 @@
-
-
 /**
  * Display a temporary toast message on the screen.
  * Requires a DOM element with id="toast".
@@ -19,4 +17,43 @@ export function showToast(message, duration = 3000) {
     toast.classList.remove('show');
     toast.classList.add('hidden');
   }, duration);
+}
+
+/**
+ * Initialize multistep form navigation.
+ * Should be called once on page load for experiment-entry.html.
+ */
+export function initMultistepForm() {
+  const steps = document.querySelectorAll(".form-step");
+  let currentStep = 0;
+
+  function showStep(stepIndex) {
+    steps.forEach((step, index) => {
+      step.style.display = index === stepIndex ? "block" : "none";
+    });
+  }
+
+  function nextStep() {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  document.querySelectorAll(".next-step-btn").forEach(btn =>
+    btn.addEventListener("click", nextStep)
+  );
+
+  document.querySelectorAll(".prev-step-btn").forEach(btn =>
+    btn.addEventListener("click", prevStep)
+  );
+
+  showStep(currentStep);
 }
