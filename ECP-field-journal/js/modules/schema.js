@@ -47,7 +47,7 @@ export const defaultSchema = {
     "thinking_mode",
     "entrainment_protocol",
     "user_interface",
-    "chatgpt_custom_instructions",
+    "custom_instructions",
     "initial_prompt_type",
     "origin_prompt_tone",
     "conversation_style",

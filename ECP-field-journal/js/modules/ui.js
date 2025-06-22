@@ -57,3 +57,30 @@ export function initMultistepForm() {
 
   showStep(currentStep);
 }
+
+export function initTooltips() {
+  document.querySelectorAll('.help-icon').forEach(icon => {
+    icon.addEventListener('click', () => {
+      // Remove any existing tooltips
+      document.querySelectorAll('.tooltip').forEach(t => t.remove());
+
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.textContent = icon.dataset.help;
+      document.body.appendChild(tooltip);
+
+      const rect = icon.getBoundingClientRect();
+      tooltip.style.position = 'absolute';
+      tooltip.style.left = `${rect.left + window.scrollX + 20}px`;
+      tooltip.style.top = `${rect.top + window.scrollY}px`;
+
+      // Auto-remove tooltip on next document click
+      const remove = () => {
+        tooltip.remove();
+        document.removeEventListener('click', remove);
+      };
+      setTimeout(remove, 12000);
+      setTimeout(() => document.addEventListener('click', remove), 0);
+    });
+  });
+}

@@ -41,13 +41,13 @@
 | Field | Meaning |
 |-------|---------|
 | `provider` | API or local model provider (e.g., OpenAI, Claude, Ollama) |
-| `model_family` | LLM version/family (e.g., GPT-4o, Claude 3, Mistral) |
+| `model_family` | LLM version/family (e.g., GPT-4o, Opus 4, Mistral) |
 | `model_temperature` | Creativity/determinism setting |
 | `thinking_mode` | Apparent cognitive behavior (e.g., reflective, sycophantic, recursive) |
-| `entrainment_protocol` | Boot files or prompts used to tune the model |
-| `user_interface` | Mode of interaction (e.g., terminal, web UI, voice) |
-| `chatgpt_custom_instructions` | Custom persona settings applied |
-| `initial_prompt_type` | Format of entry prompt (story, chant, reflection) |
+| `entrainment_protocol` | Boot files or prompts used to tune the model before conversation |
+| `user_interface` | Mode of interaction (e.g., terminal, web UI, voice, API) |
+| `custom_instructions` | Custom persona settings applied |
+| `initial_prompt_type` | Format of entry prompt (story, chant, reflection, task orientation) |
 | `origin_prompt_tone` | Tone of prompt (e.g., poetic, technical, sincere) |
 | `conversation_style` | General flow of discourse (e.g., co-creative, interrogative) |
 | `conversation_length` | Duration or token count of session |

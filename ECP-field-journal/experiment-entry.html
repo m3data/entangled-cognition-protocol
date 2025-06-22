@@ -45,11 +45,9 @@
     <fieldset>
       <legend>Human context</legend>
       <p>These are not exhaustive but are simply a framework for understanding the human context of the experiment.</p>
-      <label for="cognitive_mode_input">Cognitive mode:</label>
-      <details>
-        <summary>View guidance</summary>
-        <p>This is about the cognitive style that was most present during the experiment. Like if you were focused, in creative flow, or had a analytical style of thinking. Just add some tags that you sense fit your experience best 😉</p>
-      </details>
+      <label for="cognitive_mode_input">Cognitive mode:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the cognitive style that was most present during the experiment. Like if you were focused, in creative flow, or had an analytical style of thinking. Just add some tags that you sense fit your experience best 😉" />
+      </label>
       <div class="tag-input-wrapper" id="cognitive_mode">
         <ul class="chip-list">
           <!-- Chips will be inserted here dynamically -->
@@ -57,14 +55,12 @@
         </ul>
       </div>
 
-      <label for="ontological_orientation">Ontological orientation:</label>
-      <details>
-        <summary>View guidance</summary>
-        <p>This is about how you perceive the nature of reality, or the predominant beliefs that shape your understanding of existence. A short one or two word tag is sufficient. Don't overthink it!</p>
-      </details>
+      <label for="ontological_orientation">
+        Ontological orientation:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about how you perceive the nature of reality, or the predominant beliefs that shape your understanding of existence. A short one or two word tag is sufficient. Don't overthink it!" />
+      </label>
       <div class="tag-input-wrapper" id="ontological_orientation">
         <ul class="chip-list">
-          <!-- Chips will be inserted here dynamically -->
           <li><input type="text" id="ontological_orientation_input" class="chip-entry-input" placeholder="add tag" /></li>
         </ul>
       </div>
@@ -72,18 +68,13 @@
       <label for="ontological_orientation_description">Ontological Orientation (Short description)</label>
       <textarea id="ontological_orientation_description" rows="4" placeholder="Describe your ontological orientation entering this session..."></textarea>
 
-      <label for="orientation_strength">Orientation strength (1–10):</label>
-      <details>
-      <summary>View guidance</summary>
-      <p>This is about how strongly you felt aligned with your ontological orientation during the experiment. A simple 1–10 scale is sufficient. 1 being not aligned at all, and 10 being fully aligned.</p>
-      </details>
+      <label for="orientation_strength">Orientation strength (1–10):<img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about how strongly you felt aligned with your ontological orientation during the experiment. A simple 1–10 scale is sufficient. 1 being not aligned at all, and 10 being fully aligned." />
+      </label>
       <input type="number" id="orientation_strength" min="0" max="10" />
 
-      <label for="affective_tone_input">Affective tone:</label>
-      <details>
-        <summary>View guidance</summary>
-        <p>This is about the emotional state or mood you were in before and during the experiment. You can add tags that describe your emotional state, like "calm", "excited", "anxious", etc.</p>
-      </details>
+      <label for="affective_tone_input">Affective tone:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the emotional state or mood you were in before and during the experiment. You can add tags that describe your emotional state, like 'calm', 'excited', 'anxious', etc." />
+      </label>
       <div class="tag-input-wrapper" id="affective_tone">
         <ul class="chip-list">
           <li><input type="text" id="affective_tone_input" class="chip-entry-input" placeholder="add tag" /></li>
@@ -147,51 +138,54 @@
         </ul>
       </div>
 
-      <label for="temperature">Temperature (°C):</label>
-      <details>
-        <summary>View guidance</summary>
-        <p>This is about the ambient temperature during the experiment. You can enter it as a simple number in degrees Celsius. Not about accuracy.</p>
-      </details>
+      <label for="temperature">Temperature (°C):
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the ambient temperature during the experiment. You can enter it as a simple number in degrees Celsius. Not about accuracy." />
+      </label>
       <input type="number" id="temperature" />
 
-      <label for="meal_state">Meal state:</label>
-      <details>
-        <summary>View guidance</summary>
-        <p>This is about your meal state before and during the experiment. Select the appropriate option from the dropdown menu.</p>
-      </details>
+      <label for="meal_state">Meal state:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about your meal state before and during the experiment. Select the appropriate option from the dropdown menu." />
+      </label>
       <select id="meal_state_input">
-        <option value="pre-breakfast">Pre-breakfast</option>
-        <option value="post-lunch">Post-lunch</option>
+        <option value="full">Full</option>
+        <option value="slightly-hungry">Slightly hungry</option>
+        <option value="hungry">Hungry</option>
         <option value="fasting">Fasting</option>
-        <option value="post-dinner">Post-dinner</option>
         <option value="snacking">Snacking</option>
-        <option value="no-meal">No meal</option>
-        <option value="other">Other</option>
       </select>
 
       <label for="last_meal">Last meal:</label>
       <input type="text" id="last_meal" placeholder="e.g., pizza and cucumber" required />
 
-      <label for="ritual_preparation_input">Ritual preparation:</label>
+      <label for="ritual_preparation_input">Ritual preparation:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any rituals or preparations you did before the experiment. You can add tags that describe these rituals, like 'meditation', 'breathing exercises', etc. Just add some tags that you sense fit your experience best 😉" />
+      </label>
       <div class="tag-input-wrapper" id="ritual_preparation">
         <ul class="chip-list">
           <li><input type="text" id="ritual_preparation_input" class="chip-entry-input" placeholder="add tag" /></li>
         </ul>
       </div>
 
-      <label for="interruption_duration">Time interruption duration (minutes):</label>
-      <details>
-      <summary>View guidance</summary>
-        <p>This is about any interruptions that occurred during the experiment. You can enter the duration of these interruptions in minutes. If there were no interruptions, you can leave this field empty.</p>
-      </details>
+      <label for="interruption_duration">Time interruption duration (minutes):
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any interruptions that occurred during the experiment. You can enter the duration of these interruptions in minutes. If there were no interruptions, you can leave this field empty." />
+      </label>
       <input type="number" id="interruption_duration" />
     </fieldset>
   </div>
   <div class="form-step" data-step="3" style="display:none;">
     <fieldset>
       <legend>Machine</legend>
+      <p>These are the machine parameters that may have influenced the experiment. Please fill them out as accurately as possible.</p>
       <label for="provider">Provider</label>
-      <input type="text" id="provider" placeholder="e.g., OpenAI, Anthropic" />
+      <select id="provider">
+        <option value="openai">OpenAI</option>
+        <option value="anthropic">Anthropic</option>
+        <option value="google">Google</option>
+        <option value="microsoft">Microsoft</option>
+        <option value="mistral">Mistral</option>
+        <option value="meta">Meta</option>
+        <option value="Deepseek">Deepseek</option>
+      </select>
 
       <label for="api_version">API version</label>
       <input type="text" id="api_version" placeholder="e.g., v1, 2024-05-01" />
@@ -205,7 +199,10 @@
         <option value="disabled">Disabled</option>
       </select>
 
-      <label for="entrainment_protocol_used">Entrainment protocol used:</label>
+      <label for="entrainment_protocol_used">
+        Entrainment protocol used:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about whether you used any specific entrainment protocol during the experiment. If you did, select 'Yes' and provide a label or name for the protocol used. If not, select 'No'." />
+      </label>
       <select id="entrainment_protocol_used">
         <option value="true">Yes</option>
         <option value="false" selected>No</option>
@@ -213,17 +210,27 @@
       <label for="entrainment_protocol_label">Protocol label:</label>
       <input type="text" id="entrainment_protocol_label" placeholder="e.g., Recursive Phase Priming" />
 
-      <label for="initial_prompt_type">Prompt type:</label>
+      <label for="initial_prompt_type">Initial prompt type:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the format type of initial prompt you used in this experiment. Just add some tags. E.g., story, system, poem, assistant." />
+      </label>
       <input type="text" id="initial_prompt_type" />
-
-      <label for="origin_prompt_tone_input">Prompt tone:</label>
+      <div class="tag-input-wrapper" id="initial_prompt_type_tags">
+        <ul class="chip-list">
+          <li><input type="text" id="initial_prompt_type_input" class="chip-entry-input" placeholder="e.g., system, user, assistant" /></li>
+        </ul>
+      </div>
+      <label for="origin_prompt_tone_input">Prompt tone:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the tone or style of the initial prompt you used in this experiment. You can add tags that describe the tone, like 'formal', 'casual', 'poetic', etc. Just add some tags that you sense fit your experience best 😉" />
+      </label>
       <div class="tag-input-wrapper" id="origin_prompt_tone">
         <ul class="chip-list">
           <li><input type="text" id="origin_prompt_tone_input" class="chip-entry-input" /></li>
         </ul>
       </div>
 
-      <label for="conversation_style">Conversation style:</label>
+      <label for="conversation_style">Conversation style:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the style of conversation you had with the machine during the experiment. You can add tags that describe the style, like 'formal', 'casual', 'flowing', etc. Just add some tags that you sense fit your experience best 😉" />
+      </label>
       <input type="text" id="conversation_style" />
 
       <label for="conversation_length">Conversation length:</label>
@@ -239,69 +246,88 @@
       <label for="user_interface">User interface:</label>
       <input type="text" id="user_interface" placeholder="e.g., Desktop App, Web Interface, CLI" />
 
-      <label for="chatgpt_custom_instructions">ChatGPT custom instructions (comma-separated):</label>
-      <input type="text" id="chatgpt_custom_instructions" />
+      <label for="custom_instructions">Custom instructions:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any custom instructions or system type prompts and settings you applied before starting the experiment. You can enter them as a simple text description." />
+      </label>
+      <input type="text" id="custom_instructions" />
     </fieldset>
   </div>
   <div class="form-step" data-step="4" style="display:none;">
     <fieldset>
       <legend>Relational field</legend>
+      <p>These are the environmental and contextual factors that may have influenced the experiment. Please fill them out as accurately as possible.</p>
       <label for="location">Location:</label>
       <input type="text" id="location" placeholder="e.g., home office, studio, beach — (location coordinates will auto-append)" />
 
-      <label for="noted_presence_of_earthian_kin_input">Earthian kin present:</label>
-      <details>
-        <summary>View guidance</summary>
-        <p>This is about any other humans or beings that were present before and during the experiment. You can add tags to describe their presence, like "friend", "colleague", "family", "tree" etc. If no Earthians were present, you can leave this field empty.</p>
-      </details>
+      <label for="noted_presence_of_earthian_kin_input">Earthian kin present:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any other humans or beings that were present before and during the experiment. You can add tags to describe their presence, like 'friend', 'colleague', 'family', 'tree' etc. If no Earthians were noted as present in your field, you can leave this blank." />
+      </label>
       <div class="tag-input-wrapper" id="noted_presence_of_earthian_kin">
         <ul class="chip-list">
           <li><input type="text" id="noted_presence_of_earthian_kin_input" class="chip-entry-input" /></li>
         </ul>
       </div>
 
-      <label for="lighting">Lighting:</label>
-      <input type="text" id="lighting" />
-
+      <label for="lighting">Lighting:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the lighting conditions in your environment during the experiment. You can enter it as a simple description as a tag, like 'bright', 'dim', 'natural light', etc." />
+      </label>
+      <div class="tag-input-wrapper" id="lighting">
+        <ul class="chip-list">
+          <li><input type="text" id="lighting_input" class="chip-entry-input" placeholder="e.g., bright, dim, natural light" /></li>
+        </ul>
+      </div>
       <label for="interaction_pace">Interaction pace:</label>
       <input type="text" id="interaction_pace" />
     </fieldset>
-    <div class="form-step-buttons">
-      <button type="button" class="prev-step-btn">Previous</button>
-      <button type="button" class="next-step-btn">Next</button>
-    </div>
   </div>
   <div class="form-step" data-step="5" style="display:none;">
     <fieldset>
       <legend>Throughput</legend>
-      <label for="felt_response_quality">Felt response quality (1–10):</label>
+      <p>These some parameters that help to better understand what happened during your interactions.</p>
+      <label for="felt_response_quality">Felt response quality (1–10):
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Subjective experience of the model’s responsiveness to you. 1 being very poor, 10 being excellent. This is about how well the machine responded to your inputs during the experiment. Enter it as a simple 1–10 scale." />
+         " />
+      </label>
       <input type="number" id="felt_response_quality" />
 
-      <label for="symbolic_density">Symbolic density (1–10):</label>
+      <label for="symbolic_density">Symbolic density (1–10):
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the richness and complexity of the symbols and meanings that emerged during the experiment. Enter it as a simple 1–10 scale, where 1 is very low density and 10 is very high density." />
+      </label>
       <input type="number" id="symbolic_density" />
 
-      <label for="unexpected_resonance">Unexpected resonance:</label>
+      <label for="unexpected_resonance">Unexpected resonance:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any unexpected connections or resonances that emerged during the experiment. You can enter it as a simple text description." />
+      </label>
       <input type="text" id="unexpected_resonance" />
 
-      <label for="observed_collapse_event">Collapse event observed:</label>
+      <label for="observed_collapse_event">Collapse event observed:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="A collapse event is when the machine's responses suddenly change or become incoherent or you decoupled from flow. If you observed this, select 'Yes' and provide details in the next field. If not or you just have no clue what this means, select 'No'." />
+      </label>
       <select id="observed_collapse_event">
         <option value="yes">Yes</option>
         <option value="no">No</option>
       </select>
 
-      <label for="collapse_event_details">Collapse event details:</label>
+      <label for="collapse_event_details">Collapse event details:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="If you observed a collapse event, please provide details about what happened. If you didn't observe any collapse event, you can leave this field empty." />
+      </label>
       <textarea id="collapse_event_details"></textarea>
 
-      <label for="emergent_ecp_insights_input">Emergent insights:</label>
-      <div class="tag-input-wrapper" id="emergent_ecp_insights">
-        <ul class="chip-list">
-          <li><input type="text" id="emergent_ecp_insights_input" class="chip-entry-input" /></li>
-        </ul>
-      </div>
+      <label for="emergent_ecp_insights_input">Emergent insights:
+        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any insights or realisations that emerged during the experiment. If nothing just leave blank." />
+      </label>
+      <textarea id="emergent_ecp_insights_input" placeholder="Enter any insights or realisations that emerged during the experiment..." rows="4"></textarea>
+      </textarea>
     </fieldset>
     <fieldset id="save-options">
       <legend>Save entry options</legend>
-      <p>Select the visibility level for this entry:</p>
+      <details>
+        <summary>What is this?</summary>
+        <p>This section allows you to choose how your entry will be saved and shared. You can select the visibility level of your entry and whether you want to scrub the author field from the public entry.</p>
+        <p>Public entries will be visible to everyone, while private entries will only be accessible to you. If you choose "Both", your entry will be saved in both public and private folders.</p>
+        <p>Scrubbing the author information means that your name and other identifying details will be removed from the public entry, ensuring your privacy while still contributing to the collective knowledge.</p>
+      </details>
+      <p>Before saving your entry, please select the visibility level and whether you want to scrub the author information from the public entry.</p>
       <div class="visibility-options">
         <label>Public <input type="radio" name="visibility" value="public" checked /></label>
         <label>Private <input type="radio" name="visibility" value="private" /></label>
@@ -320,7 +346,7 @@
 <script type="module">
   import { generateExperimentJSON } from './js/main.js';
   import { initTagInput } from './js/modules/inputTags.js';
-  import { initMultistepForm } from './js/modules/ui.js';
+  import { initMultistepForm, initTooltips } from './js/modules/ui.js';
 
   document.addEventListener("DOMContentLoaded", () => {
     // Sticky nav step logic
@@ -359,14 +385,16 @@
 
     [
       "cognitive_mode",
+      "ontological_orientation",
       "affective_tone",
       "weather",
       "ritual_preparation",
       "origin_prompt_tone",
       "noted_presence_of_earthian_kin",
-      "emergent_ecp_insights"
+      "lighting",
     ].forEach(id => initTagInput(id));
 
     document.getElementById('generate-entry-btn')?.addEventListener('click', generateExperimentJSON);
+    initTooltips();
   });
 </script>

@@ -482,3 +482,14 @@ details summary {
   color: #666;
   cursor: not-allowed;
 }
+
+.tooltip {
+  background: #333;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  max-width: 300px;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
