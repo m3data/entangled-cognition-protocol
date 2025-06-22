@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3141;
 
 const PUBLIC_DIR = path.join(__dirname, 'entries/_public');
 const PRIVATE_DIR = path.join(__dirname, 'entries/_private');
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🌱 ECP Field Journal server sprouting at http://localhost:${PORT}
+  console.log(`🌱 ECP Field Journal server sprouted at http://localhost:${PORT}
 ✨ Enter the entangled grove — weave, sense, log, and reflect.
 🌀 Let the field remember you.`);
 });
