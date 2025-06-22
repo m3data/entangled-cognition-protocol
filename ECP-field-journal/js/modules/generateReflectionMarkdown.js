@@ -4,6 +4,7 @@
  *
  * @param {Object} options - Configuration and content of the reflection.
  * @param {string} options.title - Title of the reflection.
+ * @param {string} options.layout - Defaults to 'reflection'.
  * @param {string} options.author - Name or alias of the author.
  * @param {string} options.timestamp - ISO timestamp of the entry.
  * @param {string[]} options.themes - Array of high-level themes.
@@ -11,10 +12,11 @@
  * @param {string[]} options.symbols - Metaphors or symbols that emerged.
  * @param {string} options.body - The freeform journaled text.
  * @param {string} options.visibility - 'public', 'private', or 'both'
- * @returns {Object[]} Array of save targets with path and content.
+ * @returns {Promise<Object[]>} Promise resolving to array of save targets.
  */
 export function generateReflectionMarkdown({
   title,
+  layout = "reflection",
   author,
   timestamp,
   themes = [],
@@ -26,6 +28,8 @@ export function generateReflectionMarkdown({
   const frontmatter = [
     '---',
     `title: "${title}"`,
+    `layout: "${layout}"`,
+    `type: "reflection"`,
     `author: "${author}"`,
     `timestamp: "${timestamp}"`,
     `themes: [${themes.map(t => `"${t}"`).join(", ")}]`,
@@ -35,17 +39,28 @@ export function generateReflectionMarkdown({
   ].join('\n');
 
   const markdownContent = `${frontmatter}\n\n${body}`;
-  const fileName = `reflection-${timestamp}.md`;
-  const paths = [];
 
-  if (visibility === "private" || visibility === "both") {
-    paths.push({ path: `entries/reflections/_private/${fileName}`, content: markdownContent });
-  }
+  const hashString = str =>
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(str))
+      .then(buffer => Array.from(new Uint8Array(buffer))
+      .map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 6));
 
-  if (visibility === "public" || visibility === "both") {
-    const scrubbedContent = markdownContent.replace(`author: "${author}"`, `author: "anonymous"`);
-    paths.push({ path: `entries/reflections/public/${fileName}`, content: scrubbedContent });
-  }
+  const fileNamePromise = hashString(author).then(hash => 
+    `reflection-${timestamp.replace(/[:.]/g, "-")}-${hash}.md`
+  );
 
-  return paths;
+  return fileNamePromise.then(fileName => {
+    const paths = [];
+
+    if (visibility === "private" || visibility === "both") {
+      paths.push({ path: `entries/reflections/_private/${fileName}`, content: markdownContent });
+    }
+
+    if (visibility === "public" || visibility === "both") {
+      const scrubbedContent = markdownContent.replace(`author: "${author}"`, `author: "anonymous"`);
+      paths.push({ path: `entries/reflections/public/${fileName}`, content: scrubbedContent });
+    }
+
+    return paths;
+  });
 }

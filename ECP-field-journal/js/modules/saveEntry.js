@@ -1,17 +1,15 @@
-
-
 // js/modules/saveEntry.js
 
 /**
  * Save experiment JSON to appropriate location(s) based on visibility and privacy settings.
  *
  * @param {string} json - The full JSON stringified experiment entry.
- * @param {string} timestamp - ISO timestamp used to name the file.
+ * @param {string} filename - Final filename to use, e.g., 'ecp-2025-06-22T00-05-00-hash.json'
  * @param {boolean} scrubAuthor - If true, replace author with 'anonymous' in public copy.
  * @param {string} visibility - 'public', 'private', or 'both'
  */
-export function saveExperimentEntry(json, timestamp, scrubAuthor = false, visibility = "public") {
-  const fileName = `ecp-${timestamp || Date.now()}.json`;
+export function saveExperimentEntry(json, filename, scrubAuthor = false, visibility = "public") {
+  const safeFilename = filename.endsWith(".json") ? filename : `${filename}.json`;
   let savePaths = [];
 
   if (visibility === "both") {
@@ -19,8 +17,8 @@ export function saveExperimentEntry(json, timestamp, scrubAuthor = false, visibi
     if (scrubAuthor) publicCopy.author = 'anonymous';
 
     savePaths = [
-      { path: `entries/experiments/_private/${fileName}`, content: json },
-      { path: `entries/experiments/public/${fileName}`, content: JSON.stringify(publicCopy, null, 2) }
+      { path: `entries/experiments/_private/${safeFilename}`, content: json },
+      { path: `entries/experiments/public/${safeFilename}`, content: JSON.stringify(publicCopy, null, 2) }
     ];
   } else {
     const folder = visibility === "private" ? "_private" : "public";
@@ -28,7 +26,7 @@ export function saveExperimentEntry(json, timestamp, scrubAuthor = false, visibi
       ? (() => { const temp = JSON.parse(json); temp.author = 'anonymous'; return JSON.stringify(temp, null, 2); })()
       : json;
 
-    savePaths = [{ path: `entries/experiments/${folder}/${fileName}`, content }];
+    savePaths = [{ path: `entries/experiments/${folder}/${safeFilename}`, content }];
   }
 
   Promise.all(savePaths.map(({ path, content }) =>

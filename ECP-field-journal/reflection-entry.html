@@ -105,7 +105,7 @@
       const visibility = document.querySelector('input[name="visibility"]:checked')?.value || "public";
       const scrub = document.getElementById('scrub-author')?.checked;
 
-      const targets = generateReflectionMarkdown({
+      generateReflectionMarkdown({
         title,
         author,
         timestamp,
@@ -114,22 +114,22 @@
         symbols,
         body,
         visibility
-      });
-
-      Promise.all(targets.map(({ path, content }) =>
-        fetch("/save-entry", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ path, content })
+      }).then(targets => {
+        Promise.all(targets.map(({ path, content }) =>
+          fetch("/save-entry", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path, content })
+          })
+        ))
+        .then(() => {
+          document.getElementById("reflection-output").textContent = targets.map(t => `Saved to: ${t.path}`).join("\n");
+          showToast("Reflection saved.");
         })
-      ))
-      .then(() => {
-        document.getElementById("reflection-output").textContent = targets.map(t => `Saved to: ${t.path}`).join("\n");
-        showToast("Reflection saved.");
-      })
-      .catch((err) => {
-        console.error("Save error:", err);
-        showToast("Error saving reflection.");
+        .catch((err) => {
+          console.error("Save error:", err);
+          showToast("Error saving reflection.");
+        });
       });
     });
   });

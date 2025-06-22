@@ -6,6 +6,38 @@ import { getUserCoordinates } from './modules/location.js';
 import { showToast } from './modules/ui.js';
 import { normalize } from './modules/formBindings.js';
 
+async function hashString(str) {
+  const buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 6);
+}
+
+function scrubSensitiveData(entry) {
+  const scrubbedEntry = structuredClone(entry);
+
+  // Remove location coordinates (deep scrub: delete regardless of value/visibility)
+  if (scrubbedEntry?.relational_field?.location) {
+    delete scrubbedEntry.relational_field.location.coordinates;
+  }
+
+  return scrubbedEntry;
+}
+
+async function generateFilename(author, timestamp) {
+  const authorHash = await hashString(author || "anon");
+  // Fallback to Date.now() if timestamp is invalid or undefined
+  let dateObj;
+  if (!timestamp) {
+    dateObj = new Date(Date.now());
+  } else {
+    dateObj = new Date(timestamp);
+    if (isNaN(dateObj.getTime())) {
+      dateObj = new Date(Date.now());
+    }
+  }
+  const formattedTimestamp = dateObj.toISOString().replace(/[:.]/g, "-");
+  return `ecp-${formattedTimestamp}-${authorHash}`;
+}
+
 /**
  * Generate JSON for experiment entry and trigger save process.
  */
@@ -57,7 +89,7 @@ export function generateExperimentJSON() {
           label: getNormalizedValue('entrainment_protocol_label')
         },
         user_interface: getNormalizedValue('user_interface'),
-        chatgpt_custom_instructions: getNormalizedValue('chatgpt_custom_instructions', 'array'),
+        custom_instructions: getNormalizedValue('custom_instructions', 'array'),
         initial_prompt_type: getNormalizedValue('initial_prompt_type'),
         origin_prompt_tone: getNormalizedValue('origin_prompt_tone'),
         conversation_style: getNormalizedValue('conversation_style'),
@@ -78,23 +110,39 @@ export function generateExperimentJSON() {
         unexpected_resonance: getNormalizedValue('unexpected_resonance'),
         observed_collapse_event: getNormalizedValue('observed_collapse_event') === "true",
         collapse_event_details: getNormalizedValue('collapse_event_details'),
-        emergent_ecp_insights: getNormalizedValue('emergent_ecp_insights', 'array')
+        emergent_ecp_insights: getNormalizedValue('emergent_ecp_insights', 'string')
       }
     };
 
     const scrub = document.getElementById('scrub-author')?.checked;
     const visibility = document.querySelector('input[name="visibility"]:checked')?.value || "public";
 
-    getUserCoordinates().then(coords => {
-      experiment.relational_field.location.coordinates = coords;
-      const json = JSON.stringify(experiment, null, 2);
-      window.lastExperimentJSON = json;
-      document.getElementById('output').textContent = json;
-      saveExperimentEntry(json, experiment.timestamp_start, scrub, visibility);
-    });
+    if (visibility !== 'public') {
+      getUserCoordinates().then(coords => {
+        experiment.relational_field.location.coordinates = coords;
+        finalizeExperiment(experiment, visibility, scrub);
+      });
+    } else {
+      finalizeExperiment(experiment, visibility, scrub);
+    }
 
   } catch (e) {
     console.error("Failed to generate experiment:", e);
-    document.getElementById('output').textContent = "Failed to generate experiment JSON.";
+    document.getElementById('throughput').textContent = "Failed to generate experiment JSON.";
   }
+}
+function finalizeExperiment(experiment, visibility, scrub) {
+  let experimentToSave = structuredClone(experiment);
+
+  if (scrub) {
+    experimentToSave = scrubSensitiveData(experimentToSave);
+  }
+
+  const json = JSON.stringify(experimentToSave, null, 2);
+  window.lastExperimentJSON = json;
+  document.getElementById('throughput').textContent = json;
+
+  generateFilename(experiment.author, experiment.timestamp_start).then(filename => {
+    saveExperimentEntry(json, filename, scrub, visibility);
+  });
 }

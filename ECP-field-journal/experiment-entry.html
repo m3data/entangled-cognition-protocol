@@ -213,7 +213,6 @@
       <label for="initial_prompt_type">Initial prompt type:
         <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the format type of initial prompt you used in this experiment. Just add some tags. E.g., story, system, poem, assistant." />
       </label>
-      <input type="text" id="initial_prompt_type" />
       <div class="tag-input-wrapper" id="initial_prompt_type_tags">
         <ul class="chip-list">
           <li><input type="text" id="initial_prompt_type_input" class="chip-entry-input" placeholder="e.g., system, user, assistant" /></li>
@@ -231,8 +230,11 @@
       <label for="conversation_style">Conversation style:
         <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the style of conversation you had with the machine during the experiment. You can add tags that describe the style, like 'formal', 'casual', 'flowing', etc. Just add some tags that you sense fit your experience best 😉" />
       </label>
-      <input type="text" id="conversation_style" />
-
+      <div class="tag-input-wrapper" id="conversation_style_tags">
+        <ul class="chip-list">
+          <li><input type="text" id="conversation_style_input" class="chip-entry-input" placeholder="e.g., formal, logos, pathos, ethos" /></li>
+        </ul>
+      </div>
       <label for="conversation_length">Conversation length:</label>
       <select id="conversation_length">
         <option value="short">Short (1-5 messages)</option>
@@ -286,7 +288,6 @@
       <p>These some parameters that help to better understand what happened during your interactions.</p>
       <label for="felt_response_quality">Felt response quality (1–10):
         <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Subjective experience of the model’s responsiveness to you. 1 being very poor, 10 being excellent. This is about how well the machine responded to your inputs during the experiment. Enter it as a simple 1–10 scale." />
-         " />
       </label>
       <input type="number" id="felt_response_quality" />
 
@@ -304,8 +305,9 @@
         <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="A collapse event is when the machine's responses suddenly change or become incoherent or you decoupled from flow. If you observed this, select 'Yes' and provide details in the next field. If not or you just have no clue what this means, select 'No'." />
       </label>
       <select id="observed_collapse_event">
+        <option value="no" selected>No</option>
+        <option value="unsure">Unsure</option>
         <option value="yes">Yes</option>
-        <option value="no">No</option>
       </select>
 
       <label for="collapse_event_details">Collapse event details:
@@ -341,6 +343,7 @@
       <button id="generate-entry-btn">Generate and save entry</button>
     </div>
   </div>
+  <pre id="throughput" style="white-space: pre-wrap; background: #f9f9f9; padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;"></pre>
 </div>
 <div id="toast" class="hidden"></div>
 <script type="module">
@@ -391,6 +394,7 @@
       "ritual_preparation",
       "origin_prompt_tone",
       "noted_presence_of_earthian_kin",
+      "conversation_style_tags",
       "lighting",
     ].forEach(id => initTagInput(id));
 
