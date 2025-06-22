@@ -5,6 +5,7 @@ import { saveExperimentEntry } from './modules/saveEntry.js';
 import { getUserCoordinates } from './modules/location.js';
 import { showToast } from './modules/ui.js';
 import { normalize } from './modules/formBindings.js';
+import { sanitizeForPublic } from './modules/dataSanitiser.js';
 
 async function hashString(str) {
   const buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
@@ -115,7 +116,10 @@ export function generateExperimentJSON() {
     };
 
     const scrub = document.getElementById('scrub-author')?.checked;
-    const visibility = document.querySelector('input[name="visibility"]:checked')?.value || "public";
+    const visibilityElement = document.querySelector('input[name="visibility"]:checked');
+    console.log("Selected visibility element:", visibilityElement);
+    const visibility = visibilityElement?.value || "public";
+    console.log("Selected visibility:", visibility);
 
     if (visibility !== 'public') {
       getUserCoordinates().then(coords => {
@@ -131,10 +135,28 @@ export function generateExperimentJSON() {
     document.getElementById('throughput').textContent = "Failed to generate experiment JSON.";
   }
 }
-function finalizeExperiment(experiment, visibility, scrub) {
+async function finalizeExperiment(experiment, visibility, scrub) {
   let experimentToSave = structuredClone(experiment);
 
-  if (scrub) {
+  if (visibility === 'public') {
+    const { sanitizedEntry, riskInfo } = sanitizeForPublic(experimentToSave);
+    console.log("Sanitized entry:", sanitizedEntry);
+    console.log("Reached finalizeExperiment with visibility:", visibility);
+    const consent = confirm(
+      `You’ve selected to make this entry public.\n\n` +
+      `🔒 Redacted: ${riskInfo.redacted.join(', ') || 'None'}\n` +
+      `🔄 Generalized: ${riskInfo.generalized.join(', ') || 'None'}\n` +
+      `⚠️ Sensitive: ${riskInfo.flaggedSensitive.join(', ') || 'None'}\n\n` +
+      `Do you consent to publish this sanitized version?`
+    );
+
+    if (!consent) {
+      alert("❌ Entry not saved publicly.");
+      return;
+    }
+
+    experimentToSave = sanitizedEntry;
+  } else if (scrub) {
     experimentToSave = scrubSensitiveData(experimentToSave);
   }
 
@@ -142,7 +164,7 @@ function finalizeExperiment(experiment, visibility, scrub) {
   window.lastExperimentJSON = json;
   document.getElementById('throughput').textContent = json;
 
-  generateFilename(experiment.author, experiment.timestamp_start).then(filename => {
-    saveExperimentEntry(json, filename, scrub, visibility);
-  });
+  const filenameBase = await generateFilename(experiment.author, experiment.timestamp_start);
+  const filename = `${filenameBase}.json`;
+  saveExperimentEntry(json, filename, scrub, visibility);
 }

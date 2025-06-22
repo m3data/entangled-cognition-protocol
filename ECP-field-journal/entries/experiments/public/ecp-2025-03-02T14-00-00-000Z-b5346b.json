@@ -1,0 +1,71 @@
+{
+  "experiment_id": "",
+  "timestamp_start": "2025-03-03T01:00",
+  "timestamp_end": "2025-06-22T15:14",
+  "author": "anonymous",
+  "human": {
+    "cognitive_mode": "",
+    "ontological_orientation": {
+      "label": "",
+      "strength": 0,
+      "description": ""
+    },
+    "affective_tone": "",
+    "ingested_modulators": {
+      "caffeine": 0,
+      "psilocybin": 0,
+      "alcohol": 0,
+      "nicotine": 0,
+      "tetrahydrocannabinol": 0,
+      "dimethyltryptamine": 0,
+      "lysergic_acid_diethylamide": 0,
+      "ketamine": 0,
+      "methylene_dioxymethamphetamine": 0,
+      "other_modulators": ""
+    },
+    "environment": {
+      "weather": "",
+      "temperature": 0,
+      "meal_state": "",
+      "last_meal": "",
+      "priming_music": "",
+      "music_while_conversing": ""
+    },
+    "ritual_preparation": [],
+    "interruption_duration": 0
+  },
+  "machine": {
+    "model": "",
+    "version": "",
+    "thinking_mode": "enabled",
+    "model_temperature": 0,
+    "entrainment_protocol": {
+      "used": false,
+      "label": ""
+    },
+    "user_interface": "",
+    "custom_instructions": [
+      "Testing"
+    ],
+    "initial_prompt_type": "",
+    "origin_prompt_tone": "",
+    "conversation_style": "",
+    "conversation_length": "short"
+  },
+  "relational_field": {
+    "location": {
+      "label": ""
+    },
+    "noted_presence_of_earthian_kin": [],
+    "lighting": "",
+    "interaction_pace": ""
+  },
+  "throughput": {
+    "felt_response_quality": 0,
+    "symbolic_density": 0,
+    "unexpected_resonance": "",
+    "observed_collapse_event": false,
+    "collapse_event_details": "",
+    "emergent_ecp_insights": ""
+  }
+}
