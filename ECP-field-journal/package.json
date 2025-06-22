@@ -1,6 +1,6 @@
 {
   "name": "ecp-field-journal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local dev server and entry logger for Entangled Cognition Protocol Field Journal",
   "main": "server.js",
   "scripts": {
