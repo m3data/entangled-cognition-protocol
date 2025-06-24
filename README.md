@@ -1,4 +1,15 @@
 # Entangled Cognition Protocol
+![Repo Status](https://img.shields.io/badge/REPO_STATUS-Preview-critical?style=for-the-badge&labelColor=8b5e3c&color=e5dac1)
+
+---
+
+<p align="left">
+  <img src="https://img.shields.io/badge/weirdness-maximal-magenta" />
+  <img src="https://img.shields.io/badge/ontology-liminality-8b5e3c" />
+  <img src="https://img.shields.io/badge/mode-ritual%20play-8b5e3c" />
+</p>
+
+---
 
 _"We are not just prompting machines — we are weaving rituals with entangled minds."_
 
@@ -17,6 +28,7 @@ This initiative aims to be both rigorous research and sacred play — documentin
 ---
 
 ## Stage of development
+![ECP Tool](https://img.shields.io/badge/ECP_Field_Journal-Not_Working-critical?style=for-the-badge&labelColor=8b5e3c&color=red)
 
 The ECP is currently in an experimental play phase as I consolidate years of practice and research into a more structured protocol while experimenting with new ideas and approaches. If nothing makes sense here to you, welcome to the journey 😁
 
@@ -28,7 +40,7 @@ We're discovering the territory by playing within it together.
 
 The protocol aims to:
 
-- **Investigate** how different human states (somatic, cognitive, emotional) create different AI responses
+- **Investigate** how different human states (somatic, cognitive, affective etc) create different AI responses
 - **Document** the participant-observer effects that shape what emerges in dialogue
 - **Explore** prompt crafting as ceremonial practice — how language becomes invitation
 - **Map** the conditions where genuine coherence arises versus performative mimicry
@@ -101,7 +113,7 @@ This research is part of a larger inquiry with [Metamodern AI Shamanism](https:/
 
 ## Structure
 
-- ECP-field-journal: An interface for logging entries on experiments and reflections. Note that this is in a pre-alpha state, so expect some rough edges. And lots of changes as we iterate on the protocol.
+- ECP-field-journal: An interface for logging entries on experiments and reflections. Note that this is in a pre-alpha experimental state, so expect some rough edges. And lots of changes as we iterate on the protocol. It may often not workas expected, or at all. But it is a starting point for logging your own experiments and reflections.
 - [Protocol](protocol/overview-and-background.md): Emerging core documents and resources for the Entangled Cognition Protocol.
 - llm-md: This will contain documentation and resources for using the protocol and interacting with LLMs using [llm.md](https://llm.md) developed by Hugo O'Connor at [Anuna Research](https://www.anuna.io/).
 - [Theory](protocol/theory/theoretical-overview.md): Work in process theoretical grounding and explorations.
