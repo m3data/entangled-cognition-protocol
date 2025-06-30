@@ -1,4 +1,3 @@
-entries/_private/
-entries/reflections/_private/
-entries/experiments/_private/
-entries/field-notes/_private/
+ECP-field-journal/entries/**/_private/
+ECP-field-journal/field-notes/**/_private/
+ECP-field-journal/node_modules/
