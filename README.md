@@ -144,8 +144,6 @@ If you wish to share your entries to the public and for research purposes using 
 
 ---
 
----
-
 ## 🛡️ Local pre-commit safeguard
 
 To avoid accidentally committing sensitive `_private` files (which may contain personally identifiable data or sensitive cognitive reflections), this project recommends using a local pre-commit Git hook.
@@ -161,6 +159,27 @@ This will activate a hook that prevents commits if they include any files within
 
 > ⚠️ Git hooks are not version-controlled. Each contributor must enable this manually.  
 > To automate this setup across collaborators in the future we could consider tools like [Husky](https://typicode.github.io/husky/).
+
+### Example: `pre-commit` script
+
+Save the following as `.git/hooks/pre-commit`:
+
+```bash
+#!/bin/bash
+
+echo "🔒 Checking for _private files in commit..."
+
+if git diff --cached --name-only | grep '_private/'; then
+  echo "🚫 Commit blocked: You are trying to commit files from a _private directory."
+  echo "Please move or remove them before committing."
+  exit 1
+fi
+
+echo "✅ No _private files found. Proceeding with commit."
+exit 0
+```
+
+> 🧠 Tip: Don’t forget to `chmod +x .git/hooks/pre-commit` to make it executable.
 
 ---
 
