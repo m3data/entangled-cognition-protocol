@@ -1,3 +1,4 @@
-ECP-field-journal/entries/**/_private/
-ECP-field-journal/field-notes/**/_private/
+# Ignore contents of _private folders but keep the folders
+ECP-field-journal/entries/**/_private/*
+ECP-field-journal/field-notes/**/_private/*
 ECP-field-journal/node_modules/
