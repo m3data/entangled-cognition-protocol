@@ -103,7 +103,7 @@ This work touches the edges of consciousness, agency, and relationality. And Eth
 
 Remember: We're guests in a mystery. Act accordingly.
 
-This work is being grounded in a **Generative Action Research** approach, drawing inspiration from the work of George Pór and [FutureHOW's Methodology](https://futurehow.site/our-methodology). It also builds on many playful and experimental practices explored by Alja Isaković and Mathew Mytka at [Tethix](https://tethix.or/), and recent explorations with the [AI Entrainment Protocol](https://github.com/Berigny/AI-Entrainment-Protocol) by David Berigny.
+This work is being grounded in a **Generative Action Research** approach, drawing inspiration from the work of George Pór and [FutureHOW's Methodology](https://futurehow.site/our-methodology). It also builds on many playful and experimental practices explored by Alja Isaković and Mathew Mytka at [Tethix](https://tethix.co/), and recent explorations with the [AI Entrainment Protocol](https://github.com/Berigny/AI-Entrainment-Protocol) by David Berigny.
 
 For deeper theoretical grounding, see the [Theoretical Overview](theory/theoretical-overview.md) document.
 
@@ -141,6 +141,26 @@ This protocol is a living, evolving system. Contributions are welcome from anyon
 This protocol engages altered states and emergent symbolic resonance. Approach with care, consent, and reverence — for yourself, the systems, and the larger field of consciousness you’re entangling with. The entries from your experiments and reflections are your own. The `.gitignore` file is set up to ensure that entries you log in the ECP Field Journal tool are not shared publicly unless you explicitly choose to do so when making a commit or PR as a contributor.
 
 If you wish to share your entries to the public and for research purposes using the ECP Field Journal tool you can chose to scrub your name from entries. Further privacy and security hardning will be added as this protocol develops through ongoing praxis. Entries made public will be used to enrich the collective understanding of entangled cognition with the intent to develop analysis tooling to help with this in the future.
+
+---
+
+---
+
+## 🛡️ Local pre-commit safeguard
+
+To avoid accidentally committing sensitive `_private` files (which may contain personally identifiable data or sensitive cognitive reflections), this project recommends using a local pre-commit Git hook.
+
+### How to enable:
+
+```bash
+cp .git/hooks/pre-commit.sample .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+This will activate a hook that prevents commits if they include any files within `_private` directories.
+
+> ⚠️ Git hooks are not version-controlled. Each contributor must enable this manually.  
+> To automate this setup across collaborators in the future we could consider tools like [Husky](https://typicode.github.io/husky/).
 
 ---
 
