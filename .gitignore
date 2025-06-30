@@ -1,4 +1,12 @@
-# Ignore contents of _private folders but keep the folders
-ECP-field-journal/entries/**/_private/*
-ECP-field-journal/field-notes/**/_private/*
+# Ignore all contents inside _private folders
+ECP-field-journal/entries/experiments/_private/*
+ECP-field-journal/entries/reflections/_private/*
+ECP-field-journal/field-notes/_private/*
+
+# But allow .gitkeep files to preserve folder structure
+!ECP-field-journal/entries/experiments/_private/.gitkeep
+!ECP-field-journal/entries/reflections/_private/.gitkeep
+!ECP-field-journal/field-notes/_private/.gitkeep
+
+# Also ignore node_modules (nested project)
 ECP-field-journal/node_modules/
