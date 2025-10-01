@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Onboarding Debug Helper</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #7da26d;
+      display: flex;
+      gap: 20px;
+    }
+    .panel {
+      flex: 1;
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    h2 { color: #7da26d; margin-top: 0; }
+    .status {
+      padding: 8px;
+      margin: 5px 0;
+      background: #1a1a1a;
+      border-left: 3px solid #7da26d;
+    }
+    .fail { border-color: #d65d5d; color: #d65d5d; }
+    button {
+      background: #7da26d;
+      color: #1a1a1a;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      background: #1a1a1a;
+      color: #7da26d;
+      border: 1px solid #7da26d;
+      padding: 8px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h2>Onboarding State Inspector</h2>
+    <button onclick="checkState()">Check Current State</button>
+    <button onclick="localStorage.clear(); location.reload()">Clear & Reload</button>
+    <div id="stateOutput"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Manual Test</h2>
+    <p>Fill in these fields (>10 chars each):</p>
+
+    <label>Sacred Space:</label>
+    <textarea id="testSacredSpace" placeholder="Type at least 10 characters..."></textarea>
+
+    <label>Intention:</label>
+    <textarea id="testIntention" placeholder="Type at least 10 characters..."></textarea>
+
+    <label>
+      <input type="checkbox" id="testConsent"> Ethics Consent
+    </label>
+
+    <p id="requirements"></p>
+    <button id="testButton" disabled>Complete Setup (Test)</button>
+  </div>
+
+  <script>
+    function checkState() {
+      const output = document.getElementById('stateOutput');
+      const profile = localStorage.getItem('ecpUserProfile');
+      const completed = localStorage.getItem('ecpOnboardingCompleted');
+
+      let html = '<h3>LocalStorage:</h3>';
+      html += `<div class="status">Profile exists: ${!!profile}</div>`;
+      html += `<div class="status">Completed: ${completed}</div>`;
+
+      if (profile) {
+        try {
+          const parsed = JSON.parse(profile);
+          html += '<h3>Profile Data:</h3>';
+          html += `<div class="status">Path: ${parsed.selectedPath || 'none'}</div>`;
+          html += `<div class="status">Principles: ${parsed.principlesExplored?.size || 0}</div>`;
+          html += `<div class="status">Sacred Space: ${parsed.sacredSpace?.length || 0} chars</div>`;
+          html += `<div class="status">Intention: ${parsed.intention?.length || 0} chars</div>`;
+          html += `<div class="status">Ethics Consent: ${parsed.ethicsConsent}</div>`;
+        } catch (e) {
+          html += `<div class="status fail">Parse error: ${e.message}</div>`;
+        }
+      }
+
+      output.innerHTML = html;
+    }
+
+    // Test button logic
+    const testSacredSpace = document.getElementById('testSacredSpace');
+    const testIntention = document.getElementById('testIntention');
+    const testConsent = document.getElementById('testConsent');
+    const testButton = document.getElementById('testButton');
+    const requirements = document.getElementById('requirements');
+
+    function updateTestButton() {
+      const sacredSpace = testSacredSpace.value;
+      const intention = testIntention.value;
+      const consent = testConsent.checked;
+
+      const canContinue = consent &&
+                         sacredSpace.length > 10 &&
+                         intention.length > 10;
+
+      testButton.disabled = !canContinue;
+
+      requirements.innerHTML = `
+        <div class="status ${consent ? '' : 'fail'}">✓ Consent: ${consent}</div>
+        <div class="status ${sacredSpace.length > 10 ? '' : 'fail'}">✓ Sacred Space: ${sacredSpace.length} chars (need >10)</div>
+        <div class="status ${intention.length > 10 ? '' : 'fail'}">✓ Intention: ${intention.length} chars (need >10)</div>
+        <div class="status ${canContinue ? '' : 'fail'}">Can Continue: ${canContinue}</div>
+      `;
+    }
+
+    testSacredSpace.addEventListener('input', updateTestButton);
+    testIntention.addEventListener('input', updateTestButton);
+    testConsent.addEventListener('change', updateTestButton);
+
+    testButton.addEventListener('click', () => {
+      alert('✓ Button would work! Requirements met.');
+    });
+
+    // Auto-check state
+    checkState();
+    updateTestButton();
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ECP Module Loading Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #7da26d; }
+    .test { margin: 10px 0; padding: 10px; background: #2a2a2a; border-left: 3px solid #7da26d; }
+    .pass { border-color: #7da26d; }
+    .fail { border-color: #d65d5d; color: #d65d5d; }
+    h1 { color: #7da26d; }
+  </style>
+</head>
+<body>
+  <h1>ECP Onboarding Module Loading Test</h1>
+  <div id="output">Loading modules...</div>
+
+  <!-- Load all onboarding modules -->
+  <script src="js/modules/microExperiments.js"></script>
+  <script src="js/modules/breathingGuide.js"></script>
+  <script src="js/modules/experimentDesigner.js"></script>
+  <script src="js/modules/onboardingIntegration.js"></script>
+  <script src="js/modules/onboardingFlow.js"></script>
+
+  <script>
+    setTimeout(() => {
+      const output = document.getElementById('output');
+      const tests = [];
+
+      function test(name, condition, details = '') {
+        const result = condition ? '✓ PASS' : '✗ FAIL';
+        const className = condition ? 'pass' : 'fail';
+        tests.push(`<div class="test ${className}">${result}: ${name}${details ? '<br>  ' + details : ''}</div>`);
+        return condition;
+      }
+
+      test('MicroExperiments class available', typeof window.MicroExperiments !== 'undefined');
+      test('BreathingGuide class available', typeof window.BreathingGuide !== 'undefined');
+      test('ExperimentDesigner class available', typeof window.ExperimentDesigner !== 'undefined');
+      test('OnboardingIntegration class available', typeof window.OnboardingIntegration !== 'undefined');
+      test('OnboardingFlow class available', typeof window.OnboardingFlow !== 'undefined');
+
+      // Test instantiation
+      if (typeof window.MicroExperiments !== 'undefined') {
+        try {
+          const me = new MicroExperiments();
+          test('MicroExperiments instantiation', true, 'Instance created successfully');
+        } catch (e) {
+          test('MicroExperiments instantiation', false, `Error: ${e.message}`);
+        }
+      }
+
+      if (typeof window.BreathingGuide !== 'undefined') {
+        try {
+          const container = document.createElement('div');
+          const bg = new BreathingGuide(container, () => {});
+          test('BreathingGuide instantiation', true, 'Instance created successfully');
+        } catch (e) {
+          test('BreathingGuide instantiation', false, `Error: ${e.message}`);
+        }
+      }
+
+      if (typeof window.ExperimentDesigner !== 'undefined') {
+        try {
+          const ed = new ExperimentDesigner();
+          test('ExperimentDesigner instantiation', true, 'Instance created successfully');
+        } catch (e) {
+          test('ExperimentDesigner instantiation', false, `Error: ${e.message}`);
+        }
+      }
+
+      if (typeof window.OnboardingIntegration !== 'undefined') {
+        try {
+          const oi = new OnboardingIntegration();
+          test('OnboardingIntegration instantiation', true, 'Instance created successfully');
+        } catch (e) {
+          test('OnboardingIntegration instantiation', false, `Error: ${e.message}`);
+        }
+      }
+
+      // Test onboarding page elements
+      test('window.location available', typeof window.location !== 'undefined');
+      test('localStorage available', typeof localStorage !== 'undefined');
+
+      output.innerHTML = tests.join('');
+    }, 500);
+  </script>
+</body>
+</html>

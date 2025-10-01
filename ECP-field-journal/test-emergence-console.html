@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergence Phase Console Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #7da26d; }
+    pre { background: #2a2a2a; padding: 15px; border-left: 3px solid #7da26d; }
+    button { background: #7da26d; color: #1a1a1a; border: none; padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Emergence Phase Button Logic Test</h1>
+  <button onclick="testInIframe()">Test in Iframe (simulates real page)</button>
+  <button onclick="testDirect()">Test Direct Logic</button>
+  <button onclick="checkOnboardingPage()">Inspect Actual Onboarding Page State</button>
+
+  <pre id="output">Click a button to run tests...</pre>
+
+  <script>
+    function testDirect() {
+      const output = document.getElementById('output');
+
+      // Simulate the exact conditions
+      const userProfile = {
+        ethicsConsent: true,
+        sacredSpace: "This is my sacred space description that is definitely more than ten characters long",
+        intention: "My intention is to explore consciousness and presence with AI technology"
+      };
+
+      const canContinue = userProfile.ethicsConsent &&
+                         userProfile.sacredSpace.length > 10 &&
+                         userProfile.intention.length > 10;
+
+      output.textContent = `
+Direct Logic Test:
+==================
+Ethics Consent: ${userProfile.ethicsConsent}
+Sacred Space: "${userProfile.sacredSpace}"
+  Length: ${userProfile.sacredSpace.length}
+  > 10? ${userProfile.sacredSpace.length > 10}
+
+Intention: "${userProfile.intention}"
+  Length: ${userProfile.intention.length}
+  > 10? ${userProfile.intention.length > 10}
+
+ALL CONDITIONS:
+  ethicsConsent: ${userProfile.ethicsConsent}
+  sacredSpace.length > 10: ${userProfile.sacredSpace.length > 10}
+  intention.length > 10: ${userProfile.intention.length > 10}
+
+CAN CONTINUE: ${canContinue}
+BUTTON SHOULD BE: ${canContinue ? 'ENABLED' : 'DISABLED'}
+`;
+    }
+
+    function checkOnboardingPage() {
+      const output = document.getElementById('output');
+
+      // Open onboarding in new window and check its state
+      const win = window.open('http://localhost:3141/onboarding.html', '_blank');
+
+      setTimeout(() => {
+        try {
+          const flow = win.window.onboardingFlow;
+          if (flow) {
+            output.textContent = `
+Found OnboardingFlow instance!
+==============================
+Current Phase: ${flow.currentPhase}
+
+User Profile:
+  breathingComplete: ${flow.userProfile.breathingComplete}
+  principlesExplored: ${flow.userProfile.principlesExplored.size}
+  selectedPath: ${flow.userProfile.selectedPath}
+  sacredSpace: "${flow.userProfile.sacredSpace}" (${flow.userProfile.sacredSpace.length} chars)
+  intention: "${flow.userProfile.intention}" (${flow.userProfile.intention.length} chars)
+  ethicsConsent: ${flow.userProfile.ethicsConsent}
+
+Button State Check:
+  canContinue = ${flow.userProfile.ethicsConsent} &&
+                ${flow.userProfile.sacredSpace.length} > 10 &&
+                ${flow.userProfile.intention.length} > 10
+  = ${flow.userProfile.ethicsConsent && flow.userProfile.sacredSpace.length > 10 && flow.userProfile.intention.length > 10}
+`;
+          } else {
+            output.textContent = 'OnboardingFlow not found. Make sure page is loaded and on emergence phase.';
+          }
+        } catch (e) {
+          output.textContent = `Error accessing onboarding window: ${e.message}
+
+This is normal for cross-origin restrictions.
+Instead, open http://localhost:3141/onboarding.html
+Then in that page's console, run:
+
+window.onboardingFlow.userProfile
+
+And check the values manually.`;
+        }
+      }, 2000);
+    }
+
+    function testInIframe() {
+      const output = document.getElementById('output');
+      output.textContent = 'Loading onboarding in iframe...';
+
+      const iframe = document.createElement('iframe');
+      iframe.src = 'http://localhost:3141/onboarding.html';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      setTimeout(() => {
+        try {
+          const iframeWindow = iframe.contentWindow;
+          const flow = iframeWindow.onboardingFlow;
+
+          if (flow) {
+            output.textContent = `Iframe Test Success!
+Current phase: ${flow.currentPhase}
+Profile: ${JSON.stringify(flow.userProfile, null, 2)}`;
+          } else {
+            output.textContent = 'OnboardingFlow not yet initialized in iframe';
+          }
+        } catch (e) {
+          output.textContent = `Iframe test error: ${e.message}`;
+        }
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
