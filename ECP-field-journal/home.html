@@ -14,19 +14,53 @@
       <li><a href="about.html" class="menu-link">About</a></li>
       <li><a href="experiment-entry.html" class="menu-link">Experiments</a></li>
       <li><a href="reflection-entry.html" class="menu-link">Reflections</a></li>
+      <li><a href="measurement-dashboard.html" class="menu-link">Dashboard</a></li>
+      <li><a href="workflow-templates.html" class="menu-link">Templates</a></li>
+      <li><a href="community-dashboard.html" class="menu-link">Community</a></li>
     </ul>
   </nav>
 
-  <section class="welcome">
-    <h2>Welcome to the ECP Field Journal</h2>
-    <p>This is a place for mindful experimentation and reflection in relationship with language models and the fields we co-create. Each entry is a portal, a pattern, a pulse in the living record of entangled cognition.</p>
-    <div class="cta-buttons">
-      <a href="experiment-entry.html"><button>Begin an Experiment</button></a>
-      <a href="reflection-entry.html"><button>Reflect on an Interaction</button></a>
+  <section class="welcome" id="welcomeSection">
+    <!-- Default welcome for new users -->
+    <div id="newUserWelcome">
+      <h2>Welcome to the ECP Field Journal</h2>
+      <p>This is a place for mindful experimentation and reflection in relationship with language models and the fields we co-create. Each entry is a portal, a pattern, a pulse in the living record of entangled cognition.</p>
+      <div class="onboarding-invitation">
+        <p class="sacred-invitation">Before beginning your research journey, we invite you into a brief onboarding experience that will help you understand the ECP approach and create your personal practice container.</p>
+        <a href="onboarding.html" class="primary-cta">
+          <button class="onboarding-btn">Begin Sacred Introduction</button>
+        </a>
+        <div class="alternative-entry">
+          <p>Or explore the journal directly:</p>
+          <div class="cta-buttons">
+            <a href="experiment-entry.html"><button>Begin an Experiment</button></a>
+            <a href="reflection-entry.html"><button>Reflect on an Interaction</button></a>
+            <a href="workflow-templates.html"><button>Browse Research Templates</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personalized welcome for returning users -->
+    <div id="returningUserWelcome" class="hidden">
+      <h2>Welcome Back to Your Practice</h2>
+      <div id="personalizedGreeting">
+        <!-- Dynamically populated with user's path and practice elements -->
+      </div>
+      <div class="practice-suggestions" id="practiceSuggestions">
+        <!-- Personalized suggestions based on user profile -->
+      </div>
+      <div class="cta-buttons">
+        <a href="" id="suggestedAction"><button id="suggestedActionBtn">Continue Your Journey</button></a>
+        <a href="experiment-entry.html"><button>New Experiment</button></a>
+        <a href="reflection-entry.html"><button>Reflect & Integrate</button></a>
+        <a href="measurement-dashboard.html"><button>Review Patterns</button></a>
+      </div>
     </div>
   </section>
 
   <div id="toast" class="toast hidden"></div>
 
+  <script src="js/modules/homePersonalization.js"></script>
 </body>
 </html>

@@ -1,0 +1,799 @@
+/* Onboarding-specific styles extending the main logger-styles.css */
+
+.onboarding-body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #f4f1ee 0%, #e8e4e0 50%, #f0edea 100%);
+  position: fixed;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.onboarding-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  padding-top: 80px; /* Account for progress bar at top */
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Ambient Background */
+.ambient-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ambient-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #8b5e3c;
+  opacity: 0.3;
+  border-radius: 50%;
+  animation: float 20s infinite ease-in-out;
+}
+
+.ambient-particle:nth-child(1) {
+  left: 20%;
+  top: 20%;
+  animation-delay: 0s;
+}
+
+.ambient-particle:nth-child(2) {
+  left: 70%;
+  top: 60%;
+  animation-delay: 7s;
+}
+
+.ambient-particle:nth-child(3) {
+  left: 40%;
+  top: 80%;
+  animation-delay: 14s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+  25% { transform: translateY(-20px) translateX(10px); opacity: 0.5; }
+  50% { transform: translateY(0px) translateX(-5px); opacity: 0.3; }
+  75% { transform: translateY(15px) translateX(-10px); opacity: 0.4; }
+}
+
+/* Phase System */
+.onboarding-phase {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Entry Phase Specific */
+.onboarding-phase[data-phase="entry"] {
+  padding: 0.5rem;
+}
+
+/* Breathing Guide Centering */
+.breath-guide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  min-height: 300px;
+}
+
+.onboarding-phase.hidden {
+  display: none;
+}
+
+.onboarding-phase.slide-out {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.onboarding-phase.slide-in {
+  opacity: 0;
+  transform: translateX(100px);
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.phase-content {
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding: 3rem 2rem 2rem 2rem;
+  margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Entry phase specific content sizing */
+#phase-entry .phase-content {
+  padding: 0.5rem;
+  gap: 1rem;
+}
+
+/* Entry Phase Styles */
+.welcome-ritual {
+  margin-bottom: 1.5rem;
+  flex-shrink: 0;
+}
+
+.breath-circle {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+  position: relative;
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breath-pulse {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, var(--accent-color)20, transparent 70%);
+  border-radius: 50%;
+  animation: breathPulse 4s infinite ease-in-out;
+}
+
+@keyframes breathPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 0.3; }
+}
+
+.sacred-title {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2;
+}
+
+.invitation {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.entry-preparation {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  backdrop-filter: blur(5px);
+  flex-shrink: 0;
+}
+
+.gentle-instruction {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+.breath-guide-btn {
+  background: linear-gradient(45deg, var(--accent-color), var(--green-soft));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.breath-guide-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.breath-guide {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.breath-instruction {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  min-height: 2rem;
+}
+
+.breath-progress {
+  width: 200px;
+  height: 8px;
+  background: rgba(var(--accent-color), 0.2);
+  border-radius: 4px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.breath-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color), var(--green-soft));
+  border-radius: 4px;
+  transition: width 0.1s ease-out;
+}
+
+.transition-space {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--accent-color);
+  flex-shrink: 0;
+}
+
+.transition-space .invitation {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.phase-continue {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 20px;
+}
+
+/* Attunement Phase Styles */
+.phase-title {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  color: var(--accent-color);
+  margin-bottom: 2rem;
+}
+
+.core-understanding {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.principle-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.principle-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: var(--accent-color);
+}
+
+.principle-card h3 {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.principle-intro {
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.principle-details {
+  margin-top: 1rem;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.principle-details.visible {
+  opacity: 1;
+  max-height: 300px;
+}
+
+.micro-experiment {
+  background: var(--highlight-color);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.explore-principle {
+  background: none;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.explore-principle:hover, .explore-principle.active {
+  background: var(--accent-color);
+  color: white;
+}
+
+/* Path Selection */
+.path-selection {
+  margin: 3rem 0;
+  text-align: center;
+}
+
+.path-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.path-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 2rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  position: relative;
+}
+
+.path-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.path-card.selected {
+  border-color: var(--green-soft);
+  background: rgba(125, 162, 109, 0.1);
+  transform: translateY(-5px);
+}
+
+.path-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: var(--green-soft);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.path-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.path-card h4 {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.path-card p {
+  color: var(--text-color);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Emergence Phase Styles */
+.container-setup {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.setup-section {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.setup-section h3 {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.setup-section p {
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.space-reflection textarea,
+.intention-reflection textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.space-reflection textarea:focus,
+.intention-reflection textarea:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+.ritual-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ritual-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ritual-option:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+.ritual-option input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.custom-ritual input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  transition: border-color 0.3s ease;
+}
+
+.custom-ritual input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+.experiment-designer {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.ethics-consent {
+  background: rgba(245, 240, 235, 0.8);
+  border: 2px solid var(--accent-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.ethics-consent h3 {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.ethics-content ul {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.ethics-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.consent-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.consent-checkbox input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  transform: scale(1.2);
+}
+
+/* Return Phase Styles */
+.completion-ritual {
+  text-align: left;
+}
+
+.completion-summary {
+  background: rgba(125, 162, 109, 0.1);
+  border: 2px solid var(--green-soft);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.portal-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.portal-link {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: block;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.portal-link:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: var(--accent-color);
+}
+
+.portal-link.primary {
+  border-color: var(--green-soft);
+  background: rgba(125, 162, 109, 0.1);
+}
+
+.portal-link h4 {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.portal-link p {
+  color: var(--text-color);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.integration-space {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.integration-space h3 {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.integration-space textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  font-family: var(--font-body);
+  transition: border-color 0.3s ease;
+}
+
+.integration-space textarea:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+/* Progress Indicator */
+.onboarding-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-bottom: 1px solid var(--accent-color);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(139, 94, 60, 0.2);
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color), var(--green-soft));
+  border-radius: 2px;
+  transition: width 0.6s ease;
+  width: 25%;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.progress-label {
+  color: rgba(139, 94, 60, 0.6);
+  transition: color 0.3s ease;
+}
+
+.progress-label.active {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.progress-label.completed {
+  color: var(--green-soft);
+}
+
+/* Phase Navigation */
+.phase-continue {
+  background: linear-gradient(45deg, var(--accent-color), var(--green-soft));
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  margin-top: 2rem;
+}
+
+.phase-continue:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.phase-continue:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.secondary-action {
+  background: none;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+}
+
+.secondary-action:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .onboarding-phase {
+    padding: 1rem;
+  }
+  
+  .phase-content {
+    max-width: 100%;
+  }
+  
+  .sacred-title {
+    font-size: 2.2rem;
+  }
+  
+  .core-understanding {
+    grid-template-columns: 1fr;
+  }
+  
+  .path-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .portal-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-labels {
+    font-size: 0.75rem;
+  }
+  
+  .ritual-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animation utilities */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+/* Hidden utility */
+.hidden {
+  display: none !important;
+}

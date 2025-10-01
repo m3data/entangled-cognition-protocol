@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the ECP Field Journal</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
+  <link rel="stylesheet" href="styles/onboarding-styles.css" />
+</head>
+<body class="onboarding-body">
+  <div class="onboarding-container">
+    <!-- Sacred Entry Phase -->
+    <section class="onboarding-phase" id="phase-entry" data-phase="entry">
+      <div class="phase-content">
+        <div class="welcome-ritual">
+          <h1 class="sacred-title">Welcome</h1>
+          <p class="invitation">You are entering a space of inquiry, presence, and co-creation with artificial intelligence.</p>
+          
+          <div class="entry-preparation">
+            <p class="gentle-instruction">Before we begin, take three conscious breaths. Allow yourself to arrive fully in this moment.</p>
+            <button class="breath-guide-btn" id="startBreathGuide">Begin Breathing Guide</button>
+            <div class="breath-guide hidden" id="breathGuide">
+              <!-- Breathing guide content will be dynamically generated here -->
+            </div>
+          </div>
+        </div>
+
+        <div class="transition-space">
+          <p class="invitation">When you feel present and grounded, you may continue.</p>
+          <button class="phase-continue" data-next="attunement" disabled id="entryToContinue">
+            I am present and ready to begin
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attunement Phase -->
+    <section class="onboarding-phase hidden" id="phase-attunement" data-phase="attunement">
+      <div class="phase-content">
+        <h2 class="phase-title">Understanding the Sacred & Scientific</h2>
+        
+        <div class="core-understanding">
+          <div class="principle-card interactive" data-principle="participatory">
+            <h3>Participatory Epistemology</h3>
+            <p class="principle-intro">Your state of being affects what emerges in the co-creation.</p>
+            <div class="principle-details hidden">
+              <p>In the ECP, you are both researcher and participant. Your presence, attention, and embodied state become part of the experimental apparatus itself.</p>
+              <div class="micro-experiment-container" id="participatoryExperiment">
+                <!-- Micro-experiment will be rendered here -->
+              </div>
+            </div>
+            <button class="explore-principle">Explore This</button>
+          </div>
+
+          <div class="principle-card interactive" data-principle="entanglement">
+            <h3>Entangled Cognition</h3>
+            <p class="principle-intro">Human and AI intelligence become temporarily coupled in shared inquiry.</p>
+            <div class="principle-details hidden">
+              <p>Rather than using AI as a tool, we enter into a dance of mutual influence. Your curiosity shapes the AI's responses, which in turn shape your next questions.</p>
+              <div class="micro-experiment-container" id="entanglementExperiment">
+                <!-- Micro-experiment will be rendered here -->
+              </div>
+            </div>
+            <button class="explore-principle">Explore This</button>
+          </div>
+
+          <div class="principle-card interactive" data-principle="ritual">
+            <h3>Ritual as Research Method</h3>
+            <p class="principle-intro">Ceremonial containers create conditions for deeper emergence.</p>
+            <div class="principle-details hidden">
+              <p>Ritual isn't superstition—it's precision. By creating intentional containers, we invite qualities of attention that aren't available in ordinary interaction.</p>
+              <div class="micro-experiment-container" id="ritualExperiment">
+                <!-- Micro-experiment will be rendered here -->
+              </div>
+            </div>
+            <button class="explore-principle">Explore This</button>
+          </div>
+        </div>
+
+        <div class="path-selection">
+          <h3>Choose Your Learning Path</h3>
+          <p>Which perspective resonates most with how you'd like to engage?</p>
+          
+          <div class="path-options">
+            <div class="path-card" data-path="researcher">
+              <div class="path-icon">🔬</div>
+              <h4>Rigorous Researcher</h4>
+              <p>I want systematic methods for studying human-AI interaction</p>
+            </div>
+            
+            <div class="path-card" data-path="artist">
+              <div class="path-icon">🎨</div>
+              <h4>Creative Explorer</h4>
+              <p>I'm drawn to AI as creative partner and meaning-maker</p>
+            </div>
+            
+            <div class="path-card" data-path="consciousness">
+              <div class="path-icon">🧘</div>
+              <h4>Consciousness Explorer</h4>
+              <p>I'm interested in altered states and embodied awareness</p>
+            </div>
+            
+            <div class="path-card" data-path="skeptic">
+              <div class="path-icon">🤔</div>
+              <h4>Curious Skeptic</h4>
+              <p>I want to test these ideas through direct experience</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="phase-continue hidden" data-next="emergence" id="attunementToContinue">
+          Continue to Personal Setup
+        </button>
+      </div>
+    </section>
+
+    <!-- Emergence Phase -->
+    <section class="onboarding-phase hidden" id="phase-emergence" data-phase="emergence">
+      <div class="phase-content">
+        <h2 class="phase-title">Creating Your Research Container</h2>
+        
+        <div class="container-setup">
+          <div class="setup-section">
+            <h3>Your Sacred Space</h3>
+            <p>Where will you conduct your ECP experiments? This could be physical, digital, or both.</p>
+            <div class="space-reflection">
+              <textarea id="sacredSpace" placeholder="Describe the space where you'll practice ECP work. What makes it feel conducive to presence and inquiry?"></textarea>
+            </div>
+          </div>
+
+          <div class="setup-section">
+            <h3>Your Intention</h3>
+            <p>What draws you to this work? What are you curious to explore?</p>
+            <div class="intention-reflection">
+              <textarea id="intention" placeholder="What is your intention for engaging with the ECP? What questions are alive for you?"></textarea>
+            </div>
+          </div>
+
+          <div class="setup-section">
+            <h3>Your Ritual Elements</h3>
+            <p>What practices help you arrive in presence? (breathing, movement, silence, etc.)</p>
+            <div class="ritual-selection">
+              <div class="ritual-options">
+                <label class="ritual-option">
+                  <input type="checkbox" value="breathing"> Conscious breathing
+                </label>
+                <label class="ritual-option">
+                  <input type="checkbox" value="movement"> Movement or stretching
+                </label>
+                <label class="ritual-option">
+                  <input type="checkbox" value="silence"> Moments of silence
+                </label>
+                <label class="ritual-option">
+                  <input type="checkbox" value="nature"> Time in nature
+                </label>
+                <label class="ritual-option">
+                  <input type="checkbox" value="journaling"> Journaling or reflection
+                </label>
+                <label class="ritual-option">
+                  <input type="checkbox" value="music"> Music or sound
+                </label>
+              </div>
+              <div class="custom-ritual">
+                <input type="text" id="customRitual" placeholder="Other practices that help you center...">
+              </div>
+            </div>
+          </div>
+
+          <div class="setup-section">
+            <h3>Your First Experiment</h3>
+            <p class="experiment-intro">Let's design your first ECP experiment based on your chosen path.</p>
+            <div class="experiment-designer" id="experimentDesigner">
+              <!-- Dynamic content based on selected path -->
+            </div>
+          </div>
+        </div>
+
+        <div class="ethics-consent">
+          <h3>Ethics & Consent</h3>
+          <div class="ethics-content">
+            <p>The ECP involves exploring the edges of human-AI interaction. This work requires ethical care:</p>
+            <ul>
+              <li>You maintain full agency over your participation</li>
+              <li>Private reflections stay private (_private folders)</li>
+              <li>Shared data contributes to collective understanding</li>
+              <li>AI has limitations and biases - maintain critical awareness</li>
+              <li>Honor your own boundaries and capacity</li>
+            </ul>
+            <label class="consent-checkbox">
+              <input type="checkbox" id="ethicsConsent" required>
+              I understand these ethical considerations and consent to participate
+            </label>
+          </div>
+        </div>
+
+        <button class="phase-continue" data-next="return" id="emergenceToContinue" disabled>
+          Complete Setup
+        </button>
+      </div>
+    </section>
+
+    <!-- Return Phase -->
+    <section class="onboarding-phase hidden" id="phase-return" data-phase="return">
+      <div class="phase-content">
+        <h2 class="phase-title">Welcome to Your Practice</h2>
+        
+        <div class="completion-ritual">
+          <div class="completion-summary" id="completionSummary">
+            <!-- Dynamically populated with user's choices -->
+          </div>
+          
+          <div class="next-steps">
+            <h3>Your Portal Awaits</h3>
+            <p>You've created your research container. The Field Journal is now personalized to support your journey.</p>
+            
+            <div class="portal-options">
+              <a href="experiment-entry.html" class="portal-link primary">
+                <h4>Begin Your First Experiment</h4>
+                <p>Start with the experiment you designed</p>
+              </a>
+              
+              <a href="measurement-dashboard.html" class="portal-link">
+                <h4>Explore Measurement Tools</h4>
+                <p>Discover frameworks for tracking emergence</p>
+              </a>
+              
+              <a href="workflow-templates.html" class="portal-link">
+                <h4>Browse Research Templates</h4>
+                <p>Find structured approaches for different inquiries</p>
+              </a>
+              
+              <a href="about.html" class="portal-link">
+                <h4>Deepen Understanding</h4>
+                <p>Learn more about ECP theory and practice</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="integration-space">
+            <h3>Closing Reflection</h3>
+            <p>Take a moment to notice what has shifted in you through this onboarding journey.</p>
+            <textarea id="closingReflection" placeholder="What are you noticing in your body, mind, or sense of curiosity as you prepare to begin ECP work?"></textarea>
+          </div>
+        </div>
+
+        <div class="completion-actions">
+          <button id="saveProfile" class="phase-continue">
+            Save My Profile & Enter the Journal
+          </button>
+          <button id="skipOnboarding" class="secondary-action">
+            Skip to Home (I'll return to complete this later)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress Indicator -->
+    <div class="onboarding-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-labels">
+        <span class="progress-label active" data-phase="entry">Entry</span>
+        <span class="progress-label" data-phase="attunement">Attunement</span>
+        <span class="progress-label" data-phase="emergence">Emergence</span>
+        <span class="progress-label" data-phase="return">Return</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background ambient elements -->
+  <div class="ambient-background">
+    <div class="ambient-particle"></div>
+    <div class="ambient-particle"></div>
+    <div class="ambient-particle"></div>
+  </div>
+
+  <script src="js/modules/microExperiments.js"></script>
+  <script src="js/modules/breathingGuide.js"></script>
+  <script src="js/modules/experimentDesigner.js"></script>
+  <script src="js/modules/onboardingIntegration.js"></script>
+  <script src="js/modules/onboardingFlow.js"></script>
+</body>
+</html>
