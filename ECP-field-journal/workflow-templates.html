@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECP Workflow Templates</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
+  <link rel="stylesheet" href="lib/phosphor-regular.css" />
+</head>
+<body>
+  <h1 class="title">ECP Workflow Templates</h1>
+
+  <div id="nav-container"></div>
+
+  <section class="templates-intro">
+    <h2>Systematic Research Workflows</h2>
+    <p>Transform research questions into guided, systematic protocols that honor both scientific rigor and the embodied nature of ECP practice. Each template provides step-by-step guidance while maintaining openness to emergence and discovery.</p>
+    
+    <div class="intro-actions">
+      <button id="browse-templates-btn" class="primary-button">Browse Templates</button>
+      <button id="design-study-btn" class="secondary-button">Design Custom Study</button>
+      <button id="view-active-studies-btn" class="secondary-button">View Active Studies</button>
+    </div>
+  </section>
+
+  <div id="main-content" class="templates-main-content">
+    <!-- Main content will be dynamically inserted here -->
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div id="modal-content" class="modal-content">
+      <!-- Modal content will be inserted here -->
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module">
+    import { 
+      templateLibrary, 
+      templateCategories, 
+      getTemplate,
+      getTemplatesByCategory,
+      getAllTemplates,
+      searchTemplates
+    } from './js/modules/templateLibrary.js';
+    
+    import { WorkflowExecutor, ResearchDesignHelper } from './js/modules/workflowEngine.js';
+    import ResearchDesignWizard from './js/modules/researchDesignGuide.js';
+    import MultiSessionArcCoordinator from './js/modules/multiSessionCoordinator.js';
+    import { MeasurementScheduler } from './js/modules/measurementIntegration.js';
+
+    class TemplateInterface {
+      constructor() {
+        this.currentView = 'browse';
+        this.executor = new WorkflowExecutor();
+        this.coordinator = new MultiSessionArcCoordinator();
+        this.designWizard = new ResearchDesignWizard();
+        this.activeExperiments = new Map();
+        
+        this.initializeEventListeners();
+        this.showBrowseTemplates();
+      }
+
+      initializeEventListeners() {
+        document.getElementById('browse-templates-btn').addEventListener('click', () => {
+          this.showBrowseTemplates();
+        });
+
+        document.getElementById('design-study-btn').addEventListener('click', () => {
+          this.showResearchDesignWizard();
+        });
+
+        document.getElementById('view-active-studies-btn').addEventListener('click', () => {
+          this.showActiveStudies();
+        });
+
+        // Modal close
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+          if (e.target.id === 'modal-overlay') {
+            this.closeModal();
+          }
+        });
+
+        // Listen for workflow executor events
+        this.executor.addEventListener('experiment:started', (data) => {
+          this.onExperimentStarted(data);
+        });
+
+        this.executor.addEventListener('step:completed', (data) => {
+          this.onStepCompleted(data);
+        });
+
+        this.executor.addEventListener('experiment:completed', (data) => {
+          this.onExperimentCompleted(data);
+        });
+      }
+
+      showBrowseTemplates() {
+        this.currentView = 'browse';
+        this.updateActiveButton('browse-templates-btn');
+        
+        const content = document.getElementById('main-content');
+        content.innerHTML = this.createBrowseTemplatesHTML();
+        this.attachBrowseEventListeners();
+      }
+
+      createBrowseTemplatesHTML() {
+        const categories = Object.entries(templateCategories);
+        
+        let html = `
+          <div class="templates-browse">
+            <div class="browse-header">
+              <h3>Research Template Library</h3>
+              <div class="browse-controls">
+                <input type="text" id="template-search" placeholder="Search templates..." class="search-input">
+                <select id="category-filter" class="category-filter">
+                  <option value="">All Categories</option>
+                  ${categories.map(([id, category]) => 
+                    `<option value="${id}">${category.name}</option>`
+                  ).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="templates-grid" id="templates-grid">
+              ${this.createTemplateCardsHTML(getAllTemplates())}
+            </div>
+          </div>
+        `;
+
+        return html;
+      }
+
+      createTemplateCardsHTML(templates) {
+        return templates.map(template => `
+          <div class="template-card" data-template-id="${template.id}">
+            <div class="template-header">
+              <h4 class="template-title">${template.name}</h4>
+              <div class="template-meta">
+                <span class="template-category">${template.category}</span>
+                <span class="template-difficulty difficulty-${template.difficulty}">${template.difficulty}</span>
+              </div>
+            </div>
+            
+            <div class="template-description">
+              <p>${template.description}</p>
+            </div>
+            
+            <div class="template-details">
+              <div class="detail-item">
+                <strong>Duration:</strong> ${template.expectedDuration}
+              </div>
+              <div class="detail-item">
+                <strong>Research Question:</strong> ${template.researchQuestion}
+              </div>
+              <div class="detail-item">
+                <strong>Phases:</strong> ${template.phases.length}
+              </div>
+            </div>
+            
+            <div class="template-tags">
+              ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+            
+            <div class="template-actions">
+              <button class="template-action-btn preview-btn" data-action="preview" data-template-id="${template.id}">
+                Preview
+              </button>
+              <button class="template-action-btn start-btn" data-action="start" data-template-id="${template.id}">
+                Start Study
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      attachBrowseEventListeners() {
+        // Search functionality
+        document.getElementById('template-search').addEventListener('input', (e) => {
+          const query = e.target.value;
+          const filteredTemplates = query ? searchTemplates(query) : getAllTemplates();
+          this.updateTemplateGrid(filteredTemplates);
+        });
+
+        // Category filter
+        document.getElementById('category-filter').addEventListener('change', (e) => {
+          const categoryId = e.target.value;
+          const filteredTemplates = categoryId ? getTemplatesByCategory(categoryId) : getAllTemplates();
+          this.updateTemplateGrid(filteredTemplates);
+        });
+
+        // Template action buttons
+        document.addEventListener('click', (e) => {
+          if (e.target.classList.contains('template-action-btn')) {
+            const action = e.target.dataset.action;
+            const templateId = e.target.dataset.templateId;
+            
+            if (action === 'preview') {
+              this.previewTemplate(templateId);
+            } else if (action === 'start') {
+              this.startTemplateStudy(templateId);
+            }
+          }
+        });
+      }
+
+      updateTemplateGrid(templates) {
+        const grid = document.getElementById('templates-grid');
+        grid.innerHTML = this.createTemplateCardsHTML(templates);
+      }
+
+      previewTemplate(templateId) {
+        const template = getTemplate(templateId);
+        if (!template) return;
+
+        const modalContent = `
+          <div class="template-preview">
+            <div class="preview-header">
+              <h3>${template.name}</h3>
+              <button class="close-modal-btn">&times;</button>
+            </div>
+            
+            <div class="preview-content">
+              <div class="preview-section">
+                <h4>Research Question</h4>
+                <p>${template.researchQuestion}</p>
+              </div>
+              
+              <div class="preview-section">
+                <h4>Description</h4>
+                <p>${template.description}</p>
+              </div>
+              
+              <div class="preview-section">
+                <h4>Study Design</h4>
+                <div class="design-details">
+                  <div><strong>Expected Duration:</strong> ${template.expectedDuration}</div>
+                  <div><strong>Difficulty Level:</strong> ${template.difficulty}</div>
+                  <div><strong>Number of Phases:</strong> ${template.phases.length}</div>
+                </div>
+              </div>
+              
+              <div class="preview-section">
+                <h4>Variables & Measurements</h4>
+                <div class="variables-list">
+                  <div class="variable-group">
+                    <h5>Variables:</h5>
+                    <ul>
+                      ${template.variables.map(v => `<li><strong>${v.name}:</strong> ${v.description}</li>`).join('')}
+                    </ul>
+                  </div>
+                  <div class="measurement-group">
+                    <h5>Measurements:</h5>
+                    <ul>
+                      ${template.measurements.map(m => `<li>${m}</li>`).join('')}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="preview-section">
+                <h4>Study Phases</h4>
+                <div class="phases-overview">
+                  ${template.phases.map((phase, index) => `
+                    <div class="phase-preview">
+                      <h5>Phase ${index + 1}: ${phase.name}</h5>
+                      <p>${phase.description}</p>
+                      <div class="phase-details">
+                        <span><strong>Duration:</strong> ${phase.duration}</span>
+                        <span><strong>Steps:</strong> ${phase.steps.length}</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              
+              ${template.prerequisites.length > 0 ? `
+                <div class="preview-section">
+                  <h4>Prerequisites</h4>
+                  <ul>
+                    ${template.prerequisites.map(prereq => `<li>${prereq}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+              
+              ${template.ethicalConsiderations.length > 0 ? `
+                <div class="preview-section">
+                  <h4>Ethical Considerations</h4>
+                  <ul>
+                    ${template.ethicalConsiderations.map(consideration => `<li>${consideration}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+            </div>
+            
+            <div class="preview-actions">
+              <button class="secondary-button" onclick="templateInterface.closeModal()">Close</button>
+              <button class="primary-button" onclick="templateInterface.startTemplateStudy('${templateId}')">Start This Study</button>
+            </div>
+          </div>
+        `;
+
+        this.showModal(modalContent);
+      }
+
+      startTemplateStudy(templateId) {
+        const template = getTemplate(templateId);
+        if (!template) return;
+
+        this.closeModal();
+
+        const modalContent = `
+          <div class="start-study-config">
+            <div class="config-header">
+              <h3>Configure Study: ${template.name}</h3>
+              <button class="close-modal-btn">&times;</button>
+            </div>
+            
+            <form id="study-config-form" class="config-form">
+              <div class="config-section">
+                <h4>Basic Configuration</h4>
+                
+                <label for="study-title">Study Title:</label>
+                <input type="text" id="study-title" value="${template.name}" required>
+                
+                <label for="study-description">Personal Description (optional):</label>
+                <textarea id="study-description" rows="3" placeholder="Why are you conducting this study? What do you hope to learn?"></textarea>
+                
+                <label for="start-date">Preferred Start Date:</label>
+                <input type="date" id="start-date" value="${new Date().toISOString().split('T')[0]}" required>
+              </div>
+              
+              ${this.createStudyTypeSpecificConfig(template)}
+              
+              <div class="config-section">
+                <h4>Measurement Preferences</h4>
+                
+                <label for="measurement-frequency">Measurement Frequency:</label>
+                <select id="measurement-frequency">
+                  <option value="full">Complete all measurements (recommended)</option>
+                  <option value="core">Core measurements only</option>
+                  <option value="minimal">Minimal measurements</option>
+                </select>
+                
+                <div class="measurement-customization">
+                  <h5>Customize Measurements:</h5>
+                  ${template.measurements.map(measurement => `
+                    <label class="checkbox-label">
+                      <input type="checkbox" name="selected-measurements" value="${measurement}" checked>
+                      ${measurement}
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+              
+              <div class="config-section">
+                <h4>Reminders & Schedule</h4>
+                
+                <label class="checkbox-label">
+                  <input type="checkbox" id="enable-reminders" checked>
+                  Enable session reminders
+                </label>
+                
+                <div id="reminder-config" class="reminder-options">
+                  <label for="reminder-time">Reminder time (minutes before):</label>
+                  <select id="reminder-time">
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="120">2 hours</option>
+                  </select>
+                  
+                  <label for="preferred-times">Preferred session times:</label>
+                  <input type="text" id="preferred-times" placeholder="e.g., 9:00 AM, 7:00 PM" />
+                </div>
+              </div>
+              
+              <div class="config-actions">
+                <button type="button" class="secondary-button" onclick="templateInterface.closeModal()">Cancel</button>
+                <button type="submit" class="primary-button">Start Study</button>
+              </div>
+            </form>
+          </div>
+        `;
+
+        this.showModal(modalContent);
+
+        // Attach form submission handler
+        document.getElementById('study-config-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.createStudyFromConfig(templateId);
+        });
+
+        // Reminder toggle
+        document.getElementById('enable-reminders').addEventListener('change', (e) => {
+          document.getElementById('reminder-config').style.display = e.target.checked ? 'block' : 'none';
+        });
+      }
+
+      createStudyTypeSpecificConfig(template) {
+        // Determine if this is a multi-session study
+        const isMultiSession = template.category === 'multi-session' || 
+                              template.phases.some(phase => phase.steps.length > 5);
+        
+        if (isMultiSession) {
+          return `
+            <div class="config-section">
+              <h4>Multi-Session Configuration</h4>
+              
+              <label for="session-frequency">Session Frequency:</label>
+              <select id="session-frequency">
+                <option value="daily">Daily</option>
+                <option value="every-other-day">Every other day</option>
+                <option value="weekly">Weekly</option>
+                <option value="bi-weekly">Bi-weekly</option>
+              </select>
+              
+              <label for="total-duration">Maximum study duration:</label>
+              <select id="total-duration">
+                <option value="2-weeks">2 weeks</option>
+                <option value="4-weeks">4 weeks (recommended)</option>
+                <option value="8-weeks">8 weeks</option>
+                <option value="12-weeks">12 weeks</option>
+              </select>
+            </div>
+          `;
+        } else {
+          // Single or short-term study
+          return `
+            <div class="config-section">
+              <h4>Study Configuration</h4>
+              
+              <label for="condition-order">Condition Order:</label>
+              <select id="condition-order">
+                <option value="standard">Standard order</option>
+                <option value="randomized">Randomized order</option>
+                <option value="counterbalanced">Counterbalanced</option>
+              </select>
+              
+              <label for="session-spacing">Time between conditions:</label>
+              <select id="session-spacing">
+                <option value="immediate">Same session</option>
+                <option value="5-minutes">5 minute break</option>
+                <option value="30-minutes">30 minute break</option>
+                <option value="separate-days">Separate days</option>
+              </select>
+            </div>
+          `;
+        }
+      }
+
+      createStudyFromConfig(templateId) {
+        const template = getTemplate(templateId);
+        const formData = new FormData(document.getElementById('study-config-form'));
+        
+        const config = {
+          title: formData.get('study-title') || document.getElementById('study-title').value,
+          description: document.getElementById('study-description').value,
+          startDate: document.getElementById('start-date').value,
+          measurementFrequency: document.getElementById('measurement-frequency').value,
+          selectedMeasurements: Array.from(document.querySelectorAll('input[name="selected-measurements"]:checked')).map(cb => cb.value),
+          remindersEnabled: document.getElementById('enable-reminders').checked,
+          reminderTime: document.getElementById('reminder-time')?.value,
+          preferredTimes: document.getElementById('preferred-times')?.value?.split(',').map(t => t.trim()),
+        };
+
+        // Add study-type specific configuration
+        const sessionFrequency = document.getElementById('session-frequency');
+        if (sessionFrequency) {
+          config.sessionFrequency = sessionFrequency.value;
+          config.totalDuration = document.getElementById('total-duration').value;
+        }
+
+        const conditionOrder = document.getElementById('condition-order');
+        if (conditionOrder) {
+          config.conditionOrder = conditionOrder.value;
+          config.sessionSpacing = document.getElementById('session-spacing').value;
+        }
+
+        // Create the study
+        let studyId;
+        if (template.category === 'multi-session') {
+          studyId = this.coordinator.createArc(template, config);
+        } else {
+          studyId = this.executor.startExperiment(template, config);
+        }
+
+        this.activeExperiments.set(studyId, {
+          templateId,
+          type: template.category === 'multi-session' ? 'arc' : 'experiment',
+          config,
+          startDate: new Date().toISOString()
+        });
+
+        this.closeModal();
+        this.showToast(`Study "${config.title}" created successfully!`);
+        
+        // Show the active studies view
+        setTimeout(() => {
+          this.showActiveStudies();
+        }, 1000);
+      }
+
+      showResearchDesignWizard() {
+        this.currentView = 'design';
+        this.updateActiveButton('design-study-btn');
+        
+        const content = document.getElementById('main-content');
+        content.innerHTML = `
+          <div class="research-design-container">
+            <div class="design-header">
+              <h3>Research Design Wizard</h3>
+              <p>Design a custom ECP study with systematic experimental methodology</p>
+            </div>
+            <div id="design-wizard-content" class="design-wizard-content">
+              <!-- Wizard content will be inserted here -->
+            </div>
+          </div>
+        `;
+        
+        const wizardContainer = document.getElementById('design-wizard-content');
+        this.designWizard.start(wizardContainer);
+        
+        // Listen for design completion
+        wizardContainer.addEventListener('designComplete', (e) => {
+          this.onCustomDesignComplete(e.detail);
+        });
+      }
+
+      showActiveStudies() {
+        this.currentView = 'active';
+        this.updateActiveButton('view-active-studies-btn');
+        
+        const content = document.getElementById('main-content');
+        content.innerHTML = this.createActiveStudiesHTML();
+        this.attachActiveStudiesEventListeners();
+      }
+
+      createActiveStudiesHTML() {
+        const activeStudies = Array.from(this.activeExperiments.entries());
+        
+        if (activeStudies.length === 0) {
+          return `
+            <div class="active-studies-empty">
+              <h3>No Active Studies</h3>
+              <p>You haven't started any studies yet. Browse templates or design a custom study to begin.</p>
+              <div class="empty-actions">
+                <button class="primary-button" onclick="templateInterface.showBrowseTemplates()">Browse Templates</button>
+                <button class="secondary-button" onclick="templateInterface.showResearchDesignWizard()">Design Custom Study</button>
+              </div>
+            </div>
+          `;
+        }
+
+        let html = `
+          <div class="active-studies">
+            <div class="studies-header">
+              <h3>Active Studies</h3>
+              <div class="studies-summary">
+                <span class="summary-item">Total: ${activeStudies.length}</span>
+                <span class="summary-item">In Progress: ${activeStudies.filter(([_, study]) => this.getStudyStatus(study) === 'active').length}</span>
+              </div>
+            </div>
+            
+            <div class="studies-list">
+              ${activeStudies.map(([studyId, study]) => this.createStudyCardHTML(studyId, study)).join('')}
+            </div>
+          </div>
+        `;
+
+        return html;
+      }
+
+      createStudyCardHTML(studyId, study) {
+        const template = getTemplate(study.templateId);
+        const status = this.getStudyStatus(study);
+        const progress = this.getStudyProgress(studyId, study);
+        
+        return `
+          <div class="study-card" data-study-id="${studyId}">
+            <div class="study-header">
+              <h4 class="study-title">${study.config.title}</h4>
+              <div class="study-meta">
+                <span class="study-status status-${status}">${status}</span>
+                <span class="study-type">${study.type}</span>
+              </div>
+            </div>
+            
+            <div class="study-info">
+              <div class="info-item">
+                <strong>Template:</strong> ${template?.name || 'Custom Design'}
+              </div>
+              <div class="info-item">
+                <strong>Started:</strong> ${new Date(study.startDate).toLocaleDateString()}
+              </div>
+              <div class="info-item">
+                <strong>Progress:</strong> ${progress.completed}/${progress.total} sessions
+              </div>
+            </div>
+            
+            <div class="study-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${progress.percentage}%"></div>
+              </div>
+              <span class="progress-text">${progress.percentage.toFixed(1)}% complete</span>
+            </div>
+            
+            ${study.config.description ? `
+              <div class="study-description">
+                <p>${study.config.description}</p>
+              </div>
+            ` : ''}
+            
+            <div class="study-actions">
+              ${status === 'active' ? `
+                <button class="primary-button continue-btn" data-study-id="${studyId}">Continue Session</button>
+              ` : ''}
+              <button class="secondary-button view-btn" data-study-id="${studyId}">View Details</button>
+              <button class="secondary-button export-btn" data-study-id="${studyId}">Export Data</button>
+              ${status === 'active' ? `
+                <button class="danger-button pause-btn" data-study-id="${studyId}">Pause Study</button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      attachActiveStudiesEventListeners() {
+        document.addEventListener('click', (e) => {
+          const studyId = e.target.dataset.studyId;
+          if (!studyId) return;
+
+          if (e.target.classList.contains('continue-btn')) {
+            this.continueStudySession(studyId);
+          } else if (e.target.classList.contains('view-btn')) {
+            this.viewStudyDetails(studyId);
+          } else if (e.target.classList.contains('export-btn')) {
+            this.exportStudyData(studyId);
+          } else if (e.target.classList.contains('pause-btn')) {
+            this.pauseStudy(studyId);
+          }
+        });
+      }
+
+      getStudyStatus(study) {
+        // This would integrate with the actual study state
+        return 'active'; // Simplified for now
+      }
+
+      getStudyProgress(studyId, study) {
+        if (study.type === 'arc') {
+          const progress = this.coordinator.getArcProgress(studyId);
+          return progress ? {
+            completed: progress.basic.completedSessions,
+            total: progress.basic.totalSessions,
+            percentage: progress.basic.percentComplete
+          } : { completed: 0, total: 1, percentage: 0 };
+        } else {
+          const progress = this.executor.getProgress(studyId);
+          return progress ? {
+            completed: progress.completedSteps,
+            total: progress.totalSteps,
+            percentage: progress.percentComplete
+          } : { completed: 0, total: 1, percentage: 0 };
+        }
+      }
+
+      continueStudySession(studyId) {
+        const study = this.activeExperiments.get(studyId);
+        if (!study) return;
+
+        if (study.type === 'arc') {
+          const requirements = this.coordinator.getCurrentSessionRequirements(studyId);
+          this.showSessionInterface(studyId, requirements);
+        } else {
+          const currentStep = this.executor.getCurrentStep(studyId);
+          this.showStepInterface(studyId, currentStep);
+        }
+      }
+
+      showSessionInterface(studyId, requirements) {
+        const modalContent = `
+          <div class="session-interface">
+            <div class="session-header">
+              <h3>${requirements.arc.title}</h3>
+              <div class="session-progress">
+                Session ${requirements.session.number} of ${requirements.session.total}
+              </div>
+              <button class="close-modal-btn">&times;</button>
+            </div>
+            
+            <div class="session-content">
+              <div class="current-phase">
+                <h4>Current Phase: ${requirements.phase.name}</h4>
+                <p>${requirements.phase.description}</p>
+                <div class="phase-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${requirements.phase.progress}%"></div>
+                  </div>
+                </div>
+              </div>
+              
+              ${requirements.continuityNotes ? `
+                <div class="continuity-notes">
+                  <h5>Continuity Notes</h5>
+                  <p>${requirements.continuityNotes.summary}</p>
+                  ${requirements.continuityNotes.recommendations.length > 0 ? `
+                    <ul>
+                      ${requirements.continuityNotes.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                  ` : ''}
+                </div>
+              ` : ''}
+              
+              <div class="current-step">
+                <h5>Current Step: ${requirements.step.name}</h5>
+                <p>${requirements.step.instruction}</p>
+                
+                ${requirements.step.guidance ? `
+                  <div class="step-guidance">
+                    <strong>Guidance:</strong> ${requirements.step.guidance}
+                  </div>
+                ` : ''}
+              </div>
+              
+              ${requirements.measurements.length > 0 ? `
+                <div class="session-measurements">
+                  <h5>Measurements for this Step</h5>
+                  <div id="measurement-widgets">
+                    <!-- Measurement widgets will be inserted here -->
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+            
+            <div class="session-actions">
+              <button class="secondary-button" onclick="templateInterface.closeModal()">Save & Continue Later</button>
+              <button class="primary-button" id="complete-session-btn">Complete This Session</button>
+            </div>
+          </div>
+        `;
+
+        this.showModal(modalContent);
+
+        // Add complete session handler
+        document.getElementById('complete-session-btn').addEventListener('click', () => {
+          this.completeSession(studyId);
+        });
+      }
+
+      completeSession(studyId) {
+        const sessionData = {
+          duration: 45, // Would be calculated
+          measurements: {},
+          notes: '',
+          insights: '',
+          timestamp: new Date().toISOString()
+        };
+
+        const study = this.activeExperiments.get(studyId);
+        if (study.type === 'arc') {
+          this.coordinator.completeSession(studyId, sessionData);
+        } else {
+          this.executor.completeStep(studyId, sessionData);
+        }
+
+        this.closeModal();
+        this.showToast('Session completed successfully!');
+        this.showActiveStudies(); // Refresh the view
+      }
+
+      viewStudyDetails(studyId) {
+        const study = this.activeExperiments.get(studyId);
+        const template = getTemplate(study.templateId);
+        
+        let detailsContent;
+        if (study.type === 'arc') {
+          const progress = this.coordinator.getArcProgress(studyId);
+          const insights = this.coordinator.generateArcInsights(studyId);
+          
+          detailsContent = `
+            <div class="study-details arc-details">
+              <h3>${study.config.title}</h3>
+              <div class="details-content">
+                <div class="detail-section">
+                  <h4>Progress Overview</h4>
+                  <div class="progress-stats">
+                    <div class="stat-item">
+                      <span class="stat-label">Sessions Completed:</span>
+                      <span class="stat-value">${progress.basic.completedSessions}/${progress.basic.totalSessions}</span>
+                    </div>
+                    <div class="stat-item">
+                      <span class="stat-label">Current Phase:</span>
+                      <span class="stat-value">${progress.phases[progress.basic.currentPhase]?.name}</span>
+                    </div>
+                    <div class="stat-item">
+                      <span class="stat-label">Days Active:</span>
+                      <span class="stat-value">${progress.timing.daysSinceStart}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                ${insights.patterns ? `
+                  <div class="detail-section">
+                    <h4>Emerging Patterns</h4>
+                    <div class="insights-content">
+                      ${this.formatInsights(insights)}
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        } else {
+          const progress = this.executor.getProgress(studyId);
+          
+          detailsContent = `
+            <div class="study-details experiment-details">
+              <h3>${study.config.title}</h3>
+              <div class="details-content">
+                <div class="detail-section">
+                  <h4>Experiment Progress</h4>
+                  <div class="progress-stats">
+                    <div class="stat-item">
+                      <span class="stat-label">Steps Completed:</span>
+                      <span class="stat-value">${progress.completedSteps}/${progress.totalSteps}</span>
+                    </div>
+                    <div class="stat-item">
+                      <span class="stat-label">Current Phase:</span>
+                      <span class="stat-value">${progress.currentPhase + 1}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        const modalContent = `
+          ${detailsContent}
+          <div class="modal-actions">
+            <button class="secondary-button" onclick="templateInterface.closeModal()">Close</button>
+            <button class="primary-button" onclick="templateInterface.exportStudyData('${studyId}')">Export Data</button>
+          </div>
+        `;
+
+        this.showModal(modalContent);
+      }
+
+      exportStudyData(studyId) {
+        const study = this.activeExperiments.get(studyId);
+        
+        let exportData;
+        if (study.type === 'arc') {
+          exportData = this.coordinator.exportArcData(studyId);
+        } else {
+          exportData = {
+            studyId,
+            study,
+            progress: this.executor.getProgress(studyId),
+            exportedAt: new Date().toISOString()
+          };
+        }
+
+        // Create and download file
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+          type: 'application/json' 
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ecp-study-${studyId}-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        this.showToast('Study data exported successfully!');
+      }
+
+      formatInsights(insights) {
+        if (!insights.patterns) return '<p>Continue with more sessions to see patterns emerge.</p>';
+        
+        return `
+          <div class="insights-list">
+            ${insights.recommendations.map(rec => `
+              <div class="insight-item">
+                <div class="insight-type">${rec.type}</div>
+                <div class="insight-message">${rec.message}</div>
+                <div class="insight-action">${rec.action}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Event handlers
+      onExperimentStarted(data) {
+        console.log('Experiment started:', data);
+      }
+
+      onStepCompleted(data) {
+        console.log('Step completed:', data);
+      }
+
+      onExperimentCompleted(data) {
+        console.log('Experiment completed:', data);
+        this.showToast('Study completed! Check your results.');
+      }
+
+      onCustomDesignComplete(designData) {
+        console.log('Custom design completed:', designData);
+        this.showToast('Custom study design created!');
+      }
+
+      // Utility methods
+      updateActiveButton(activeId) {
+        document.querySelectorAll('.intro-actions button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        document.getElementById(activeId).classList.add('active');
+      }
+
+      showModal(content) {
+        const modal = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        
+        modalContent.innerHTML = content;
+        modal.classList.remove('hidden');
+        
+        // Attach close button listeners
+        modalContent.querySelectorAll('.close-modal-btn').forEach(btn => {
+          btn.addEventListener('click', () => this.closeModal());
+        });
+      }
+
+      closeModal() {
+        document.getElementById('modal-overlay').classList.add('hidden');
+      }
+
+      showToast(message, duration = 3000) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.remove('hidden');
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+          toast.classList.add('hidden');
+        }, duration);
+      }
+    }
+
+    // Initialize the interface
+    document.addEventListener("DOMContentLoaded", () => {
+      window.templateInterface = new TemplateInterface();
+    });
+  </script>
+
+  <style>
+    .templates-intro {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .templates-intro h2 {
+      margin: 0 0 1rem 0;
+      color: #333;
+      font-size: 1.8em;
+    }
+
+    .templates-intro p {
+      color: #666;
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .intro-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .primary-button, .secondary-button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .primary-button {
+      background: #007acc;
+      color: white;
+    }
+
+    .primary-button:hover {
+      background: #005a9e;
+      transform: translateY(-1px);
+    }
+
+    .secondary-button {
+      background: #6c757d;
+      color: white;
+    }
+
+    .secondary-button:hover {
+      background: #545b62;
+    }
+
+    .danger-button {
+      background: #dc3545;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .danger-button:hover {
+      background: #c82333;
+    }
+
+    .templates-main-content {
+      margin: 2rem 0;
+    }
+
+    .browse-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .browse-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-input, .category-filter {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .search-input {
+      min-width: 250px;
+    }
+
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+
+    .template-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      background: white;
+      transition: all 0.2s ease;
+    }
+
+    .template-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .template-header {
+      margin-bottom: 1rem;
+    }
+
+    .template-title {
+      margin: 0 0 0.5rem 0;
+      color: #333;
+      font-size: 1.3em;
+    }
+
+    .template-meta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .template-category {
+      background: #e9ecef;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8em;
+      color: #495057;
+    }
+
+    .template-difficulty {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8em;
+      color: white;
+    }
+
+    .difficulty-beginner {
+      background: #28a745;
+    }
+
+    .difficulty-intermediate {
+      background: #ffc107;
+      color: #333 !important;
+    }
+
+    .difficulty-advanced {
+      background: #dc3545;
+    }
+
+    .template-description {
+      margin-bottom: 1rem;
+    }
+
+    .template-description p {
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .template-details {
+      margin-bottom: 1rem;
+    }
+
+    .detail-item {
+      margin-bottom: 0.5rem;
+      font-size: 0.9em;
+    }
+
+    .template-tags {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: #f8f9fa;
+      color: #495057;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8em;
+      border: 1px solid #e9ecef;
+    }
+
+    .template-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .template-action-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+    }
+
+    .preview-btn {
+      background: #6c757d;
+      color: white;
+    }
+
+    .preview-btn:hover {
+      background: #545b62;
+    }
+
+    .start-btn {
+      background: #007acc;
+      color: white;
+    }
+
+    .start-btn:hover {
+      background: #005a9e;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      padding: 0;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .template-preview {
+      padding: 2rem;
+      max-width: 800px;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 1rem;
+    }
+
+    .close-modal-btn {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #666;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-modal-btn:hover {
+      color: #333;
+    }
+
+    .preview-section {
+      margin-bottom: 2rem;
+    }
+
+    .preview-section h4 {
+      margin: 0 0 1rem 0;
+      color: #333;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 0.5rem;
+    }
+
+    .preview-section h5 {
+      margin: 1rem 0 0.5rem 0;
+      color: #495057;
+    }
+
+    .design-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .phase-preview {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .phase-preview h5 {
+      margin: 0 0 0.5rem 0;
+      color: #007acc;
+    }
+
+    .phase-details {
+      display: flex;
+      gap: 2rem;
+      margin-top: 0.5rem;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .preview-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    /* Active studies styles */
+    .active-studies-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .active-studies-empty h3 {
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .empty-actions {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .studies-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .studies-summary {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .summary-item {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .study-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: white;
+    }
+
+    .study-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .study-title {
+      margin: 0;
+      color: #333;
+    }
+
+    .study-meta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .study-status {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8em;
+      color: white;
+    }
+
+    .status-active {
+      background: #28a745;
+    }
+
+    .status-paused {
+      background: #ffc107;
+      color: #333 !important;
+    }
+
+    .status-completed {
+      background: #007acc;
+    }
+
+    .study-type {
+      background: #6c757d;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8em;
+    }
+
+    .study-info {
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .info-item {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .study-progress {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #007acc;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 0.9em;
+      color: #666;
+      min-width: 80px;
+    }
+
+    .study-description {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border-left: 4px solid #007acc;
+    }
+
+    .study-description p {
+      margin: 0;
+      color: #666;
+      font-style: italic;
+    }
+
+    .study-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .study-actions button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+    }
+
+    /* Toast styles */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #333;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      z-index: 1001;
+      max-width: 300px;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.hidden {
+      transform: translateX(100%);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .templates-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .browse-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .browse-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .search-input {
+        min-width: 100%;
+      }
+
+      .intro-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .intro-actions button {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .modal-content {
+        max-width: 95vw;
+        margin: 1rem;
+      }
+
+      .studies-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .study-actions {
+        justify-content: center;
+      }
+    }
+  </style>
+  <script src="js/modules/onboardingMeasurementIntegration.js"></script>
+  <script type="module" src="js/modules/navigation.js"></script>
+</body>
+</html>

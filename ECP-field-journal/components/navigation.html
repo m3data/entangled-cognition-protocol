@@ -1,0 +1,160 @@
+<!-- Shared Navigation Component -->
+<nav class="site-menu">
+  <ul>
+    <li><a href="home.html" class="menu-link" data-page="home"><i class="ph ph-house"></i> Home</a></li>
+
+    <li class="menu-dropdown">
+      <a href="#" class="menu-link" data-page="new-entry">
+        <i class="ph ph-plus-circle"></i> New Entry <i class="ph ph-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="experiment-entry.html"><i class="ph ph-flask"></i> Experiment</a></li>
+        <li><a href="reflection-entry.html"><i class="ph ph-notebook"></i> Reflection</a></li>
+      </ul>
+    </li>
+
+    <li><a href="journal-archive.html" class="menu-link" data-page="archive"><i class="ph ph-books"></i> Archive</a></li>
+
+    <li><a href="measurement-dashboard.html" class="menu-link" data-page="insights"><i class="ph ph-chart-line"></i> Insights</a></li>
+
+    <li class="menu-dropdown">
+      <a href="#" class="menu-link" data-page="resources">
+        <i class="ph ph-book-open"></i> Resources <i class="ph ph-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="about.html"><i class="ph ph-info"></i> About ECP</a></li>
+        <li><a href="onboarding.html"><i class="ph ph-sparkle"></i> Onboarding</a></li>
+        <li><a href="workflow-templates.html"><i class="ph ph-files"></i> Templates</a></li>
+        <li><a href="community-dashboard.html"><i class="ph ph-users-three"></i> Community</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<style>
+.site-menu {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  background-color: var(--background-light);
+  border-bottom: 1px dashed var(--accent-color);
+}
+
+.site-menu ul {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.site-menu li {
+  margin: 0;
+  position: relative;
+}
+
+.site-menu .menu-link {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  padding: 0.6em 1em;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.site-menu .menu-link:hover {
+  background-color: var(--highlight-color);
+}
+
+.site-menu .menu-link.active {
+  background-color: var(--green-soft);
+  color: #1e1f2f;
+}
+
+/* Dropdown styles */
+.menu-dropdown {
+  position: relative;
+}
+
+.menu-dropdown .ph-caret-down {
+  font-size: 0.8em;
+  opacity: 0.6;
+}
+
+.dropdown-menu {
+  display: none !important;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: white;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.menu-dropdown:hover .dropdown-menu {
+  display: block !important;
+}
+
+.dropdown-menu li {
+  margin: 0;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7em 1em;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--highlight-color);
+}
+
+.dropdown-menu .ph {
+  opacity: 0.7;
+}
+</style>
+
+<script>
+// Set active state based on current page
+document.addEventListener('DOMContentLoaded', () => {
+  const currentPage = window.location.pathname.split('/').pop();
+
+  // Map pages to nav items
+  const pageMap = {
+    'home.html': 'home',
+    'experiment-entry.html': 'new-entry',
+    'reflection-entry.html': 'new-entry',
+    'journal-archive.html': 'archive',
+    'measurement-dashboard.html': 'insights',
+    'about.html': 'resources',
+    'onboarding.html': 'resources',
+    'workflow-templates.html': 'resources',
+    'community-dashboard.html': 'resources'
+  };
+
+  const activePage = pageMap[currentPage];
+  if (activePage) {
+    const activeLink = document.querySelector(`[data-page="${activePage}"]`);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+  }
+});
+</script>

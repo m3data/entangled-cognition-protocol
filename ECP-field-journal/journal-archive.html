@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal Archive | ECP Field Journal</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
+  <link rel="stylesheet" href="lib/phosphor-regular.css" />
+  <style>
+    .archive-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .archive-controls {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--accent-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-group {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .filter-group label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      margin: 0;
+      padding: 0;
+    }
+
+    .filter-group select {
+      flex: 1;
+      padding: 0.5em;
+      border: 1px solid var(--accent-color);
+      border-radius: 5px;
+      background: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .filter-group select:focus {
+      outline: 2px solid var(--accent-color);
+    }
+
+    .filters-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.75em;
+      border: 1px solid var(--accent-color);
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    .archive-timeline {
+      margin-top: 2rem;
+    }
+
+    .entry-card {
+      background: white;
+      border: 1px solid var(--accent-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .entry-card:hover {
+      box-shadow: 0 4px 12px rgba(139, 94, 60, 0.15);
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .entry-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 600;
+      color: var(--accent-color);
+      font-size: 0.95rem;
+    }
+
+    .entry-date {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .entry-privacy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.3em 0.7em;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .entry-privacy.private {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .entry-privacy.public {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .entry-preview {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+
+    .entry-metadata {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--accent-color);
+    }
+
+    .metadata-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .entry-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .entry-tag {
+      background: var(--highlight-color);
+      padding: 0.3em 0.7em;
+      border-radius: 15px;
+      font-size: 0.8rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #666;
+    }
+
+    .empty-state .ph {
+      font-size: 4rem;
+      opacity: 0.3;
+      margin-bottom: 1rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--accent-color);
+    }
+
+    /* Entry Detail Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      margin: 2rem auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--accent-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 10;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      color: var(--accent-color);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .detail-section {
+      margin-bottom: 2rem;
+    }
+
+    .detail-section h3 {
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      font-family: var(--font-title);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .detail-item {
+      padding: 0.75rem;
+      background: var(--background-light);
+      border-radius: 5px;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-value {
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title"><i class="ph ph-books"></i> Journal Archive</h1>
+
+  <div id="nav-container"></div>
+
+  <div class="archive-header">
+    <p>Your living record of experiments, reflections, and emergent insights</p>
+  </div>
+
+  <div class="archive-controls">
+    <div class="filters-row">
+      <div class="filter-group">
+        <label for="typeFilter"><i class="ph ph-funnel"></i> Type</label>
+        <select id="typeFilter">
+          <option value="all">All Entries</option>
+          <option value="experiment">Experiments</option>
+          <option value="reflection">Reflections</option>
+          <option value="note">Field Notes</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="privacyFilter"><i class="ph ph-lock"></i> Privacy</label>
+        <select id="privacyFilter">
+          <option value="all">All</option>
+          <option value="private">Private Only</option>
+          <option value="public">Public Only</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="timeFilter"><i class="ph ph-calendar"></i> Time</label>
+        <select id="timeFilter">
+          <option value="all">All Time</option>
+          <option value="7">Last 7 Days</option>
+          <option value="30">Last 30 Days</option>
+          <option value="90">Last 3 Months</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label for="searchBox"><i class="ph ph-magnifying-glass"></i> Search</label>
+      <input
+        type="text"
+        id="searchBox"
+        class="search-box"
+        placeholder="Search insights, reflections, or metadata..."
+      />
+    </div>
+  </div>
+
+  <div id="archiveTimeline" class="archive-timeline">
+    <div class="loading">
+      <i class="ph ph-circle-notch"></i> Loading your journal entries...
+    </div>
+  </div>
+
+  <!-- Entry Detail Modal -->
+  <div id="entryModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Entry Details</h2>
+        <button class="modal-close" id="modalClose"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module" src="js/modules/navigation.js"></script>
+  <script type="module" src="js/modules/journalArchive.js"></script>
+</body>
+</html>

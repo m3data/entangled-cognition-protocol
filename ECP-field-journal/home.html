@@ -5,20 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ECP Field Journal v0.1.0</title>
   <link rel="stylesheet" href="styles/logger-styles.css" />
+  <link rel="stylesheet" href="lib/phosphor-regular.css" />
 </head>
 <body>
   <h1 class="title">ECP Field Journal Interface</h1>
 
-  <nav class="site-menu">
-    <ul>
-      <li><a href="about.html" class="menu-link">About</a></li>
-      <li><a href="experiment-entry.html" class="menu-link">Experiments</a></li>
-      <li><a href="reflection-entry.html" class="menu-link">Reflections</a></li>
-      <li><a href="measurement-dashboard.html" class="menu-link">Dashboard</a></li>
-      <li><a href="workflow-templates.html" class="menu-link">Templates</a></li>
-      <li><a href="community-dashboard.html" class="menu-link">Community</a></li>
-    </ul>
-  </nav>
+  <div id="nav-container"></div>
 
   <section class="welcome" id="welcomeSection">
     <!-- Default welcome for new users -->
@@ -28,7 +20,7 @@
       <div class="onboarding-invitation">
         <p class="sacred-invitation">Before beginning your research journey, we invite you into a brief onboarding experience that will help you understand the ECP approach and create your personal practice container.</p>
         <a href="onboarding.html" class="primary-cta">
-          <button class="onboarding-btn">Begin Sacred Introduction</button>
+          <button class="onboarding-btn"><i class="ph ph-sparkle"></i> Begin Sacred Introduction</button>
         </a>
         <div class="alternative-entry">
           <p>Or explore the journal directly:</p>
@@ -61,6 +53,7 @@
 
   <div id="toast" class="toast hidden"></div>
 
+  <script type="module" src="js/modules/navigation.js"></script>
   <script src="js/modules/homePersonalization.js"></script>
 </body>
 </html>

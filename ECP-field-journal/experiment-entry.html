@@ -1,14 +1,8 @@
 
 <link rel="stylesheet" href="styles/logger-styles.css" />
+<link rel="stylesheet" href="lib/phosphor-regular.css" />
 
-<nav class="site-menu">
-  <ul>
-    <li><a href="home.html" class="menu-link">Home</a></li>
-    <li><a href="about.html" class="menu-link">About</a></li>
-    <li><a href="experiment-entry.html" class="menu-link active">Experiments</a></li>
-    <li><a href="reflection-entry.html" class="menu-link">Reflections</a></li>
-  </ul>
-</nav>
+<div id="nav-container"></div>
 
 <div class="entry-form">
   <h2>Experiment entry</h2>
@@ -21,7 +15,7 @@
   </div>
   <div id="step-nav" class="sticky-nav">
   <div id="step-indicator" style="text-align: center; margin-bottom: 0.5rem;">
-    Step 1 of 5: Metadata
+    Step 1 of 7: Metadata
   </div>
   <div class="nav-buttons" style="display: flex; justify-content: space-between;">
     <button type="button" class="prev-step-btn">← Previous</button>
@@ -319,8 +313,18 @@
         <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any insights or realisations that emerged during the experiment. If nothing just leave blank." />
       </label>
       <textarea id="emergent_ecp_insights_input" placeholder="Enter any insights or realisations that emerged during the experiment..." rows="4"></textarea>
-      </textarea>
     </fieldset>
+  </div>
+  <div class="form-step" data-step="6" style="display:none;">
+    <fieldset>
+      <legend>Measurement Frameworks</legend>
+      <p>These assessments help track patterns in your ECP practice over time. Complete what feels relevant to your session experience.</p>
+      <div class="measurement-sections-container">
+        <!-- Measurement widgets will be inserted here by JavaScript -->
+      </div>
+    </fieldset>
+  </div>
+  <div class="form-step" data-step="7" style="display:none;">
     <fieldset id="save-options">
       <legend>Save entry options</legend>
       <details>
@@ -338,6 +342,13 @@
       <div class="scrub-option">
         <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
       </div>
+      
+      <div class="community-contribution-indicator" style="display: none; margin-top: 1rem; padding: 0.75rem; background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); border-radius: 8px; border-left: 4px solid #48bb78;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: #2d3748; font-size: 0.9rem;">
+          <span>🌱</span>
+          <span>This experiment will contribute to community wisdom while maintaining your privacy.</span>
+        </div>
+      </div>
     </fieldset>
     <div class="form-step-buttons">
       <button id="generate-entry-btn">Generate and save entry</button>
@@ -350,12 +361,19 @@
   import { generateExperimentJSON } from './js/main.js';
   import { initTagInput } from './js/modules/inputTags.js';
   import { initMultistepForm, initTooltips } from './js/modules/ui.js';
+  import { 
+    createSomaticCoherenceAssessment,
+    createResponseQualityAssessment,
+    createMeaningMakingAssessment,
+    createEmergencePatternsSection,
+    initMeasurementFrameworks
+  } from './js/modules/measurementWidgets.js';
 
   document.addEventListener("DOMContentLoaded", () => {
     // Sticky nav step logic
     const stepIndicator = document.getElementById("step-indicator");
     const updateStepIndicator = (currentStep, totalSteps) => {
-      const stepNames = ["Metadata", "Human Context", "Machine", "Relational Field", "Throughput"];
+      const stepNames = ["Metadata", "Human Context", "Machine", "Relational Field", "Throughput", "Measurement Frameworks", "Save Options"];
       stepIndicator.textContent = `Step ${currentStep} of ${totalSteps}: ${stepNames[currentStep - 1]}`;
     };
 
@@ -386,6 +404,20 @@
 
     showStep(currentStep); // Initialize
 
+    // Initialize measurement frameworks
+    const measurementContainer = document.querySelector('.measurement-sections-container');
+    if (measurementContainer) {
+      // Add measurement sections
+      measurementContainer.appendChild(createSomaticCoherenceAssessment('pre'));
+      measurementContainer.appendChild(createSomaticCoherenceAssessment('post'));
+      measurementContainer.appendChild(createResponseQualityAssessment());
+      measurementContainer.appendChild(createMeaningMakingAssessment());
+      measurementContainer.appendChild(createEmergencePatternsSection());
+      
+      // Initialize measurement framework functionality
+      initMeasurementFrameworks(measurementContainer);
+    }
+
     [
       "cognitive_mode",
       "ontological_orientation",
@@ -402,3 +434,5 @@
     initTooltips();
   });
 </script>
+<script type="module" src="js/modules/breadcrumb.js"></script>
+<script src="js/modules/onboardingMeasurementIntegration.js"></script>

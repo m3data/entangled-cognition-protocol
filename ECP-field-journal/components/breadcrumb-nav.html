@@ -1,0 +1,69 @@
+<!-- Minimal Breadcrumb Navigation for Focused Task Pages -->
+<nav class="breadcrumb-nav">
+  <a href="home.html" class="breadcrumb-home">
+    <i class="ph ph-house"></i> Home
+  </a>
+  <span class="breadcrumb-separator">/</span>
+  <span class="breadcrumb-current" id="breadcrumbCurrent">Current Page</span>
+</nav>
+
+<style>
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.breadcrumb-home {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-home:hover {
+  color: var(--green-soft);
+}
+
+.breadcrumb-separator {
+  opacity: 0.4;
+}
+
+.breadcrumb-current {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.breadcrumb-nav .ph {
+  font-size: 1.1em;
+}
+</style>
+
+<script>
+// Set current page name based on file
+document.addEventListener('DOMContentLoaded', () => {
+  const currentPage = window.location.pathname.split('/').pop();
+  const breadcrumbEl = document.getElementById('breadcrumbCurrent');
+
+  const pageNames = {
+    'experiment-entry.html': 'New Experiment',
+    'reflection-entry.html': 'New Reflection',
+    'journal-archive.html': 'Archive',
+    'measurement-dashboard.html': 'Insights Dashboard',
+    'workflow-templates.html': 'Templates',
+    'community-dashboard.html': 'Community',
+    'about.html': 'About ECP'
+  };
+
+  if (breadcrumbEl && pageNames[currentPage]) {
+    breadcrumbEl.textContent = pageNames[currentPage];
+  }
+});
+</script>

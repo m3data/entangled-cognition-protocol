@@ -493,3 +493,30 @@ details summary {
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
+/* Phosphor Icon Integration */
+.ph {
+  display: inline-block;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+.menu-link .ph {
+  font-size: 1.1em;
+  margin-right: 0.4em;
+}
+
+button .ph {
+  margin-right: 0.4em;
+}
+
+h3 .ph {
+  margin-right: 0.5em;
+  opacity: 0.7;
+}
+
+.breath-instruction .ph {
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+

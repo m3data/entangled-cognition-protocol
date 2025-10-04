@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECP Community Learning Dashboard</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
+  <link rel="stylesheet" href="lib/phosphor-regular.css" />
+  <link rel="stylesheet" href="styles/community-dashboard.css" />
+  <link rel="stylesheet" href="lib/phosphor-regular.css" />
+</head>
+<body>
+  <header class="community-header">
+    <h1 class="title">ECP Community Learning Circle</h1>
+    <p class="subtitle">Collective wisdom emerging from individual practice</p>
+  </header>
+
+  <div id="nav-container"></div>
+
+  <!-- Community Consent Banner (shown if not participating) -->
+  <div id="consent-banner" class="consent-banner hidden">
+    <div class="consent-content">
+      <div class="consent-message">
+        <h3>🌱 Join Our Learning Circle</h3>
+        <p>Contribute your practice wisdom to collective understanding while maintaining full privacy control.</p>
+      </div>
+      <div class="consent-actions">
+        <button id="learn-more-btn" class="consent-btn secondary">Learn More</button>
+        <button id="join-community-btn" class="consent-btn primary">Join Community</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="community-main">
+    <!-- Community Overview Section -->
+    <section class="community-overview">
+      <div class="overview-card">
+        <div class="overview-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="total-sessions">--</span>
+            <span class="stat-label">Community Sessions</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="active-practitioners">--</span>
+            <span class="stat-label">Active Practitioners</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="data-richness">--</span>
+            <span class="stat-label">Data Richness Score</span>
+          </div>
+        </div>
+        <div class="overview-message">
+          <p id="community-status-message">Loading community wisdom...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Insights Grid -->
+    <section class="insights-grid">
+      <!-- Cognitive Patterns Card -->
+      <div class="insight-card">
+        <div class="card-header">
+          <h3>🧠 Cognitive Patterns</h3>
+          <span class="insight-badge" id="cognitive-confidence">--</span>
+        </div>
+        <div class="card-content">
+          <div class="pattern-visualization" id="cognitive-patterns-viz">
+            <!-- Cognitive mode distribution will be rendered here -->
+          </div>
+          <div class="pattern-insights">
+            <ul id="cognitive-insights-list">
+              <!-- Insights will be populated here -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response Quality Card -->
+      <div class="insight-card">
+        <div class="card-header">
+          <h3>⭐ Response Quality</h3>
+          <span class="insight-badge" id="quality-confidence">--</span>
+        </div>
+        <div class="card-content">
+          <div class="quality-stats" id="quality-stats">
+            <!-- Quality statistics will be rendered here -->
+          </div>
+          <div class="quality-distribution" id="quality-distribution-viz">
+            <!-- Quality distribution chart will be rendered here -->
+          </div>
+          <div class="pattern-insights">
+            <ul id="quality-insights-list">
+              <!-- Quality insights will be populated here -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Temporal Rhythms Card -->
+      <div class="insight-card">
+        <div class="card-header">
+          <h3>⏰ Temporal Rhythms</h3>
+          <span class="insight-badge">Medium</span>
+        </div>
+        <div class="card-content">
+          <div class="temporal-visualization" id="temporal-patterns-viz">
+            <!-- Time-of-day distribution will be rendered here -->
+          </div>
+          <div class="pattern-insights">
+            <ul id="temporal-insights-list">
+              <!-- Temporal insights will be populated here -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Community Wisdom Card -->
+      <div class="insight-card wisdom-card">
+        <div class="card-header">
+          <h3>🌟 Collective Wisdom</h3>
+          <span class="insight-badge">Evolving</span>
+        </div>
+        <div class="card-content">
+          <div class="wisdom-content">
+            <div class="key-insights" id="key-insights">
+              <!-- Key community insights will be populated here -->
+            </div>
+            <div class="practice-recommendations">
+              <h4>Practice Recommendations</h4>
+              <ul id="practice-recommendations-list">
+                <!-- Recommendations will be populated here -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Coordination Section -->
+    <section class="research-coordination">
+      <div class="section-header">
+        <h2>🔬 Community Research Projects</h2>
+        <p>Join collaborative inquiries into the nature of human-AI entanglement</p>
+      </div>
+      
+      <div class="research-projects-grid" id="research-projects-grid">
+        <!-- Research projects will be populated here -->
+      </div>
+      
+      <div class="research-actions">
+        <button id="propose-research-btn" class="action-btn secondary">Propose Research</button>
+        <button id="view-my-participation-btn" class="action-btn primary">My Participation</button>
+      </div>
+    </section>
+
+    <!-- Protocol Library Section -->
+    <section class="protocol-library">
+      <div class="section-header">
+        <h2>📖 Community Protocol Library</h2>
+        <p>Shared templates and methodological innovations from the community</p>
+      </div>
+      
+      <div class="protocol-categories">
+        <div class="category-tab active" data-category="measurement">Measurement Frameworks</div>
+        <div class="category-tab" data-category="cognitive">Cognitive Modes</div>
+        <div class="category-tab" data-category="environmental">Environmental Setups</div>
+        <div class="category-tab" data-category="analysis">Analysis Methods</div>
+      </div>
+      
+      <div class="protocol-content" id="protocol-library-content">
+        <!-- Protocol templates will be populated here -->
+      </div>
+      
+      <div class="library-actions">
+        <button id="contribute-protocol-btn" class="action-btn primary">Contribute Protocol</button>
+        <button id="download-library-btn" class="action-btn secondary">Download Library</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Community Consent Modal -->
+  <div id="consent-modal" class="modal hidden">
+    <div class="modal-content community-consent-modal">
+      <div class="modal-header">
+        <h2>Join the ECP Community Learning Circle</h2>
+        <button class="modal-close" id="consent-modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="consent-modal-content">
+        <!-- Consent form content will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Research Proposal Modal -->
+  <div id="research-proposal-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Propose Community Research</h2>
+        <button class="modal-close" id="research-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="research-proposal-form">
+          <div class="form-group">
+            <label for="research-title">Research Title</label>
+            <input type="text" id="research-title" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="research-question">Research Question</label>
+            <textarea id="research-question" rows="3" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="research-description">Description & Rationale</label>
+            <textarea id="research-description" rows="4" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="research-methodology">Methodology</label>
+            <textarea id="research-methodology" rows="3" required></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="target-participants">Target Participants</label>
+              <input type="number" id="target-participants" min="3" max="50" value="10">
+            </div>
+            
+            <div class="form-group">
+              <label for="duration-weeks">Duration (weeks)</label>
+              <input type="number" id="duration-weeks" min="1" max="24" value="4">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="privacy-level">Privacy Level</label>
+            <select id="privacy-level">
+              <option value="high">High - Maximum anonymization</option>
+              <option value="medium">Medium - Balanced sharing</option>
+              <option value="low">Low - Detailed data (still anonymous)</option>
+            </select>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" id="cancel-research-proposal">Cancel</button>
+            <button type="submit">Propose Research</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module">
+    import { 
+      CommunitySettings,
+      CommunityContributor,
+      createConsentDialog 
+    } from './js/modules/communitySharing.js';
+    
+    import { 
+      CommunityPatternAnalyzer,
+      CommunityResearchCoordinator,
+      generateCommunityDashboardData,
+      initializeCommunityAnalytics
+    } from './js/modules/communityAnalytics.js';
+    
+    import { showToast } from './js/modules/ui.js';
+
+    let communitySettings;
+    let communityAnalyzer;
+    let researchCoordinator;
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Initialize community systems
+      communitySettings = new CommunitySettings();
+      const analytics = initializeCommunityAnalytics();
+      communityAnalyzer = analytics.analyzer;
+      researchCoordinator = analytics.coordinator;
+
+      // Check community participation status
+      const settings = communitySettings.getSettings();
+      const hasConsent = communitySettings.hasValidConsent();
+
+      if (!hasConsent) {
+        showConsentBanner();
+      } else {
+        loadCommunityDashboard();
+      }
+
+      // Set up event listeners
+      setupEventListeners();
+    });
+
+    function showConsentBanner() {
+      const banner = document.getElementById('consent-banner');
+      banner.classList.remove('hidden');
+    }
+
+    function setupEventListeners() {
+      // Consent banner interactions
+      document.getElementById('learn-more-btn')?.addEventListener('click', showConsentModal);
+      document.getElementById('join-community-btn')?.addEventListener('click', showConsentModal);
+      
+      // Modal interactions
+      document.getElementById('consent-modal-close')?.addEventListener('click', hideConsentModal);
+      document.getElementById('research-modal-close')?.addEventListener('click', hideResearchModal);
+      
+      // Research actions
+      document.getElementById('propose-research-btn')?.addEventListener('click', showResearchProposalModal);
+      document.getElementById('cancel-research-proposal')?.addEventListener('click', hideResearchModal);
+      
+      // Form submissions
+      document.getElementById('research-proposal-form')?.addEventListener('submit', handleResearchProposal);
+      
+      // Protocol library tabs
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', handleProtocolCategoryChange);
+      });
+
+      // Close modals on backdrop click
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.add('hidden');
+          }
+        });
+      });
+    }
+
+    function showConsentModal() {
+      const modal = document.getElementById('consent-modal');
+      const content = document.getElementById('consent-modal-content');
+      
+      content.innerHTML = createConsentDialog();
+      
+      // Set up consent form listeners
+      const acceptBtn = content.querySelector('.consent-accept');
+      const declineBtn = content.querySelector('.consent-decline');
+      
+      acceptBtn?.addEventListener('click', handleConsentAccept);
+      declineBtn?.addEventListener('click', hideConsentModal);
+      
+      modal.classList.remove('hidden');
+    }
+
+    function hideConsentModal() {
+      document.getElementById('consent-modal').classList.add('hidden');
+    }
+
+    function showResearchProposalModal() {
+      document.getElementById('research-proposal-modal').classList.remove('hidden');
+    }
+
+    function hideResearchModal() {
+      document.getElementById('research-proposal-modal').classList.add('hidden');
+    }
+
+    function handleConsentAccept() {
+      const form = document.querySelector('.community-consent-dialog');
+      const formData = new FormData();
+      
+      // Collect form data
+      const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+      const select = form.querySelector('select[name="anonymization-level"]');
+      
+      const settings = {
+        participateInCommunity: form.querySelector('input[name="participate"]')?.checked || false,
+        shareAnalyticsData: form.querySelector('input[name="shareAnalytics"]')?.checked || false,
+        sharePatternInsights: form.querySelector('input[name="sharePatterns"]')?.checked || false,
+        shareProtocolAdaptations: form.querySelector('input[name="shareProtocols"]')?.checked || false,
+        anonymizationLevel: select?.value || 'high'
+      };
+
+      // Update settings
+      const updatedSettings = communitySettings.updateSettings(settings);
+      
+      if (updatedSettings) {
+        hideConsentModal();
+        document.getElementById('consent-banner').classList.add('hidden');
+        loadCommunityDashboard();
+        showToast('Welcome to the ECP Community Learning Circle! 🌱', 'success');
+      } else {
+        showToast('Failed to save consent settings. Please try again.', 'error');
+      }
+    }
+
+    async function loadCommunityDashboard() {
+      try {
+        // Generate community data
+        const dashboardData = generateCommunityDashboardData();
+        
+        // Update overview stats
+        updateOverviewStats(dashboardData);
+        
+        // Render cognitive patterns
+        renderCognitivePatterns(dashboardData.cognitive_patterns);
+        
+        // Render quality patterns
+        renderQualityPatterns(dashboardData.quality_patterns);
+        
+        // Render temporal patterns
+        renderTemporalPatterns(dashboardData.temporal_patterns);
+        
+        // Render community wisdom
+        renderCommunityWisdom(dashboardData.community_wisdom);
+        
+        // Load research projects
+        loadResearchProjects();
+        
+        // Load protocol library
+        loadProtocolLibrary();
+        
+      } catch (error) {
+        console.error('Failed to load community dashboard:', error);
+        showToast('Failed to load community data. Please refresh the page.', 'error');
+      }
+    }
+
+    function updateOverviewStats(data) {
+      const totalSessions = data.cognitive_patterns.total_sessions || 0;
+      const dataRichness = data.community_wisdom.overview?.data_richness_score || 0;
+      
+      document.getElementById('total-sessions').textContent = totalSessions;
+      document.getElementById('active-practitioners').textContent = Math.max(1, Math.ceil(totalSessions / 10));
+      document.getElementById('data-richness').textContent = dataRichness + '%';
+      
+      const statusMessage = totalSessions === 0 
+        ? "Community data collection is just beginning. Your contributions will help build collective wisdom!"
+        : `Community wisdom is emerging from ${totalSessions} shared sessions. Thank you for contributing to our collective understanding.`;
+      
+      document.getElementById('community-status-message').textContent = statusMessage;
+    }
+
+    function renderCognitivePatterns(patterns) {
+      const container = document.getElementById('cognitive-patterns-viz');
+      const insightsList = document.getElementById('cognitive-insights-list');
+      const confidenceBadge = document.getElementById('cognitive-confidence');
+      
+      if (patterns.total_sessions === 0) {
+        container.innerHTML = '<div class="no-data">Awaiting community contributions...</div>';
+        insightsList.innerHTML = '<li>Community cognitive patterns will emerge as more practitioners share their data.</li>';
+        confidenceBadge.textContent = 'Emerging';
+        return;
+      }
+      
+      // Render cognitive mode distribution
+      const distributionHTML = patterns.distribution.map(item => `
+        <div class="pattern-bar">
+          <div class="pattern-label">${item.mode}</div>
+          <div class="pattern-bar-fill">
+            <div class="pattern-bar-value" style="width: ${item.percentage}%"></div>
+          </div>
+          <div class="pattern-percentage">${item.percentage}%</div>
+        </div>
+      `).join('');
+      
+      container.innerHTML = distributionHTML;
+      
+      // Render insights
+      const insightsHTML = patterns.insights.map(insight => `
+        <li class="insight-item" data-confidence="${insight.confidence}">
+          <span class="insight-text">${insight.text}</span>
+          <span class="insight-confidence">${insight.confidence}</span>
+        </li>
+      `).join('');
+      
+      insightsList.innerHTML = insightsHTML;
+      
+      // Update confidence badge
+      const avgConfidence = patterns.insights.length > 0 ? 'Medium' : 'Low';
+      confidenceBadge.textContent = avgConfidence;
+    }
+
+    function renderQualityPatterns(patterns) {
+      const statsContainer = document.getElementById('quality-stats');
+      const insightsList = document.getElementById('quality-insights-list');
+      const confidenceBadge = document.getElementById('quality-confidence');
+      
+      if (patterns.count === 0) {
+        statsContainer.innerHTML = '<div class="no-data">Awaiting quality data...</div>';
+        insightsList.innerHTML = '<li>Response quality patterns will emerge from community contributions.</li>';
+        confidenceBadge.textContent = 'Pending';
+        return;
+      }
+      
+      // Render statistics
+      const stats = patterns.statistics;
+      statsContainer.innerHTML = `
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-value">${stats.mean}</span>
+            <span class="stat-label">Average Quality</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">${stats.median}</span>
+            <span class="stat-label">Median</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">${stats.max}</span>
+            <span class="stat-label">Highest</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">${patterns.count}</span>
+            <span class="stat-label">Sessions</span>
+          </div>
+        </div>
+      `;
+      
+      // Render insights
+      const insightsHTML = patterns.insights.map(insight => `
+        <li class="insight-item">
+          <span class="insight-text">${insight.text}</span>
+        </li>
+      `).join('');
+      
+      insightsList.innerHTML = insightsHTML;
+      confidenceBadge.textContent = patterns.count > 20 ? 'High' : 'Medium';
+    }
+
+    function renderTemporalPatterns(patterns) {
+      const container = document.getElementById('temporal-patterns-viz');
+      const insightsList = document.getElementById('temporal-insights-list');
+      
+      if (patterns.total_sessions === 0) {
+        container.innerHTML = '<div class="no-data">Temporal patterns emerging...</div>';
+        insightsList.innerHTML = '<li>Community practice rhythms will be revealed through shared timing data.</li>';
+        return;
+      }
+      
+      // Render time distribution as a simple chart
+      const distributionHTML = patterns.time_distribution.map(item => `
+        <div class="temporal-bar">
+          <div class="temporal-label">${item.time_period}</div>
+          <div class="temporal-bar-fill">
+            <div class="temporal-bar-value" style="width: ${item.percentage}%"></div>
+          </div>
+          <div class="temporal-count">${item.sessions}</div>
+        </div>
+      `).join('');
+      
+      container.innerHTML = distributionHTML;
+      
+      // Render insights
+      const insightsHTML = patterns.insights.map(insight => `
+        <li class="insight-item">
+          <span class="insight-text">${insight.text}</span>
+        </li>
+      `).join('');
+      
+      insightsList.innerHTML = insightsHTML;
+    }
+
+    function renderCommunityWisdom(wisdom) {
+      const keyInsights = document.getElementById('key-insights');
+      const recommendationsList = document.getElementById('practice-recommendations-list');
+      
+      // Render key insights
+      if (wisdom.key_insights && wisdom.key_insights.length > 0) {
+        const insightsHTML = wisdom.key_insights.slice(0, 3).map(insight => `
+          <div class="wisdom-insight">
+            <div class="insight-category">${insight.category}</div>
+            <div class="insight-text">${insight.text}</div>
+          </div>
+        `).join('');
+        keyInsights.innerHTML = insightsHTML;
+      } else {
+        keyInsights.innerHTML = '<div class="no-data">Community wisdom is crystallizing...</div>';
+      }
+      
+      // Render practice recommendations
+      if (wisdom.practice_recommendations && wisdom.practice_recommendations.length > 0) {
+        const recommendationsHTML = wisdom.practice_recommendations.map(rec => `
+          <li class="recommendation-item priority-${rec.priority}">
+            <div class="recommendation-title">${rec.title}</div>
+            <div class="recommendation-description">${rec.description}</div>
+          </li>
+        `).join('');
+        recommendationsList.innerHTML = recommendationsHTML;
+      } else {
+        recommendationsList.innerHTML = '<li>Practice recommendations will emerge from community patterns.</li>';
+      }
+    }
+
+    function loadResearchProjects() {
+      const container = document.getElementById('research-projects-grid');
+      const projects = researchCoordinator.getActiveResearchProjects();
+      
+      if (projects.length === 0) {
+        container.innerHTML = '<div class="no-data">No active research projects. Be the first to propose community research!</div>';
+        return;
+      }
+      
+      const projectsHTML = projects.map(project => `
+        <div class="research-project-card">
+          <div class="project-header">
+            <h4>${project.title}</h4>
+            <span class="project-status ${project.status}">${project.status}</span>
+          </div>
+          <div class="project-content">
+            <p class="project-description">${project.description}</p>
+            <div class="project-details">
+              <div class="project-detail">
+                <strong>Question:</strong> ${project.research_question}
+              </div>
+              <div class="project-meta">
+                <span>Participants: ${project.participants.length}/${project.target_participants}</span>
+                <span>Duration: ${project.duration_weeks} weeks</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-actions">
+            ${project.status === 'recruiting' ? 
+              `<button class="join-project-btn" data-project-id="${project.id}">Join Research</button>` :
+              '<span class="project-full">Research Active</span>'
+            }
+          </div>
+        </div>
+      `).join('');
+      
+      container.innerHTML = projectsHTML;
+      
+      // Add event listeners for join buttons
+      document.querySelectorAll('.join-project-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const projectId = e.target.dataset.projectId;
+          joinResearchProject(projectId);
+        });
+      });
+    }
+
+    function loadProtocolLibrary() {
+      // Placeholder for protocol library implementation
+      const container = document.getElementById('protocol-library-content');
+      container.innerHTML = `
+        <div class="protocol-placeholder">
+          <h4>Community Protocol Library</h4>
+          <p>This feature is being developed to host community-contributed research protocols, measurement frameworks, and methodological innovations.</p>
+          <p>Soon you'll be able to:</p>
+          <ul>
+            <li>Browse and adapt protocols shared by other practitioners</li>
+            <li>Contribute your own methodological innovations</li>
+            <li>Collaborate on protocol refinement</li>
+            <li>Access version-controlled protocol templates</li>
+          </ul>
+        </div>
+      `;
+    }
+
+    function handleProtocolCategoryChange(e) {
+      document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+      e.target.classList.add('active');
+      
+      const category = e.target.dataset.category;
+      // Load protocols for selected category
+      loadProtocolCategory(category);
+    }
+
+    function loadProtocolCategory(category) {
+      const container = document.getElementById('protocol-library-content');
+      container.innerHTML = `<div class="loading">Loading ${category} protocols...</div>`;
+      
+      // Placeholder implementation
+      setTimeout(() => {
+        container.innerHTML = `
+          <div class="category-content">
+            <h4>${category.charAt(0).toUpperCase() + category.slice(1)} Protocols</h4>
+            <p>Community protocols for ${category} are being curated. Check back soon!</p>
+          </div>
+        `;
+      }, 500);
+    }
+
+    function joinResearchProject(projectId) {
+      // Get user's participation settings
+      const settings = communitySettings.getSettings();
+      
+      const participantSettings = {
+        anonymization_level: settings.anonymizationLevel,
+        contribution_mode: settings.contributionMode,
+        data_sharing_consent: settings.shareAnalyticsData
+      };
+      
+      const result = researchCoordinator.joinResearchProject(projectId, participantSettings);
+      
+      if (result.success) {
+        showToast('Successfully joined research project! 🔬', 'success');
+        loadResearchProjects(); // Refresh the display
+      } else {
+        const message = result.reason === 'project_full' 
+          ? 'This research project is now full. Check back for new opportunities!'
+          : 'Unable to join research project. Please try again.';
+        showToast(message, 'error');
+      }
+    }
+
+    function handleResearchProposal(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const projectData = {
+        title: formData.get('research-title') || document.getElementById('research-title').value,
+        research_question: formData.get('research-question') || document.getElementById('research-question').value,
+        description: formData.get('research-description') || document.getElementById('research-description').value,
+        methodology: formData.get('research-methodology') || document.getElementById('research-methodology').value,
+        target_participants: parseInt(formData.get('target-participants') || document.getElementById('target-participants').value),
+        duration_weeks: parseInt(formData.get('duration-weeks') || document.getElementById('duration-weeks').value),
+        privacy_level: formData.get('privacy-level') || document.getElementById('privacy-level').value
+      };
+      
+      const project = researchCoordinator.createResearchProject(projectData);
+      
+      if (project) {
+        hideResearchModal();
+        loadResearchProjects();
+        showToast('Research project proposed successfully! 🌟', 'success');
+        
+        // Reset form
+        e.target.reset();
+      } else {
+        showToast('Failed to create research project. Please try again.', 'error');
+      }
+    }
+  </script>
+  <script type="module" src="js/modules/navigation.js"></script>
+</body>
+</html>
