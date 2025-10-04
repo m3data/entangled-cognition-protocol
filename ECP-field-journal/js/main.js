@@ -6,6 +6,10 @@ import { getUserCoordinates } from './modules/location.js';
 import { showToast } from './modules/ui.js';
 import { normalize } from './modules/formBindings.js';
 import { sanitizeForPublic } from './modules/dataSanitiser.js';
+import { collectMeasurementData } from './modules/measurementWidgets.js';
+import { storeMeasurementData } from './modules/storage.js';
+import { CommunitySettings, CommunityContributor } from './modules/communitySharing.js';
+import { initializeProtocolLibrary } from './modules/protocolLibrary.js';
 
 async function hashString(str) {
   const buffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
@@ -115,6 +119,20 @@ export function generateExperimentJSON() {
       }
     };
 
+    // Collect measurement framework data if measurement widgets are present
+    const measurementContainer = document.querySelector('.measurement-sections-container');
+    let measurementData = null;
+    
+    if (measurementContainer) {
+      try {
+        measurementData = collectMeasurementData(measurementContainer);
+        experiment.measurement_frameworks = measurementData;
+      } catch (error) {
+        console.warn('Failed to collect measurement data:', error);
+        // Continue without measurement data rather than failing completely
+      }
+    }
+
     const scrub = document.getElementById('scrub-author')?.checked;
     const visibilityElement = document.querySelector('input[name="visibility"]:checked');
     console.log("Selected visibility element:", visibilityElement);
@@ -143,7 +161,7 @@ async function finalizeExperiment(experiment, visibility, scrub) {
     console.log("Sanitized entry:", sanitizedEntry);
     console.log("Reached finalizeExperiment with visibility:", visibility);
     const consent = confirm(
-      `You’ve selected to make this entry public.\n\n` +
+      `You've selected to make this entry public.\n\n` +
       `🔒 Redacted: ${riskInfo.redacted.join(', ') || 'None'}\n` +
       `🔄 Generalized: ${riskInfo.generalized.join(', ') || 'None'}\n` +
       `⚠️ Sensitive: ${riskInfo.flaggedSensitive.join(', ') || 'None'}\n\n` +
@@ -166,5 +184,47 @@ async function finalizeExperiment(experiment, visibility, scrub) {
 
   const filenameBase = await generateFilename(experiment.author, experiment.timestamp_start);
   const filename = `${filenameBase}.json`;
+  
+  // Store measurement data separately for trend analysis
+  if (experiment.measurement_frameworks) {
+    try {
+      const measurementTimestamp = experiment.timestamp_end || experiment.timestamp_start || new Date().toISOString();
+      storeMeasurementData(experiment.experiment_id, experiment.measurement_frameworks, measurementTimestamp);
+    } catch (error) {
+      console.warn('Failed to store measurement data for trends:', error);
+      // Continue with normal save process
+    }
+  }
+  
+  // Check for community contribution consent
+  await handleCommunityContribution(experiment);
+  
   saveExperimentEntry(json, filename, scrub, visibility);
+}
+
+/**
+ * Handle community data contribution if user has consented
+ */
+async function handleCommunityContribution(experiment) {
+  try {
+    const communitySettings = new CommunitySettings();
+    
+    if (communitySettings.hasValidConsent()) {
+      const contributor = new CommunityContributor();
+      const result = await contributor.contributeExperiment(experiment);
+      
+      if (result.success) {
+        console.log('Successfully contributed to community learning:', result.contribution_id);
+        // Optionally show a subtle notification
+        if (document.querySelector('.community-contribution-indicator')) {
+          document.querySelector('.community-contribution-indicator').style.display = 'block';
+        }
+      } else if (result.reason !== 'no_consent') {
+        console.warn('Failed to contribute to community:', result.reason);
+      }
+    }
+  } catch (error) {
+    console.error('Error in community contribution:', error);
+    // Fail silently - don't interrupt the main experiment save process
+  }
 }

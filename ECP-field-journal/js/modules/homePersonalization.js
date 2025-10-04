@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
       background: rgba(125, 162, 109, 0.1);
       border-radius: 8px;
       padding: 1.5rem;
-      border-left: 4px solid var(--green-soft);
+      border: 2px solid var(--green-soft);
     }
     
     .sacred-space-reminder {

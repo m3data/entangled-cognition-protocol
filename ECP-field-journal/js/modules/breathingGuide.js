@@ -23,9 +23,9 @@ class BreathingGuide {
     };
     
     this.phaseInstructions = {
-      inhale: 'Breathe in slowly...',
-      hold: 'Hold gently...',
-      exhale: 'Release completely...',
+      inhale: '<i class="ph ph-arrow-up"></i> Breathe in slowly...',
+      hold: '<i class="ph ph-circle"></i> Hold gently...',
+      exhale: '<i class="ph ph-arrow-down"></i> Release completely...',
       rest: ''
     };
 
@@ -135,7 +135,7 @@ class BreathingGuide {
     
     const durationMs = duration * 1000; // Convert to milliseconds
     
-    this.instructionEl.textContent = this.phaseInstructions[phase];
+    this.instructionEl.innerHTML = this.phaseInstructions[phase];
     this.phaseTextEl.textContent = phase.charAt(0).toUpperCase() + phase.slice(1);
     
     // Animate the circle and timer

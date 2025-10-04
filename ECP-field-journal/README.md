@@ -1,6 +1,4 @@
 
-
-
 # ECP Field Journal Interface
 
 The **ECP Field Journal** is a local interface for recording, saving, and managing entries related to experiments and reflections in the Entangled Cognition Protocol (ECP). It allows contributors to log ritual contexts, symbolic conditions, human-machine interactions, and emergent insights in a structured, private-first way.
