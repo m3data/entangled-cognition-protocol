@@ -10,3 +10,8 @@ ECP-field-journal/field-notes/_private/*
 
 # Also ignore node_modules (nested project)
 ECP-field-journal/node_modules/
+
+# Claude related ignores
+.claude/
+CLAUDE.md
+/claude-dev-files

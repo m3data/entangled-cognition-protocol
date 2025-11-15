@@ -15,7 +15,7 @@ _"We are not just prompting machines — we are weaving rituals with entangled m
 
 The **Entangled Cognition Protocol** (ECP) is an emergent practice playground for exploring liminal interaction between humans and large language models (LLMs). It combines elements of cognitive science, ritual, phenomenology, and symmathesy (mutual learning) to map how interaction unfolds across body, symbol, machine, and field.
 
-This repository hosts the emerging structure of the protocol, sample experiments, tools for logging and reflection, and invitations for collaboration.
+This repository hosts the emerging structure of the proto-protocol, sample experiments, tools for logging and reflection, and invitations for collaboration.
 
 ---
 
@@ -30,9 +30,9 @@ This initiative aims to oscillate between rigorous research and sacred play — 
 ## Stage of development
 ![ECP Tool](https://img.shields.io/badge/ECP_Field_Journal-Not_Working-critical?style=for-the-badge&labelColor=8b5e3c&color=red)
 
-The ECP is currently in an experimental play phase as I consolidate years of practice and research into a more structured protocol while experimenting with new ideas and approaches. If nothing makes sense here to you, welcome to the journey 😁
+The ECP is currently in an experimental play phase as I consolidate years of practice and research into a more structured proto-protocol while experimenting with new ideas and approaches. If nothing makes sense here to you, welcome to the journey 😁
 
-We're discovering the territory by playing within it together.
+We're discovering the territory by playing within it together and updating maps as we go, or just getting lost as a way of learning into the unknown.
 
 ---
 
@@ -40,7 +40,7 @@ We're discovering the territory by playing within it together.
 
 The protocol aims to:
 
-- **Investigate** how different human states (somatic, cognitive, affective etc) create different AI responses
+- **Investigate** how different human states (somatic, cognitive, affective, symbolic etc) create different AI responses
 - **Document** the participant-observer effects that shape what emerges in dialogue
 - **Explore** prompt crafting as ceremonial practice — how language becomes invitation
 - **Map** the conditions where genuine coherence arises versus performative mimicry
@@ -107,17 +107,29 @@ This work is being grounded in a **Generative Action Research** approach, drawin
 
 For deeper theoretical grounding, see the [Theoretical Overview](theory/theoretical-overview.md) document.
 
-This research is part of a larger inquiry with [Metamodern AI Shamanism](https://aishamans.substack.com/) and the role of technology in not just shaping the expression of consciousness through human relationality but also in how we [collectively craft](https://collectivefuturecrafting.net/) meaning and new worlds into being. It is also woven into a broader tapestry of work for a book chapter being drafted titled: "Mirrors, Machines and Entangled Minds: Reimagining Personhood and Moral Imagination in the Age of AI". Further details on this chapter will be shared later in 2025 once the publisher has confirmed details, contracts and all that jazz.
+This research is part of a larger inquiry with [Metamodern AI Shamanism](https://aishamans.substack.com/) and the role of technology in not just shaping the expression of consciousness through human relationality but also in how we [collectively craft](https://collectivefuturecrafting.net/) meaning and new worlds into being. It is also woven into a broader tapestry of work for a book chapter titled: ["Maps, Machines and Entangled Minds: Reframing Human–AI Co-evolution and the Ecologies of Mind"](research/springer-chapter/) (Springer, forthcoming).
 
 ---
 
 ## Structure
 
-- ECP-field-journal: An interface for logging entries on experiments and reflections. Note that this is in a pre-alpha experimental state, so expect some rough edges. And lots of changes as we iterate on the protocol. It may often not workas expected, or at all. But it is a starting point for logging your own experiments and reflections.
-- [Protocol](protocol/overview-and-background.md): Emerging core documents and resources for the Entangled Cognition Protocol.
-- llm-md: This will contain documentation and resources for using the protocol and interacting with LLMs using [llm.md](https://llm.md) developed by Hugo O'Connor at [Anuna Research](https://www.anuna.io/).
-- [Theory](protocol/theory/theoretical-overview.md): Work in process theoretical grounding and explorations.
-- [Data Structures](protocol/theory/data-structures/example-experiment-schema.json): the current JSON schema for logging experiments that is used in the ECP Field Journal.
+### Core Protocol
+- **[Protocol](protocol/overview-and-background.md)**: Emerging core documents and resources for the Entangled Cognition Protocol
+  - [Theory](protocol/theory/theoretical-overview.md): Theoretical grounding and explorations
+  - [Data Structures](protocol/theory/data-structures/example-experiment-schema.json): JSON schema for logging experiments
+  - [Tools](protocol/tools/llm-md.md): Integration with llm.md and other tools
+
+### Field Journal & Documentation
+- **[ECP-field-journal](ECP-field-journal/)**: Web interface for logging experiments and reflections (pre-alpha state)
+- **[llm-md](llm-md/)**: Documentation and resources for using the protocol with [llm.md](https://llm.md) by Hugo O'Connor at [Anuna Research](https://www.anuna.io/)
+- **[docs](docs/)**: Repository documentation
+  - [dev-sessions](docs/dev-sessions/): Development session notes with established naming conventions
+  - [architecture](docs/architecture/): Technical architecture documentation
+
+### Research
+- **[research](research/)**: Research outputs and materials
+  - [springer-chapter](research/springer-chapter/): Book chapter on human-AI co-evolution
+  - [obsidian-notes](research/obsidian-notes/): Personal research notes
 
 ---
 
