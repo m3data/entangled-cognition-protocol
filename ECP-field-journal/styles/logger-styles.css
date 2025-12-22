@@ -1568,3 +1568,261 @@ a.launcher-btn {
   opacity: 1;
 }
 
+/* ============================================================================
+   SC Analysis Display (Synthesis Phase)
+   ============================================================================ */
+
+.sc-analysis {
+  background: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.analysis-header h4 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.analysis-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.metric-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.metric-card label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.metric-card .metric-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  font-family: var(--font-body);
+}
+
+.metric-card .metric-desc {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.coupling-summary {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.coupling-mode-display,
+.attractor-display {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+}
+
+.coupling-mode-display label,
+.attractor-display label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mode-label {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.trajectory-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  background: var(--highlight-color);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+}
+
+.basin-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.residence-time {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.psi-components {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.psi-components > label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.psi-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.psi-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.psi-bar .psi-label {
+  width: 60px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.psi-bar .psi-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.psi-bar .psi-fill {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.psi-bar .psi-value {
+  width: 36px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.metrics-trajectory {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.metrics-trajectory label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.trajectory-hint {
+  font-size: 0.8rem;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.analysis-footer {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.analysis-footer .filename {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.no-metrics {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+}
+
+.analysis-error {
+  background: var(--red-light);
+  border: 1px solid var(--red-soft);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  color: var(--red-soft);
+}
+
+.analysis-error p {
+  margin: 0 0 0.5rem;
+}
+
+.analysis-error .analysis-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.analysis-loading {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+}
+
+.analysis-placeholder {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.analysis-actions {
+  margin-top: 1rem;
+  text-align: center;
+}
+

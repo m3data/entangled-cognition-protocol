@@ -397,6 +397,25 @@ export function clearSession() {
 }
 
 /**
+ * Build Semantic Climate URL with ECP session context.
+ * Enables SC to correlate its session with the ECP experiment.
+ * @param {string} [baseUrl='http://localhost:8000'] - SC base URL
+ * @returns {string} URL with query params
+ */
+export function buildSCUrl(baseUrl = 'http://localhost:8000') {
+  if (!sessionState.experimentId) {
+    return baseUrl; // No session active, return plain URL
+  }
+
+  const params = new URLSearchParams({
+    ecp_session_id: sessionState.experimentId,
+    ecp_experiment_type: sessionState.experimentType || 'unknown'
+  });
+
+  return `${baseUrl}?${params.toString()}`;
+}
+
+/**
  * Build final experiment entry from session data
  * @returns {object} Complete experiment entry for saving
  */

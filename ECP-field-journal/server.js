@@ -161,6 +161,105 @@ app.get('/', (req, res) => {
 });
 
 // ============================================================================
+// SC Session Analysis API
+// ============================================================================
+
+// Path to SC sessions directory (relative to EarthianLabs root)
+const SC_SESSIONS_DIR = path.resolve(__dirname, '../../semantic-climate-phase-space/sessions');
+
+/**
+ * Find and return SC session data by ECP session ID
+ */
+app.get('/api/sc-session/:ecpSessionId', (req, res) => {
+  const { ecpSessionId } = req.params;
+
+  if (!ecpSessionId) {
+    return res.status(400).json({ error: 'Missing ecpSessionId parameter' });
+  }
+
+  try {
+    // Check if SC sessions directory exists
+    if (!fs.existsSync(SC_SESSIONS_DIR)) {
+      return res.status(404).json({
+        error: 'SC sessions directory not found',
+        path: SC_SESSIONS_DIR
+      });
+    }
+
+    // Scan for JSON files
+    const files = fs.readdirSync(SC_SESSIONS_DIR)
+      .filter(f => f.endsWith('.json'));
+
+    // Search for matching session
+    for (const file of files) {
+      const filePath = path.join(SC_SESSIONS_DIR, file);
+      try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        const session = JSON.parse(content);
+
+        if (session.metadata?.ecp_session_id === ecpSessionId) {
+          return res.json({
+            success: true,
+            filename: file,
+            session: session
+          });
+        }
+      } catch (parseErr) {
+        console.warn(`Failed to parse ${file}:`, parseErr.message);
+        continue;
+      }
+    }
+
+    // No matching session found
+    return res.status(404).json({
+      error: 'No SC session found for this ECP experiment',
+      ecpSessionId,
+      sessionsScanned: files.length
+    });
+
+  } catch (error) {
+    console.error('Error finding SC session:', error);
+    return res.status(500).json({ error: 'Failed to search SC sessions' });
+  }
+});
+
+/**
+ * List all available SC sessions (for debugging/manual selection)
+ */
+app.get('/api/sc-sessions', (req, res) => {
+  try {
+    if (!fs.existsSync(SC_SESSIONS_DIR)) {
+      return res.json({ sessions: [] });
+    }
+
+    const files = fs.readdirSync(SC_SESSIONS_DIR)
+      .filter(f => f.endsWith('.json'))
+      .map(f => {
+        const filePath = path.join(SC_SESSIONS_DIR, f);
+        try {
+          const content = fs.readFileSync(filePath, 'utf8');
+          const session = JSON.parse(content);
+          return {
+            filename: f,
+            session_id: session.metadata?.session_id,
+            ecp_session_id: session.metadata?.ecp_session_id,
+            model: session.metadata?.model,
+            created_at: session.metadata?.created_at,
+            total_turns: session.metadata?.total_turns
+          };
+        } catch (e) {
+          return { filename: f, error: 'Parse failed' };
+        }
+      })
+      .sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+    res.json({ sessions: files });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to list SC sessions' });
+  }
+});
+
+// ============================================================================
 // Instrument Control API
 // ============================================================================
 

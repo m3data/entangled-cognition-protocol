@@ -33,6 +33,7 @@ import {
   updateExperimentType,
   markReflectionSaved,
   buildExperimentEntry,
+  buildSCUrl,
   createPhaseNavigation,
   injectOrchestratorStyles,
   onPhaseChange,
@@ -173,6 +174,38 @@ function initInstrumentIndicators() {
         modelSelect.innerHTML = data.models.map(m => `<option value="${m}">${m}</option>`).join('');
       }
     }
+  });
+}
+
+/**
+ * Open Semantic Climate with ECP session context.
+ * This allows SC to correlate its session data with this ECP experiment.
+ */
+function openSemanticClimate() {
+  const url = buildSCUrl();
+  window.open(url, '_blank');
+}
+
+/**
+ * Initialize Semantic Climate link handlers.
+ * Updates all SC links to use the parameterized URL with session context.
+ */
+function initSCLinks() {
+  // Find all SC link buttons and update their handlers
+  document.querySelectorAll('.open-sc-btn, #open-sc-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSemanticClimate();
+    });
+    // Update href for middle-click/right-click
+    btn.href = buildSCUrl();
+  });
+
+  // Update href dynamically when session changes
+  onPhaseChange(() => {
+    document.querySelectorAll('.open-sc-btn, #open-sc-btn').forEach(btn => {
+      btn.href = buildSCUrl();
+    });
   });
 }
 
@@ -373,6 +406,183 @@ function initFormListeners() {
 }
 
 /**
+ * Load SC analysis for the current experiment
+ */
+async function loadSCAnalysis() {
+  const state = getSessionState();
+  const container = document.getElementById('analysis-container');
+  const loadBtn = document.getElementById('load-analysis-btn');
+
+  if (!state.experimentId) {
+    container.innerHTML = '<p class="analysis-error">No active experiment session.</p>';
+    return;
+  }
+
+  // Show loading state
+  loadBtn.disabled = true;
+  loadBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Loading...';
+  container.innerHTML = '<p class="analysis-loading">Searching for SC session...</p>';
+
+  try {
+    const response = await fetch(`/api/sc-session/${encodeURIComponent(state.experimentId)}`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      container.innerHTML = `
+        <div class="analysis-error">
+          <p><i class="ph ph-warning"></i> ${data.error || 'Failed to load analysis'}</p>
+          <p class="analysis-hint">Make sure you exported the session in Semantic Climate before returning here.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Render the analysis
+    renderSCAnalysis(data.session, data.filename);
+
+  } catch (error) {
+    console.error('Failed to load SC analysis:', error);
+    container.innerHTML = `
+      <div class="analysis-error">
+        <p><i class="ph ph-warning"></i> Error loading analysis: ${error.message}</p>
+      </div>
+    `;
+  } finally {
+    loadBtn.disabled = false;
+    loadBtn.innerHTML = '<i class="ph ph-download"></i> Load SC Analysis';
+  }
+}
+
+/**
+ * Render SC session analysis
+ */
+function renderSCAnalysis(session, filename) {
+  const container = document.getElementById('analysis-container');
+  const metadata = session.metadata || {};
+  const metricsHistory = session.metrics_history || [];
+
+  // Get the last metrics snapshot (most complete)
+  const latestMetrics = metricsHistory.length > 0
+    ? metricsHistory[metricsHistory.length - 1]
+    : null;
+
+  // Build analysis HTML
+  let html = `
+    <div class="sc-analysis">
+      <div class="analysis-header">
+        <h4><i class="ph ph-chart-line"></i> Session: ${metadata.session_id?.slice(0, 8) || 'unknown'}...</h4>
+        <span class="analysis-meta">${metadata.total_turns || 0} turns · ${metadata.model || 'unknown model'}</span>
+      </div>
+  `;
+
+  if (latestMetrics) {
+    const metrics = latestMetrics.metrics || {};
+    const couplingMode = latestMetrics.coupling_mode || {};
+    const psi = latestMetrics.psi_components || {};
+    const attractor = latestMetrics.attractor_dynamics || {};
+
+    html += `
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <label>Δκ (Temperature)</label>
+          <span class="metric-value">${metrics.delta_kappa?.toFixed(3) || '--'}</span>
+          <span class="metric-desc">Inferential complexity</span>
+        </div>
+        <div class="metric-card">
+          <label>ΔH (Humidity)</label>
+          <span class="metric-value">${metrics.delta_h?.toFixed(3) || '--'}</span>
+          <span class="metric-desc">Conceptual diversity</span>
+        </div>
+        <div class="metric-card">
+          <label>α (Pressure)</label>
+          <span class="metric-value">${metrics.alpha?.toFixed(3) || '--'}</span>
+          <span class="metric-desc">Fractal coherence</span>
+        </div>
+      </div>
+
+      <div class="coupling-summary">
+        <div class="coupling-mode-display">
+          <label>Coupling Mode</label>
+          <span class="mode-label ${(couplingMode.base_label || '').toLowerCase().replace(/\s+/g, '-')}">
+            ${couplingMode.compound_label || couplingMode.base_label || 'Unknown'}
+          </span>
+          ${couplingMode.trajectory ? `<span class="trajectory-badge">${couplingMode.trajectory}</span>` : ''}
+        </div>
+        ${attractor.basin ? `
+          <div class="attractor-display">
+            <label>Attractor Basin</label>
+            <span class="basin-label">${attractor.basin}</span>
+            <span class="residence-time">Residence: ${attractor.residence_time || 0} turns</span>
+          </div>
+        ` : ''}
+      </div>
+
+      <div class="psi-components">
+        <label>Ψ Components</label>
+        <div class="psi-bars">
+          <div class="psi-bar">
+            <span class="psi-label">Semantic</span>
+            <div class="psi-track"><div class="psi-fill" style="width: ${(psi.semantic || 0.5) * 100}%"></div></div>
+            <span class="psi-value">${psi.semantic?.toFixed(2) || '--'}</span>
+          </div>
+          <div class="psi-bar">
+            <span class="psi-label">Temporal</span>
+            <div class="psi-track"><div class="psi-fill" style="width: ${(psi.temporal || 0.5) * 100}%"></div></div>
+            <span class="psi-value">${psi.temporal?.toFixed(2) || '--'}</span>
+          </div>
+          <div class="psi-bar">
+            <span class="psi-label">Affective</span>
+            <div class="psi-track"><div class="psi-fill" style="width: ${(psi.affective || 0.5) * 100}%"></div></div>
+            <span class="psi-value">${psi.affective?.toFixed(2) || '--'}</span>
+          </div>
+          <div class="psi-bar">
+            <span class="psi-label">Biosignal</span>
+            <div class="psi-track"><div class="psi-fill" style="width: ${(psi.biosignal || 0.5) * 100}%"></div></div>
+            <span class="psi-value">${psi.biosignal?.toFixed(2) || '--'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Add metrics trajectory (simplified sparkline-like view)
+    if (metricsHistory.length > 1) {
+      const deltaKappaHistory = metricsHistory.map(m => m.metrics?.delta_kappa).filter(v => v != null);
+      html += `
+        <div class="metrics-trajectory">
+          <label>Trajectory (${metricsHistory.length} snapshots)</label>
+          <p class="trajectory-hint">Δκ range: ${Math.min(...deltaKappaHistory).toFixed(2)} → ${Math.max(...deltaKappaHistory).toFixed(2)}</p>
+        </div>
+      `;
+    }
+  } else {
+    html += `
+      <div class="no-metrics">
+        <p>No metrics computed (session may have had fewer than 10 turns)</p>
+      </div>
+    `;
+  }
+
+  html += `
+      <div class="analysis-footer">
+        <span class="filename"><i class="ph ph-file"></i> ${filename}</span>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+/**
+ * Initialize SC analysis handlers
+ */
+function initSCAnalysisHandlers() {
+  const loadBtn = document.getElementById('load-analysis-btn');
+  if (loadBtn) {
+    loadBtn.addEventListener('click', loadSCAnalysis);
+  }
+}
+
+/**
  * Initialize save handlers
  */
 function initSaveHandlers() {
@@ -438,6 +648,8 @@ export function init() {
   initSomaticWidgets();
   initInstrumentIndicators();
   initInstrumentLauncher();
+  initSCLinks();
+  initSCAnalysisHandlers();
   initCurrentState();
   initFormListeners();
   initSaveHandlers();
