@@ -1,0 +1,74 @@
+cff-version: 1.2.0
+title: Entangled Cognition Protocol (ECP)
+message: >-
+  If you use this protocol or software, please cite both the
+  protocol repository and the associated Springer chapter.
+type: software
+
+authors:
+  - given-names: Mathew
+    family-names: Mytka
+    affiliation: EarthianLabs
+    email: m3untold@gmail.com
+
+repository-code: https://github.com/m3data/entangled-cognition-protocol
+url: https://github.com/m3data/entangled-cognition-protocol
+
+abstract: >-
+  A field-based research framework for studying cognition as a
+  relational, embodied, and socio-technical process. ECP explores
+  how meaning emerges through dynamic relational fields across
+  humans, machines, ecologies, and symbolic environments. Includes
+  the Field Journal web interface for logging experiments and
+  reflections, measurement frameworks, and theoretical scaffolding
+  grounded in Meta-E: Entangled Cognition.
+
+keywords:
+  - entangled cognition
+  - human-AI interaction
+  - relational epistemology
+  - phenomenology
+  - 4E cognition
+  - participatory sense-making
+  - somatic sovereignty
+  - cognitive ecology
+
+license: LicenseRef-ESL-A
+version: 0.1.0
+date-released: 2025-12-22
+
+preferred-citation:
+  type: book-chapter
+  title: >-
+    Maps, Machines and Entangled Minds: Reframing Human–AI
+    Co-evolution and the Ecologies of Cognition
+  authors:
+    - given-names: Mathew
+      family-names: Mytka
+  year: 2026
+  publisher:
+    name: Springer
+  notes: Forthcoming Q1 2026
+
+references:
+  - type: software
+    title: 4D Semantic Coupling Framework
+    authors:
+      - family-names: Morgoulis
+        given-names: Daria
+    year: 2025
+    url: https://github.com/daryamorgoulis/4d-semantic-coupling
+    notes: >-
+      Core semantic metrics (Δκ, α, ΔH) inform the protocol's
+      measurement approaches via semantic-climate-phase-space.
+
+  - type: software
+    title: Semantic Climate Phase Space
+    authors:
+      - given-names: Mathew
+        family-names: Mytka
+    year: 2025
+    url: https://github.com/m3data/semantic-climate-phase-space
+    notes: >-
+      Extension of Morgoulis metrics with trajectory dynamics,
+      attractor basins, and biosignal integration.
