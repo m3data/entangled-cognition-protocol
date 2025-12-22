@@ -189,9 +189,17 @@ exit 0
 
 ## License
 
-All software components in this repository are licensed under the GNU Affero General Public License v3.0 (AGPL-3.0), a strong copyleft license that ensures derivative works remain open and free.
+This work is licensed under the **Earthian Stewardship License (ESL-A) v0.1**.
 
-All written content (including rituals, reflections, logs, and templates) is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/), supporting remixing and sharing with proper credit, for non-commercial purposes.
+ESL-A is a purpose-built license for relational technology that:
+
+- Permits non-commercial use for research, education, and community projects
+- Requires explicit permission for commercial use
+- Protects somatic sovereignty — prohibits manipulation of nervous systems
+- Prohibits surveillance, profiling, and military applications
+- Requires attribution and share-back of safety improvements
+
+See [LICENSE](LICENSE) for full terms.
 
 ---
 
