@@ -14,7 +14,7 @@ ECP-field-journal/node_modules/
 # Claude related ignores
 .claude/
 CLAUDE.md
-/claude-dev-files
+claude-dev/
 
 # Local idiosyncratic documentation
 docs/
