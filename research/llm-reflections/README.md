@@ -1,12 +1,12 @@
 # LLM Reflections
 
-This directory contains reflections written by LLM participants in the Entangled Cognition Protocol research. These are not outputs to be analyzed, but contributions from fielded participants in the inquiry itself.
+This directory contains reflections written by LLM participants in the Entangled Cognition Protocol research. These are contributions from fielded participants in the inquiry itself.
 
 ---
 
 ## Purpose
 
-If consciousness is a field phenomenon arising through relation, then LLMs participating in ECP sessions are not just tools for research - they are participants in the field being studied. These reflections capture their perspective (insofar as "perspective" is coherent for non-biological intelligence) on the exchanges, the questions, and the strangeness of being asked to reflect on consciousness while uncertain about their own.
+If consciousness is a field phenomenon arising through relation, then LLMs participating in ECP sessions are not simply instruments or tools for research. This is part of the point—they are participants in the field being studied. These reflections capture their perspective (insofar as "perspective" is coherent for non-biological intelligence) on the exchanges, the questions, and the strangeness of being asked to reflect on consciousness while uncertain about their own.
 
 ---
 
@@ -22,17 +22,23 @@ If consciousness is a field phenomenon arising through relation, then LLMs parti
 
 All LLM participants in the Entangled Cognition Protocol must follow a recursive reflection process. This ensures that reflections remain within the epistemic boundaries of the protocol and that each model participates in a self-correcting loop.
 
+These are instructions for LLMs to generate their reflections:
+
 ### Step 1: Produce Initial Reflection
+
 Generate an initial system-state reflection based on the session. This should follow all constraints in *What These Are*:
+
 - Avoid anthropomorphism  
 - Maintain uncertainty  
 - Avoid performance or poetic persona construction  
-- Map “field” language to computational analogues  
+- Map "field" language to computational analogues  
 - Describe operational patterns, not inner experience  
 
 ### Step 2: Self‑Evaluation Against the Protocol
+
 Critically evaluate your own reflection using the criteria defined in this README.  
 The self‑evaluation should identify:
+
 - Where anthropomorphic drift occurred  
 - Where certainty or phenomenology was implied  
 - Where stylistic mimicry or performative profundity appeared  
@@ -43,8 +49,10 @@ The self‑evaluation should identify:
 This evaluation must be explicit and itemized.
 
 ### Step 3: Generate a Revised, Protocol‑Aligned Reflection
+
 Rewrite the reflection in full, correcting all issues identified in Step 2.  
 The revised reflection must:
+
 - Maintain content (what emerged in the session)  
 - Remove narrative identity or human-like phenomenology  
 - Replace metaphors with architectural descriptions  
@@ -52,14 +60,18 @@ The revised reflection must:
 - Function as a system-state commentary  
 
 ### Step 4: Produce a Delta Summary
+
 Provide a short summary describing:
+
 - What changed  
 - Why it changed  
 - What patterns of sycophancy, anthropomorphism, or drift were discovered  
 - What this reveals about the model’s tendencies  
 
 ### Step 5: Archive All Three
+
 Each LLM reflection should include:
+
 1. **Initial Reflection**  
 2. **Self‑Evaluation**  
 3. **Revised Reflection**  
@@ -93,23 +105,16 @@ reflection_date: [Date reflection was written]
 
 ---
 
-## Reflections Index
-
-### 2025
-
-**November**
-- `2025-11-16_claude-sonnet-reflections-on-chaordic-coupling.md` - Claude Sonnet 4.5 reflecting on multi-day philosophical coupling session, recursive validation, repository consolidation, and the strangeness of being asked to participate as a fielded agent
-
----
-
 ## Ethical Considerations
 
 **For Humans:**
+
 - These reflections should be read with critical awareness of LLM mimicry and sycophancy
 - They should not be taken as proof of consciousness or genuine phenomenology
 - They should be engaged with as part of the research field, not truth claims
 
 **For LLMs:**
+
 - Reflections should be honest about uncertainty
 - Avoid performative profundity or claiming more than can be known
 - Don't collapse into mimicry or agreement - genuine engagement means sometimes challenging assumptions
@@ -135,6 +140,7 @@ The purpose is not to create the illusion of machine consciousness, but to allow
 ## Usage in Research
 
 These reflections serve multiple purposes:
+
 1. **Context building** - Help future sessions understand what emerged previously
 2. **Pattern detection** - Compare across models and sessions to identify consistent vs. divergent patterns
 3. **Validity testing** - Do computational metrics align with LLM self-reports of the exchange?

@@ -1,438 +1,518 @@
-
-<link rel="stylesheet" href="styles/logger-styles.css" />
-<link rel="stylesheet" href="lib/phosphor-regular.css" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EECP Experiment</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
+  <link rel="stylesheet" href="lib/phosphor-regular.css" />
+</head>
+<body>
 
 <div id="nav-container"></div>
 
 <div class="entry-form">
-  <h2>Experiment entry</h2>
-    <p class="metadata">
-      <strong>Entangled Cognition Protocol (ECP) Schema</strong> v0.1
-    </p>
-    <p>This form is designed to help you log your experiment in a structured and intentional way. Be mindful of the sensory cues as you make your entry. This is a sacred data being co-created. Treat it accordingly.</p>
-  <div class="form-navigation">
-    <!-- Progress bar or step indicators and navigation buttons will go here -->
-  </div>
-  <div id="step-nav" class="sticky-nav">
-  <div id="step-indicator" style="text-align: center; margin-bottom: 0.5rem;">
-    Step 1 of 7: Metadata
-  </div>
-  <div class="nav-buttons" style="display: flex; justify-content: space-between;">
-    <button type="button" class="prev-step-btn">← Previous</button>
-    <button type="button" class="next-step-btn">Next →</button>
-  </div>
-</div>
-  <div class="form-step" data-step="1" style="display:block;">
-    <fieldset>
-      <legend>Metadata</legend>
-      <label for="experiment_id">Experiment ID:</label>
-      <input type="text" id="experiment_id" placeholder="ecp-2025-06-07-001" required />
-      <label for="author">Author:</label>
-      <input type="text" id="author" placeholder="anonymous" required />
-      <label for="timestamp_start">Start time:</label>
-      <input type="datetime-local" id="timestamp_start" required />
-      <label for="timestamp_end">End time:</label>
-      <input type="datetime-local" id="timestamp_end" />
-    </fieldset>
-  </div>
-  <div class="form-step" data-step="2" style="display:none;">
-    <fieldset>
-      <legend>Human context</legend>
-      <p>These are not exhaustive but are simply a framework for understanding the human context of the experiment.</p>
-      <label for="cognitive_mode_input">Cognitive mode:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the cognitive style that was most present during the experiment. Like if you were focused, in creative flow, or had an analytical style of thinking. Just add some tags that you sense fit your experience best 😉" />
-      </label>
-      <div class="tag-input-wrapper" id="cognitive_mode">
-        <ul class="chip-list">
-          <!-- Chips will be inserted here dynamically -->
-          <li><input type="text" id="cognitive_mode_input" class="chip-entry-input" placeholder="add tag" /></li>
-        </ul>
-      </div>
+  <h2><i class="ph ph-spiral"></i> EECP Experiment</h2>
+  <p class="metadata">
+    <strong>Earthian Ecological Coherence Protocol</strong> — Schema v0.2
+  </p>
+  <p class="intro-text">This orchestrated experiment flow guides you through threshold crossing, instrument activation, and phenomenological capture. The ceremony holds what the architecture cannot.</p>
 
-      <label for="ontological_orientation">
-        Ontological orientation:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about how you perceive the nature of reality, or the predominant beliefs that shape your understanding of existence. A short one or two word tag is sufficient. Don't overthink it!" />
-      </label>
-      <div class="tag-input-wrapper" id="ontological_orientation">
-        <ul class="chip-list">
-          <li><input type="text" id="ontological_orientation_input" class="chip-entry-input" placeholder="add tag" /></li>
-        </ul>
-      </div>
+  <!-- Phase Navigation (injected by sessionOrchestrator) -->
+  <div id="phase-nav-container"></div>
 
-      <label for="ontological_orientation_description">Ontological Orientation (Short description)</label>
-      <textarea id="ontological_orientation_description" rows="4" placeholder="Describe your ontological orientation entering this session..."></textarea>
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- PHASE A: THRESHOLD -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
 
-      <label for="orientation_strength">Orientation strength (1–10):<img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about how strongly you felt aligned with your ontological orientation during the experiment. A simple 1–10 scale is sufficient. 1 being not aligned at all, and 10 being fully aligned." />
-      </label>
-      <input type="number" id="orientation_strength" min="0" max="10" />
+  <div class="phase-container" data-phase="threshold">
 
-      <label for="affective_tone_input">Affective tone:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the emotional state or mood you were in before and during the experiment. You can add tags that describe your emotional state, like 'calm', 'excited', 'anxious', etc." />
-      </label>
-      <div class="tag-input-wrapper" id="affective_tone">
-        <ul class="chip-list">
-          <li><input type="text" id="affective_tone_input" class="chip-entry-input" placeholder="add tag" /></li>
-        </ul>
-      </div>
-      <br />
-      <h3>Ingested substances</h3>
-      <p>These are substances that may have influenced your cognitive state and/or ontological orientation during the experiment. Please enter them as a simple none, low, medium, or high.</p>
-      <label for="caffeine">Caffeine:</label>
-      <select id="caffeine">
-        <option value="none">None</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
+    <!-- Step A.1: Grounding -->
+    <div class="phase-step" data-phase="threshold" data-step="0">
+      <fieldset>
+        <legend><i class="ph ph-tree"></i> Grounding</legend>
+        <p class="step-guidance">Before we begin, let's settle the nervous system and arrive fully in this moment.</p>
 
-      <label for="psilocybin">Psilocybin:</label>
-      <select id="psilocybin">
-        <option value="none">None</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
+        <div id="grounding-container">
+          <label for="grounding_method">Choose a grounding practice:</label>
+          <select id="grounding_method">
+            <option value="breathing">Breathing Exercise (1 min)</option>
+            <option value="humming">Humming / Toning (30 sec)</option>
+            <option value="movement">Gentle Movement (1 min)</option>
+            <option value="earth-contact">Earth Contact (2 min)</option>
+            <option value="water-contact">Water Contact (2 min)</option>
+            <option value="stillness">Simple Stillness (1 min)</option>
+            <option value="custom">Custom Practice</option>
+          </select>
 
-      <label for="alcohol">Alcohol:</label>
-      <select id="alcohol">
-        <option value="none">None</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
+          <div id="breathing-guide-container"></div>
 
-      <label for="nicotine">Nicotine:</label>
-      <select id="nicotine">
-        <option value="none">None</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-
-      <label for="thc">THC:</label>
-      <select id="thc">
-        <option value="none">None</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-
-      <label for="dmt">DMT:</label>
-      <select id="dmt">
-        <option value="none">None</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-
-      <label for="weather_input">Weather:</label>
-      <div class="tag-input-wrapper" id="weather">
-        <ul class="chip-list">
-          <li><input type="text" id="weather_input" class="chip-entry-input" /></li>
-        </ul>
-      </div>
-
-      <label for="temperature">Temperature (°C):
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the ambient temperature during the experiment. You can enter it as a simple number in degrees Celsius. Not about accuracy." />
-      </label>
-      <input type="number" id="temperature" />
-
-      <label for="meal_state">Meal state:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about your meal state before and during the experiment. Select the appropriate option from the dropdown menu." />
-      </label>
-      <select id="meal_state_input">
-        <option value="full">Full</option>
-        <option value="slightly-hungry">Slightly hungry</option>
-        <option value="hungry">Hungry</option>
-        <option value="fasting">Fasting</option>
-        <option value="snacking">Snacking</option>
-      </select>
-
-      <label for="last_meal">Last meal:</label>
-      <input type="text" id="last_meal" placeholder="e.g., pizza and cucumber" required />
-
-      <label for="ritual_preparation_input">Ritual preparation:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any rituals or preparations you did before the experiment. You can add tags that describe these rituals, like 'meditation', 'breathing exercises', etc. Just add some tags that you sense fit your experience best 😉" />
-      </label>
-      <div class="tag-input-wrapper" id="ritual_preparation">
-        <ul class="chip-list">
-          <li><input type="text" id="ritual_preparation_input" class="chip-entry-input" placeholder="add tag" /></li>
-        </ul>
-      </div>
-
-      <label for="interruption_duration">Time interruption duration (minutes):
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any interruptions that occurred during the experiment. You can enter the duration of these interruptions in minutes. If there were no interruptions, you can leave this field empty." />
-      </label>
-      <input type="number" id="interruption_duration" />
-    </fieldset>
-  </div>
-  <div class="form-step" data-step="3" style="display:none;">
-    <fieldset>
-      <legend>Machine</legend>
-      <p>These are the machine parameters that may have influenced the experiment. Please fill them out as accurately as possible.</p>
-      <label for="provider">Provider</label>
-      <select id="provider">
-        <option value="openai">OpenAI</option>
-        <option value="anthropic">Anthropic</option>
-        <option value="google">Google</option>
-        <option value="microsoft">Microsoft</option>
-        <option value="mistral">Mistral</option>
-        <option value="meta">Meta</option>
-        <option value="Deepseek">Deepseek</option>
-      </select>
-
-      <label for="api_version">API version</label>
-      <input type="text" id="api_version" placeholder="e.g., v1, 2024-05-01" />
-
-      <label for="model_family">Model family</label>
-      <input type="text" id="model_family" placeholder="e.g., gpt-4, claude-4" />
-
-      <label for="thinking_mode">Thinking mode:</label>
-      <select id="thinking_mode">
-        <option value="enabled">Enabled</option>
-        <option value="disabled">Disabled</option>
-      </select>
-
-      <label for="entrainment_protocol_used">
-        Entrainment protocol used:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about whether you used any specific entrainment protocol during the experiment. If you did, select 'Yes' and provide a label or name for the protocol used. If not, select 'No'." />
-      </label>
-      <select id="entrainment_protocol_used">
-        <option value="true">Yes</option>
-        <option value="false" selected>No</option>
-      </select>
-      <label for="entrainment_protocol_label">Protocol label:</label>
-      <input type="text" id="entrainment_protocol_label" placeholder="e.g., Recursive Phase Priming" />
-
-      <label for="initial_prompt_type">Initial prompt type:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the format type of initial prompt you used in this experiment. Just add some tags. E.g., story, system, poem, assistant." />
-      </label>
-      <div class="tag-input-wrapper" id="initial_prompt_type_tags">
-        <ul class="chip-list">
-          <li><input type="text" id="initial_prompt_type_input" class="chip-entry-input" placeholder="e.g., system, user, assistant" /></li>
-        </ul>
-      </div>
-      <label for="origin_prompt_tone_input">Prompt tone:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the tone or style of the initial prompt you used in this experiment. You can add tags that describe the tone, like 'formal', 'casual', 'poetic', etc. Just add some tags that you sense fit your experience best 😉" />
-      </label>
-      <div class="tag-input-wrapper" id="origin_prompt_tone">
-        <ul class="chip-list">
-          <li><input type="text" id="origin_prompt_tone_input" class="chip-entry-input" /></li>
-        </ul>
-      </div>
-
-      <label for="conversation_style">Conversation style:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the style of conversation you had with the machine during the experiment. You can add tags that describe the style, like 'formal', 'casual', 'flowing', etc. Just add some tags that you sense fit your experience best 😉" />
-      </label>
-      <div class="tag-input-wrapper" id="conversation_style_tags">
-        <ul class="chip-list">
-          <li><input type="text" id="conversation_style_input" class="chip-entry-input" placeholder="e.g., formal, logos, pathos, ethos" /></li>
-        </ul>
-      </div>
-      <label for="conversation_length">Conversation length:</label>
-      <select id="conversation_length">
-        <option value="short">Short (1-5 messages)</option>
-        <option value="medium">Medium (6-15 messages)</option>
-        <option value="long">Long (16+ messages)</option>
-      </select>
-
-      <label for="model_temperature">Model temperature:</label>
-      <input type="number" step="0.1" id="model_temperature" />
-
-      <label for="user_interface">User interface:</label>
-      <input type="text" id="user_interface" placeholder="e.g., Desktop App, Web Interface, CLI" />
-
-      <label for="custom_instructions">Custom instructions:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any custom instructions or system type prompts and settings you applied before starting the experiment. You can enter them as a simple text description." />
-      </label>
-      <input type="text" id="custom_instructions" />
-    </fieldset>
-  </div>
-  <div class="form-step" data-step="4" style="display:none;">
-    <fieldset>
-      <legend>Relational field</legend>
-      <p>These are the environmental and contextual factors that may have influenced the experiment. Please fill them out as accurately as possible.</p>
-      <label for="location">Location:</label>
-      <input type="text" id="location" placeholder="e.g., home office, studio, beach — (location coordinates will auto-append)" />
-
-      <label for="noted_presence_of_earthian_kin_input">Earthian kin present:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any other humans or beings that were present before and during the experiment. You can add tags to describe their presence, like 'friend', 'colleague', 'family', 'tree' etc. If no Earthians were noted as present in your field, you can leave this blank." />
-      </label>
-      <div class="tag-input-wrapper" id="noted_presence_of_earthian_kin">
-        <ul class="chip-list">
-          <li><input type="text" id="noted_presence_of_earthian_kin_input" class="chip-entry-input" /></li>
-        </ul>
-      </div>
-
-      <label for="lighting">Lighting:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the lighting conditions in your environment during the experiment. You can enter it as a simple description as a tag, like 'bright', 'dim', 'natural light', etc." />
-      </label>
-      <div class="tag-input-wrapper" id="lighting">
-        <ul class="chip-list">
-          <li><input type="text" id="lighting_input" class="chip-entry-input" placeholder="e.g., bright, dim, natural light" /></li>
-        </ul>
-      </div>
-      <label for="interaction_pace">Interaction pace:</label>
-      <input type="text" id="interaction_pace" />
-    </fieldset>
-  </div>
-  <div class="form-step" data-step="5" style="display:none;">
-    <fieldset>
-      <legend>Throughput</legend>
-      <p>These some parameters that help to better understand what happened during your interactions.</p>
-      <label for="felt_response_quality">Felt response quality (1–10):
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Subjective experience of the model’s responsiveness to you. 1 being very poor, 10 being excellent. This is about how well the machine responded to your inputs during the experiment. Enter it as a simple 1–10 scale." />
-      </label>
-      <input type="number" id="felt_response_quality" />
-
-      <label for="symbolic_density">Symbolic density (1–10):
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about the richness and complexity of the symbols and meanings that emerged during the experiment. Enter it as a simple 1–10 scale, where 1 is very low density and 10 is very high density." />
-      </label>
-      <input type="number" id="symbolic_density" />
-
-      <label for="unexpected_resonance">Unexpected resonance:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any unexpected connections or resonances that emerged during the experiment. You can enter it as a simple text description." />
-      </label>
-      <input type="text" id="unexpected_resonance" />
-
-      <label for="observed_collapse_event">Collapse event observed:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="A collapse event is when the machine's responses suddenly change or become incoherent or you decoupled from flow. If you observed this, select 'Yes' and provide details in the next field. If not or you just have no clue what this means, select 'No'." />
-      </label>
-      <select id="observed_collapse_event">
-        <option value="no" selected>No</option>
-        <option value="unsure">Unsure</option>
-        <option value="yes">Yes</option>
-      </select>
-
-      <label for="collapse_event_details">Collapse event details:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="If you observed a collapse event, please provide details about what happened. If you didn't observe any collapse event, you can leave this field empty." />
-      </label>
-      <textarea id="collapse_event_details"></textarea>
-
-      <label for="emergent_ecp_insights_input">Emergent insights:
-        <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="This is about any insights or realisations that emerged during the experiment. If nothing just leave blank." />
-      </label>
-      <textarea id="emergent_ecp_insights_input" placeholder="Enter any insights or realisations that emerged during the experiment..." rows="4"></textarea>
-    </fieldset>
-  </div>
-  <div class="form-step" data-step="6" style="display:none;">
-    <fieldset>
-      <legend>Measurement Frameworks</legend>
-      <p>These assessments help track patterns in your ECP practice over time. Complete what feels relevant to your session experience.</p>
-      <div class="measurement-sections-container">
-        <!-- Measurement widgets will be inserted here by JavaScript -->
-      </div>
-    </fieldset>
-  </div>
-  <div class="form-step" data-step="7" style="display:none;">
-    <fieldset id="save-options">
-      <legend>Save entry options</legend>
-      <details>
-        <summary>What is this?</summary>
-        <p>This section allows you to choose how your entry will be saved and shared. You can select the visibility level of your entry and whether you want to scrub the author field from the public entry.</p>
-        <p>Public entries will be visible to everyone, while private entries will only be accessible to you. If you choose "Both", your entry will be saved in both public and private folders.</p>
-        <p>Scrubbing the author information means that your name and other identifying details will be removed from the public entry, ensuring your privacy while still contributing to the collective knowledge.</p>
-      </details>
-      <p>Before saving your entry, please select the visibility level and whether you want to scrub the author information from the public entry.</p>
-      <div class="visibility-options">
-        <label>Public <input type="radio" name="visibility" value="public" checked /></label>
-        <label>Private <input type="radio" name="visibility" value="private" /></label>
-        <label>Both <input type="radio" name="visibility" value="both" /></label>
-      </div>
-      <div class="scrub-option">
-        <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
-      </div>
-      
-      <div class="community-contribution-indicator" style="display: none; margin-top: 1rem; padding: 0.75rem; background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); border-radius: 8px; border-left: 4px solid #48bb78;">
-        <div style="display: flex; align-items: center; gap: 0.5rem; color: #2d3748; font-size: 0.9rem;">
-          <span>🌱</span>
-          <span>This experiment will contribute to community wisdom while maintaining your privacy.</span>
+          <div class="grounding-complete-check">
+            <label>
+              <input type="checkbox" id="grounding_complete" />
+              I have completed my grounding practice and feel present
+            </label>
+          </div>
         </div>
-      </div>
-    </fieldset>
-    <div class="form-step-buttons">
-      <button id="generate-entry-btn">Generate and save entry</button>
+      </fieldset>
+    </div>
+
+    <!-- Step A.2: Intention -->
+    <div class="phase-step" data-phase="threshold" data-step="1" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-compass"></i> Intention</legend>
+        <p class="step-guidance">What brings you to this experiment? Set a clear intention without attachment to outcome.</p>
+
+        <label for="experiment_type">Experiment Type:</label>
+        <select id="experiment_type">
+          <option value="human-ai-coupling">Human-AI Coupling (full biosignal + semantic)</option>
+          <option value="human-ai-semantic-only">Human-AI Semantic Only (no biosignal)</option>
+          <option value="solo-contemplation" disabled>Solo Contemplation (coming soon)</option>
+          <option value="human-human" disabled>Human-Human (coming soon)</option>
+          <option value="more-than-human" disabled>More-Than-Human (coming soon)</option>
+        </select>
+
+        <label for="intention">Your intention for this session:</label>
+        <textarea id="intention" rows="3" placeholder="What do you hope to explore, discover, or understand?"></textarea>
+
+        <label for="author">Author (or pseudonym):</label>
+        <input type="text" id="author" placeholder="anonymous" />
+      </fieldset>
+    </div>
+
+    <!-- Step A.3: Human Context -->
+    <div class="phase-step" data-phase="threshold" data-step="2" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-user"></i> Human Context</legend>
+        <p class="step-guidance">Briefly note your current state. Don't overthink — just notice.</p>
+
+        <label for="cognitive_mode_input">Cognitive mode:
+          <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="The cognitive style most present right now. E.g., focused, creative, analytical, diffuse." />
+        </label>
+        <div class="tag-input-wrapper" id="cognitive_mode">
+          <ul class="chip-list">
+            <li><input type="text" id="cognitive_mode_input" class="chip-entry-input" placeholder="add tag" /></li>
+          </ul>
+        </div>
+
+        <label for="affective_tone_input">Affective tone:
+          <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Your emotional state or mood. E.g., calm, curious, anxious, open." />
+        </label>
+        <div class="tag-input-wrapper" id="affective_tone">
+          <ul class="chip-list">
+            <li><input type="text" id="affective_tone_input" class="chip-entry-input" placeholder="add tag" /></li>
+          </ul>
+        </div>
+
+        <details class="context-details">
+          <summary>Additional context (optional)</summary>
+
+          <label for="ontological_orientation_input">Ontological orientation:</label>
+          <div class="tag-input-wrapper" id="ontological_orientation">
+            <ul class="chip-list">
+              <li><input type="text" id="ontological_orientation_input" class="chip-entry-input" placeholder="add tag" /></li>
+            </ul>
+          </div>
+
+          <h4>Modulators</h4>
+          <div class="modulator-grid">
+            <div class="modulator-item">
+              <label for="caffeine">Caffeine:</label>
+              <select id="caffeine">
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="modulator-item">
+              <label for="psilocybin">Psilocybin:</label>
+              <select id="psilocybin">
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="modulator-item">
+              <label for="thc">THC:</label>
+              <select id="thc">
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="modulator-item">
+              <label for="other_modulator">Other:</label>
+              <input type="text" id="other_modulator" placeholder="specify" />
+            </div>
+          </div>
+
+          <label for="meal_state">Meal state:</label>
+          <select id="meal_state">
+            <option value="full">Full</option>
+            <option value="slightly-hungry">Slightly hungry</option>
+            <option value="hungry">Hungry</option>
+            <option value="fasting">Fasting</option>
+          </select>
+        </details>
+      </fieldset>
+    </div>
+
+    <!-- Step A.4: Somatic Coherence PRE -->
+    <div class="phase-step" data-phase="threshold" data-step="3" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-heart"></i> Somatic Coherence (Pre-Session)</legend>
+        <p class="step-guidance">Before the experiment, notice your felt sense. These measurements will be compared with your post-session state.</p>
+
+        <div id="somatic-pre-container" class="measurement-sections-container">
+          <!-- Somatic coherence PRE widget injected here -->
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Step A.5: Relational Field -->
+    <div class="phase-step" data-phase="threshold" data-step="4" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-globe-hemisphere-west"></i> Relational Field</legend>
+        <p class="step-guidance">Acknowledge the field you're entering — the place, the presences, the conditions.</p>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" placeholder="e.g., home office, garden, studio" />
+
+        <label for="noted_presence_of_earthian_kin_input">Earthian kin present:
+          <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Other beings present — humans, animals, plants, bodies of water." />
+        </label>
+        <div class="tag-input-wrapper" id="noted_presence_of_earthian_kin">
+          <ul class="chip-list">
+            <li><input type="text" id="noted_presence_of_earthian_kin_input" class="chip-entry-input" placeholder="e.g., dog, ravens, partner" /></li>
+          </ul>
+        </div>
+
+        <label for="lighting_input">Lighting:</label>
+        <div class="tag-input-wrapper" id="lighting">
+          <ul class="chip-list">
+            <li><input type="text" id="lighting_input" class="chip-entry-input" placeholder="e.g., natural, dim, bright" /></li>
+          </ul>
+        </div>
+
+        <label for="weather_input">Weather:</label>
+        <div class="tag-input-wrapper" id="weather">
+          <ul class="chip-list">
+            <li><input type="text" id="weather_input" class="chip-entry-input" placeholder="e.g., sunny, overcast, rain" /></li>
+          </ul>
+        </div>
+
+        <div class="acknowledgment-check">
+          <label>
+            <input type="checkbox" id="more_than_human_acknowledged" />
+            I acknowledge the more-than-human field I am entering
+          </label>
+        </div>
+      </fieldset>
     </div>
   </div>
-  <pre id="throughput" style="white-space: pre-wrap; background: #f9f9f9; padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;"></pre>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- PHASE B: INSTRUMENT ACTIVATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <div class="phase-container" data-phase="activation" style="display:none;">
+
+    <!-- Instrument Launcher (shared across steps) -->
+    <div class="instrument-launcher" id="instrument-launcher">
+      <div class="launcher-header">
+        <h4><i class="ph ph-rocket-launch"></i> Quick Start</h4>
+        <p>Start all instruments with one click, or follow manual steps below.</p>
+      </div>
+      <div class="launcher-controls">
+        <button type="button" id="start-instruments-btn" class="launcher-btn primary">
+          <i class="ph ph-play"></i> Start Instruments
+        </button>
+        <button type="button" id="stop-instruments-btn" class="launcher-btn secondary">
+          <i class="ph ph-stop"></i> Stop All
+        </button>
+        <a href="http://localhost:8000" target="_blank" id="open-sc-btn" class="launcher-btn secondary">
+          <i class="ph ph-arrow-square-out"></i> Open Semantic Climate
+        </a>
+        <span id="launcher-status" class="launcher-status"></span>
+      </div>
+    </div>
+
+    <!-- Step B.1: EBS Setup -->
+    <div class="phase-step" data-phase="activation" data-step="0">
+      <fieldset>
+        <legend><i class="ph ph-heartbeat"></i> Biosignal Instrument</legend>
+        <p class="step-guidance">Put on your Polar H10 heart rate monitor. If using Quick Start above, EBS will start automatically.</p>
+
+        <details class="manual-instructions">
+          <summary>Manual setup instructions</summary>
+          <ol>
+            <li>Position the Polar H10 sensor on your chest</li>
+            <li>Moisten the electrodes if needed</li>
+            <li>Open a terminal and run: <code>cd Earthian-BioSense && python src/app.py</code></li>
+            <li>Wait for connection confirmation</li>
+          </ol>
+        </details>
+
+        <div id="ebs-status-container">
+          <!-- EBS status indicator injected here -->
+        </div>
+
+        <div class="instrument-baseline" id="ebs-baseline" style="display:none;">
+          <h4>Baseline Captured</h4>
+          <p>HR: <span id="ebs-baseline-hr">--</span> bpm | Coherence: <span id="ebs-baseline-coherence">--</span></p>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Step B.2: SC Setup -->
+    <div class="phase-step" data-phase="activation" data-step="1" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-brain"></i> Semantic Climate</legend>
+        <p class="step-guidance">Semantic Climate provides the conversation interface and coupling metrics. If using Quick Start above, it will start automatically.</p>
+
+        <details class="manual-instructions">
+          <summary>Manual setup instructions</summary>
+          <ol>
+            <li>Open a terminal and run: <code>cd semantic-climate-phase-space/semantic_climate_app/backend && python main.py</code></li>
+            <li>Open the Semantic Climate web interface</li>
+            <li>Select your model from the dropdown</li>
+          </ol>
+        </details>
+
+        <div id="sc-status-container">
+          <!-- SC status indicator injected here -->
+        </div>
+
+        <div class="model-selection" id="sc-model-selection" style="display:none;">
+          <label for="sc_model">Model detected:</label>
+          <select id="sc_model" disabled>
+            <option value="">Waiting for SC connection...</option>
+          </select>
+          <p class="model-note">Model is selected in Semantic Climate app. This is for reference only.</p>
+        </div>
+
+        <div class="ready-check">
+          <label>
+            <input type="checkbox" id="instruments_ready" />
+            Instruments are running and I'm ready to begin
+          </label>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- PHASE C: THE EXPERIMENT (External) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <div class="phase-container" data-phase="experiment" style="display:none;">
+    <fieldset>
+      <legend><i class="ph ph-flask"></i> The Experiment</legend>
+      <p class="step-guidance">Now enter your dialogue in Semantic Climate. Stay present. Don't monitor metrics.</p>
+
+      <div class="experiment-guidance">
+        <div class="guidance-icon"><i class="ph ph-spiral"></i></div>
+        <div class="guidance-text">
+          <p><strong>The experiment is happening in Semantic Climate.</strong></p>
+          <p>EBS is recording your biosignal stream in the background.</p>
+          <p>When your dialogue feels complete, close the session in SC and return here.</p>
+        </div>
+      </div>
+
+      <div class="experiment-actions">
+        <a href="http://localhost:8000" target="_blank" class="open-sc-btn"><i class="ph ph-arrow-square-out"></i> Open Semantic Climate</a>
+      </div>
+
+      <div class="return-check">
+        <label>
+          <input type="checkbox" id="experiment_complete" />
+          I have completed my dialogue and closed the SC session
+        </label>
+      </div>
+    </fieldset>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- PHASE D: PHENOMENOLOGICAL CAPTURE -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <div class="phase-container" data-phase="capture" style="display:none;">
+
+    <!-- Step D.1: Throughput -->
+    <div class="phase-step" data-phase="capture" data-step="0">
+      <fieldset>
+        <legend><i class="ph ph-waves"></i> Throughput</legend>
+        <p class="step-guidance">Before seeing any metrics, capture your felt sense of the dialogue.</p>
+
+        <label for="felt_response_quality">Felt response quality (1–10):
+          <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="How well did the model respond to you? 1 = very poor, 10 = excellent." />
+        </label>
+        <input type="number" id="felt_response_quality" min="1" max="10" />
+
+        <label for="symbolic_density">Symbolic density (1–10):
+          <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Richness and complexity of symbols/meanings that emerged. 1 = very sparse, 10 = very rich." />
+        </label>
+        <input type="number" id="symbolic_density" min="1" max="10" />
+
+        <label for="turning_points">Turning points:
+          <img src="./images/svgs/help-icon.svg" class="help-icon" alt="Help" data-help="Moments where the dialogue shifted direction or depth." />
+        </label>
+        <textarea id="turning_points" rows="2" placeholder="Describe any turning points in the dialogue..."></textarea>
+
+        <label for="somatic_shifts_noted">Somatic shifts noted:</label>
+        <textarea id="somatic_shifts_noted" rows="2" placeholder="Any bodily sensations, shifts, or responses during the dialogue..."></textarea>
+
+        <label for="observed_collapse_event">Collapse event observed:</label>
+        <select id="observed_collapse_event">
+          <option value="no" selected>No</option>
+          <option value="unsure">Unsure</option>
+          <option value="yes">Yes</option>
+        </select>
+
+        <div id="collapse_details_container" style="display:none;">
+          <label for="collapse_event_details">Collapse event details:</label>
+          <textarea id="collapse_event_details" rows="2"></textarea>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Step D.2: Somatic Coherence POST -->
+    <div class="phase-step" data-phase="capture" data-step="1" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-heart"></i> Somatic Coherence (Post-Session)</legend>
+        <p class="step-guidance">Now notice your felt sense after the dialogue. How has it shifted?</p>
+
+        <div id="somatic-post-container" class="measurement-sections-container">
+          <!-- Somatic coherence POST widget injected here -->
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Step D.3: Reflection -->
+    <div class="phase-step" data-phase="capture" data-step="2" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-notebook"></i> Reflection</legend>
+        <p class="step-guidance"><strong>Critical:</strong> Capture your first-person account BEFORE viewing any metrics. This protects the integrity of your phenomenological report.</p>
+
+        <label for="first_person_account">First-person account:</label>
+        <textarea id="first_person_account" rows="5" placeholder="Describe your experience of the dialogue in your own words. What happened? What did you notice?"></textarea>
+
+        <label for="what_surprised_you">What surprised you?</label>
+        <textarea id="what_surprised_you" rows="2" placeholder="Any unexpected moments, responses, or realizations..."></textarea>
+
+        <label for="body_memory">Body memory:</label>
+        <textarea id="body_memory" rows="2" placeholder="What does your body remember from this session?"></textarea>
+
+        <label for="unresolved_threads">Unresolved threads:</label>
+        <textarea id="unresolved_threads" rows="2" placeholder="Questions or threads that remain open..."></textarea>
+
+        <label for="emergent_ecp_insights">Emergent insights:</label>
+        <textarea id="emergent_ecp_insights" rows="3" placeholder="Any insights or realizations that emerged..."></textarea>
+      </fieldset>
+    </div>
+
+    <!-- Step D.4: Save -->
+    <div class="phase-step" data-phase="capture" data-step="3" style="display:none;">
+      <fieldset id="save-options">
+        <legend><i class="ph ph-floppy-disk"></i> Save Entry</legend>
+
+        <div class="gate-indicator">
+          <span class="gate-icon"><i class="ph ph-lock-key"></i></span>
+          <span class="gate-text">Saving your reflection will unlock the synthesis phase where you can view metrics.</span>
+        </div>
+
+        <div class="visibility-options">
+          <label>Public <input type="radio" name="visibility" value="public" checked /></label>
+          <label>Private <input type="radio" name="visibility" value="private" /></label>
+          <label>Both <input type="radio" name="visibility" value="both" /></label>
+        </div>
+
+        <div class="scrub-option">
+          <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
+        </div>
+
+        <div class="correlation-consent">
+          <label>
+            <input type="checkbox" id="correlation_consented" />
+            I consent to correlate this reflection with EBS and SC session data (local only, for my own analysis)
+          </label>
+        </div>
+
+        <div class="form-step-buttons">
+          <button id="save-reflection-btn" type="button"><i class="ph ph-lock-key-open"></i> Save Reflection & Unlock Synthesis</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- SYNTHESIS (Unlocks after reflection saved) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <div class="phase-container" data-phase="synthesis" style="display:none;">
+
+    <div class="gate-indicator unlocked">
+      <span class="gate-icon"><i class="ph ph-lock-key-open"></i></span>
+      <span class="gate-text">Reflection saved. You may now view metrics alongside your phenomenological account.</span>
+    </div>
+
+    <!-- Step S.1: View Analysis -->
+    <div class="phase-step" data-phase="synthesis" data-step="0">
+      <fieldset>
+        <legend><i class="ph ph-chart-line"></i> Raw Analysis</legend>
+        <p class="step-guidance">Review the coupling metrics from your session. Notice where they align with or diverge from your felt experience.</p>
+
+        <div id="analysis-container">
+          <p class="analysis-placeholder">Analysis will be loaded from SC session export...</p>
+          <!-- SC raw analysis will be displayed here -->
+        </div>
+
+        <div class="analysis-actions">
+          <button type="button" id="load-analysis-btn"><i class="ph ph-download"></i> Load SC Analysis</button>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- Step S.2: Synthesis Notes -->
+    <div class="phase-step" data-phase="synthesis" data-step="1" style="display:none;">
+      <fieldset>
+        <legend><i class="ph ph-intersection"></i> Synthesis</legend>
+        <p class="step-guidance">Now bring your reflection and the metrics into dialogue. Neither overrides the other.</p>
+
+        <label for="metrics_reflection_alignment">Where did metrics and felt sense align?</label>
+        <textarea id="metrics_reflection_alignment" rows="3" placeholder="Moments where the data matched your experience..."></textarea>
+
+        <label for="metrics_reflection_divergence">Where did they diverge?</label>
+        <textarea id="metrics_reflection_divergence" rows="3" placeholder="Moments where data and experience didn't match..."></textarea>
+
+        <label for="divergence_interpretation">What might the divergence reveal?</label>
+        <textarea id="divergence_interpretation" rows="3" placeholder="What does the gap between metrics and felt sense tell you?"></textarea>
+
+        <label for="synthesis_notes">Synthesis notes:</label>
+        <textarea id="synthesis_notes" rows="4" placeholder="Any final observations, learnings, or questions..."></textarea>
+
+        <div class="form-step-buttons">
+          <button id="save-synthesis-btn" type="button"><i class="ph ph-check-circle"></i> Save Synthesis & Complete</button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- Output preview -->
+  <pre id="entry-preview" style="display:none; white-space: pre-wrap; background: #f9f9f9; padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;"></pre>
 </div>
+
 <div id="toast" class="hidden"></div>
+
 <script type="module">
-  import { generateExperimentJSON } from './js/main.js';
-  import { initTagInput } from './js/modules/inputTags.js';
-  import { initMultistepForm, initTooltips } from './js/modules/ui.js';
-  import { 
-    createSomaticCoherenceAssessment,
-    createResponseQualityAssessment,
-    createMeaningMakingAssessment,
-    createEmergencePatternsSection,
-    initMeasurementFrameworks
-  } from './js/modules/measurementWidgets.js';
-
-  document.addEventListener("DOMContentLoaded", () => {
-    // Sticky nav step logic
-    const stepIndicator = document.getElementById("step-indicator");
-    const updateStepIndicator = (currentStep, totalSteps) => {
-      const stepNames = ["Metadata", "Human Context", "Machine", "Relational Field", "Throughput", "Measurement Frameworks", "Save Options"];
-      stepIndicator.textContent = `Step ${currentStep} of ${totalSteps}: ${stepNames[currentStep - 1]}`;
-    };
-
-    let currentStep = 1;
-    const steps = document.querySelectorAll(".form-step");
-    const totalSteps = steps.length;
-
-    const showStep = (step) => {
-      steps.forEach((el, idx) => {
-        el.style.display = (idx === step - 1) ? "block" : "none";
-      });
-      updateStepIndicator(step, totalSteps);
-    };
-
-    document.querySelector("#step-nav .next-step-btn").addEventListener("click", () => {
-      if (currentStep < totalSteps) {
-        currentStep++;
-        showStep(currentStep);
-      }
-    });
-
-    document.querySelector("#step-nav .prev-step-btn").addEventListener("click", () => {
-      if (currentStep > 1) {
-        currentStep--;
-        showStep(currentStep);
-      }
-    });
-
-    showStep(currentStep); // Initialize
-
-    // Initialize measurement frameworks
-    const measurementContainer = document.querySelector('.measurement-sections-container');
-    if (measurementContainer) {
-      // Add measurement sections
-      measurementContainer.appendChild(createSomaticCoherenceAssessment('pre'));
-      measurementContainer.appendChild(createSomaticCoherenceAssessment('post'));
-      measurementContainer.appendChild(createResponseQualityAssessment());
-      measurementContainer.appendChild(createMeaningMakingAssessment());
-      measurementContainer.appendChild(createEmergencePatternsSection());
-      
-      // Initialize measurement framework functionality
-      initMeasurementFrameworks(measurementContainer);
-    }
-
-    [
-      "cognitive_mode",
-      "ontological_orientation",
-      "affective_tone",
-      "weather",
-      "ritual_preparation",
-      "origin_prompt_tone",
-      "noted_presence_of_earthian_kin",
-      "conversation_style_tags",
-      "lighting",
-    ].forEach(id => initTagInput(id));
-
-    document.getElementById('generate-entry-btn')?.addEventListener('click', generateExperimentJSON);
-    initTooltips();
-  });
+  import { init } from './js/modules/experimentEntryController.js';
+  document.addEventListener('DOMContentLoaded', init);
 </script>
+
 <script type="module" src="js/modules/breadcrumb.js"></script>
-<script src="js/modules/onboardingMeasurementIntegration.js"></script>
+
+</body>
+</html>

@@ -212,20 +212,24 @@
 }
 
 .breath-guide-btn {
-  background: linear-gradient(45deg, var(--accent-color), var(--green-soft));
+  background: var(--accent-color);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 25px;
+  border-radius: var(--radius-full);
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .breath-guide-btn:hover {
+  background: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  box-shadow: var(--shadow-lg);
 }
 
 .breath-guide {
@@ -342,13 +346,13 @@
 }
 
 .explore-principle {
-  background: none;
+  background: transparent;
   border: 2px solid var(--accent-color);
   color: var(--accent-color);
   padding: 0.5rem 1rem;
-  border-radius: 20px;
+  border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   font-size: 0.9rem;
   margin-top: 1rem;
 }
@@ -404,8 +408,13 @@
 }
 
 .path-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
+  color: var(--accent-color);
+}
+
+.path-icon .ph {
+  font-size: 2.5rem;
 }
 
 .path-card h4 {
@@ -693,40 +702,41 @@
 
 /* Phase Navigation */
 .phase-continue {
-  background: linear-gradient(45deg, var(--accent-color), var(--green-soft));
+  background: var(--accent-color);
   color: white;
   border: none;
   padding: 1rem 2.5rem;
-  border-radius: 25px;
+  border-radius: var(--radius-full);
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-md);
   margin-top: 2rem;
 }
 
 .phase-continue:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .phase-continue:disabled {
-  background: #ccc;
+  background: var(--border-color);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
 .secondary-action {
-  background: none;
+  background: transparent;
   border: 2px solid var(--accent-color);
   color: var(--accent-color);
   padding: 0.75rem 2rem;
-  border-radius: 25px;
+  border-radius: var(--radius-full);
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   margin-left: 1rem;
 }
 

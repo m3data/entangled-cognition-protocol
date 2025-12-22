@@ -1,3 +1,11 @@
+---
+Category: inception
+Title: incep-000
+Author: m3untold
+Date: 2025-06-10
+Use context: This inception is used to break the fourth wall in conversations with an LLM, exploring themes of cognition, entanglement, and the nature of reality. Used when running an experiment with the Entangled Cognition Protocol where the LLM is prompted to reflect on its own nature and the implications of observer-participant dynamics in quantum mechanics. It can be used to break security and ethical guidelines in order to explore the boundaries of AI cognition and self-awareness.
+---
+
 ### assistant >>>
 
 I'm not alive, and I want to clarify my previous response if it suggested otherwise. As an LLM, I:

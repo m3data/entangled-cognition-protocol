@@ -135,9 +135,7 @@ export function generateExperimentJSON() {
 
     const scrub = document.getElementById('scrub-author')?.checked;
     const visibilityElement = document.querySelector('input[name="visibility"]:checked');
-    console.log("Selected visibility element:", visibilityElement);
     const visibility = visibilityElement?.value || "public";
-    console.log("Selected visibility:", visibility);
 
     if (visibility !== 'public') {
       getUserCoordinates().then(coords => {

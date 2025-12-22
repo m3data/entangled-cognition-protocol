@@ -4,7 +4,11 @@
   "description": "Local dev server and entry logger for Entangled Cognition Protocol Field Journal",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "instruments": "./scripts/start-instruments.sh all",
+    "instruments:status": "./scripts/start-instruments.sh status",
+    "instruments:stop": "./scripts/start-instruments.sh stop",
+    "experiment": "./scripts/start-instruments.sh all && node server.js"
   },
   "author": "Mathew Mytka",
   "license": "GNU General Public License v3.0",

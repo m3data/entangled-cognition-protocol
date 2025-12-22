@@ -2,18 +2,20 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const { exec, spawn } = require('child_process');
 
 const app = express();
 const PORT = 3141;
+const SCRIPTS_DIR = path.join(__dirname, 'scripts');
 
 const PUBLIC_DIR = path.join(__dirname, 'entries/_public');
 const PRIVATE_DIR = path.join(__dirname, 'entries/_private');
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.static(path.join(__dirname)));
 
 app.post('/save-entry', (req, res) => {
-  const { path: savePath, content } = req.body;
+  const { path: savePath, content, encoding } = req.body;
 
   if (!savePath || !content) {
     return res.status(400).send('Missing path or content');
@@ -22,13 +24,25 @@ app.post('/save-entry', (req, res) => {
   const fullPath = path.join(__dirname, savePath);
   fs.mkdirSync(path.dirname(fullPath), { recursive: true });
 
-  fs.writeFile(fullPath, content, 'utf8', err => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Failed to save file');
-    }
-    res.send(`File saved to ${savePath}`);
-  });
+  // Support base64 encoding for binary files (audio, images)
+  if (encoding === 'base64') {
+    const buffer = Buffer.from(content, 'base64');
+    fs.writeFile(fullPath, buffer, err => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Failed to save file');
+      }
+      res.send(`File saved to ${savePath}`);
+    });
+  } else {
+    fs.writeFile(fullPath, content, 'utf8', err => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Failed to save file');
+      }
+      res.send(`File saved to ${savePath}`);
+    });
+  }
 });
 
 // Measurement framework API endpoints
@@ -144,6 +158,107 @@ app.get('/api/entries/:type/:privacy', (req, res) => {
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'home.html'));
+});
+
+// ============================================================================
+// Instrument Control API
+// ============================================================================
+
+/**
+ * Start instruments (EBS, SC, Ollama)
+ */
+app.post('/api/instruments/start', (req, res) => {
+  const { instrument = 'all' } = req.body;
+  const scriptPath = path.join(SCRIPTS_DIR, 'start-instruments.sh');
+
+  if (!fs.existsSync(scriptPath)) {
+    return res.status(500).json({
+      success: false,
+      error: 'Instrument launcher script not found'
+    });
+  }
+
+  exec(`"${scriptPath}" ${instrument}`, { timeout: 30000 }, (error, stdout, stderr) => {
+    if (error) {
+      console.error('Instrument start error:', error);
+      return res.status(500).json({
+        success: false,
+        error: error.message,
+        stderr
+      });
+    }
+
+    res.json({
+      success: true,
+      message: `Instruments started: ${instrument}`,
+      output: stdout
+    });
+  });
+});
+
+/**
+ * Get instrument status
+ */
+app.get('/api/instruments/status', (req, res) => {
+  const scriptPath = path.join(SCRIPTS_DIR, 'start-instruments.sh');
+
+  if (!fs.existsSync(scriptPath)) {
+    return res.status(500).json({
+      success: false,
+      error: 'Instrument launcher script not found'
+    });
+  }
+
+  exec(`"${scriptPath}" status`, { timeout: 10000 }, (error, stdout, stderr) => {
+    // Parse output to determine status
+    const ebsRunning = stdout.includes('EarthianBioSense already running') ||
+                       stdout.includes('EarthianBioSense: running');
+    const scRunning = stdout.includes('Semantic Climate already running') ||
+                      stdout.includes('Semantic Climate: running');
+    const ollamaRunning = stdout.includes('Ollama: running') ||
+                          stdout.includes('Ollama already running');
+
+    res.json({
+      success: true,
+      instruments: {
+        ebs: { running: ebsRunning },
+        sc: { running: scRunning },
+        ollama: { running: ollamaRunning }
+      },
+      output: stdout
+    });
+  });
+});
+
+/**
+ * Stop instruments
+ */
+app.post('/api/instruments/stop', (req, res) => {
+  const scriptPath = path.join(SCRIPTS_DIR, 'start-instruments.sh');
+
+  if (!fs.existsSync(scriptPath)) {
+    return res.status(500).json({
+      success: false,
+      error: 'Instrument launcher script not found'
+    });
+  }
+
+  exec(`"${scriptPath}" stop`, { timeout: 10000 }, (error, stdout, stderr) => {
+    if (error) {
+      console.error('Instrument stop error:', error);
+      return res.status(500).json({
+        success: false,
+        error: error.message,
+        stderr
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Instruments stopped',
+      output: stdout
+    });
+  });
 });
 
 app.listen(PORT, () => {

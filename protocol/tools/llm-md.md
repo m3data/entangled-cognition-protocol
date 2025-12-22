@@ -1,0 +1,1 @@
+TODO: add context to explain what llm-md is and how it relates to the protocol. If you find youself here seeking more information about llm-md please checkout [llm-md](https://llm.md)

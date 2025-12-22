@@ -1,20 +1,31 @@
 // js/modules/saveEntry.js
 
 /**
- * Save experiment JSON to appropriate location(s) based on visibility and privacy settings.
+ * Save experiment entry to appropriate location(s) based on visibility and privacy settings.
  *
- * @param {string} json - The full JSON stringified experiment entry.
- * @param {string} filename - Final filename to use, e.g., 'ecp-2025-06-22T00-05-00-hash.json'
- * @param {boolean} scrubAuthor - If true, replace author with 'anonymous' in public copy.
- * @param {string} visibility - 'public', 'private', or 'both'
+ * @param {object} entry - The experiment entry object (will be JSON stringified)
+ * @param {object} options - Save options
+ * @param {string} options.visibility - 'public', 'private', or 'both'
+ * @param {boolean} options.scrubAuthor - If true, replace author with 'anonymous' in public copy
+ * @param {boolean} options.isSynthesis - If true, this is a synthesis update to existing entry
+ * @returns {Promise<void>}
  */
-export function saveExperimentEntry(json, filename, scrubAuthor = false, visibility = "public") {
-  const safeFilename = filename.endsWith(".json") ? filename : `${filename}.json`;
+export async function saveExperimentEntry(entry, options = {}) {
+  const { visibility = 'private', scrubAuthor = false, isSynthesis = false } = options;
+
+  // Generate filename from experiment_id or metadata
+  const experimentId = entry.metadata?.experiment_id || entry.experiment_id || `ecp-${Date.now()}`;
+  const suffix = isSynthesis ? '-synthesis' : '';
+  const safeFilename = `${experimentId}${suffix}.json`;
+
+  const json = JSON.stringify(entry, null, 2);
   let savePaths = [];
 
   if (visibility === "both") {
     const publicCopy = JSON.parse(json);
-    if (scrubAuthor) publicCopy.author = 'anonymous';
+    if (scrubAuthor && publicCopy.metadata) {
+      publicCopy.metadata.author = 'anonymous';
+    }
 
     savePaths = [
       { path: `entries/experiments/_private/${safeFilename}`, content: json },
@@ -22,28 +33,34 @@ export function saveExperimentEntry(json, filename, scrubAuthor = false, visibil
     ];
   } else {
     const folder = visibility === "private" ? "_private" : "public";
-    const content = (visibility === "public" && scrubAuthor)
-      ? (() => { const temp = JSON.parse(json); temp.author = 'anonymous'; return JSON.stringify(temp, null, 2); })()
-      : json;
+    let content = json;
+
+    if (visibility === "public" && scrubAuthor) {
+      const temp = JSON.parse(json);
+      if (temp.metadata) temp.metadata.author = 'anonymous';
+      content = JSON.stringify(temp, null, 2);
+    }
 
     savePaths = [{ path: `entries/experiments/${folder}/${safeFilename}`, content }];
   }
 
-  Promise.all(savePaths.map(({ path, content }) =>
+  const results = await Promise.all(savePaths.map(({ path, content }) =>
     fetch('/save-entry', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ path, content })
     })
-  ))
-  .then(() => {
-    const msg = `Experiment saved to ${visibility}${scrubAuthor && visibility !== "private" ? " (author scrubbed)" : ""}`;
-    showToast(msg);
-  })
-  .catch(err => {
-    console.error("Save failed:", err);
-    showToast("Error saving experiment.");
-  });
+  ));
+
+  // Check all responses succeeded
+  for (const res of results) {
+    if (!res.ok) {
+      throw new Error(`Save failed: ${res.statusText}`);
+    }
+  }
+
+  const msg = `Experiment saved to ${visibility}${scrubAuthor && visibility !== "private" ? " (author scrubbed)" : ""}`;
+  showToast(msg);
 }
 
 /**

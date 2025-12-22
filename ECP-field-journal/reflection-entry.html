@@ -1,131 +1,459 @@
-<link rel="stylesheet" href="styles/logger-styles.css" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reflection Entry - ECP Field Journal</title>
+  <link rel="stylesheet" href="styles/logger-styles.css" />
   <link rel="stylesheet" href="lib/phosphor-regular.css" />
-<div id="nav-container"></div>
-<div class="entry-form">
-  <h2>Reflection entry</h2>
-  <details>
-    <summary>Craft your reflection entry</summary>
-    <!-- Title and author metadata -->
-    <label for="title">Title:</label>
-    <input type="text" id="reflection-title" required placeholder="Enter a reflective title" />
+  <style>
+    .reflection-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-    <label for="author">Author:</label>
-    <input type="text" id="reflection-author" required placeholder="Enter your name" />
+    .voice-section {
+      background: var(--highlight-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
 
-    <!-- Thematic framing -->
-    <label for="reflection-themes_input">Themes:</label>
-    <div class="tag-input-wrapper" id="reflection-themes">
-      <ul class="chip-list">
-        <li><input type="text" id="reflection-themes_input" class="chip-entry-input" placeholder="add tag" /></li>
-      </ul>
+    .voice-prompts {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .voice-prompts h3 {
+      margin: 0 0 1rem 0;
+      color: var(--text-color);
+      font-size: 1.1rem;
+    }
+
+    .voice-prompts ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .voice-prompts li {
+      padding: 0.5rem 0;
+      color: var(--text-muted);
+      font-style: italic;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .voice-prompts li i {
+      color: var(--accent-color);
+      margin-top: 0.2rem;
+    }
+
+    .recorder-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .record-btn {
+      width: 80px !important;
+      height: 80px;
+      min-width: 80px;
+      max-width: 80px;
+      border-radius: 50%;
+      border: none;
+      background: var(--accent-color);
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      padding: 0 !important;
+      margin: 0 auto;
+      line-height: 1;
+      gap: 0 !important;
+    }
+
+    .record-btn .ph {
+      margin: 0 !important;
+    }
+
+    .record-btn:hover {
+      background: var(--accent-hover);
+      transform: scale(1.05);
+    }
+
+    .record-btn.recording {
+      background: var(--red-soft);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 82, 77, 0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(201, 82, 77, 0); }
+    }
+
+    .recording-status {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .recording-status.active {
+      color: var(--red-soft);
+      font-weight: 500;
+    }
+
+    .recording-time {
+      font-family: monospace;
+      font-size: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .recordings-list {
+      margin-top: 2rem;
+    }
+
+    .recordings-list h4 {
+      margin: 0 0 1rem 0;
+      color: var(--text-color);
+    }
+
+    .recording-item {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .recording-item audio {
+      flex: 1;
+      height: 40px;
+      min-width: 280px;
+      display: block;
+    }
+
+    .recording-item .delete-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .recording-item .delete-btn:hover {
+      color: var(--red-soft);
+      background: var(--red-light);
+    }
+
+    .optional-text {
+      margin: 2rem 0;
+    }
+
+    .optional-text summary {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .optional-text[open] summary {
+      margin-bottom: 1rem;
+    }
+
+    .metadata-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .metadata-row > div {
+      flex: 1;
+    }
+
+    .metadata-row label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    .metadata-row input {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title">Reflection</h1>
+
+  <div id="nav-container"></div>
+
+  <div class="reflection-container">
+    <p class="intro-text" style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+      Speak what's alive in you. The body knows before the mind can name it.
+    </p>
+
+    <div class="voice-section">
+      <div class="voice-prompts">
+        <h3><i class="ph ph-chat-circle-dots"></i> Gentle prompts (if helpful):</h3>
+        <ul>
+          <li><i class="ph ph-heart"></i> What's happening in your body right now?</li>
+          <li><i class="ph ph-spiral"></i> What emerged from this interaction?</li>
+          <li><i class="ph ph-arrow-right"></i> What wants attention?</li>
+        </ul>
+      </div>
+
+      <div class="recorder-controls">
+        <div class="recording-time" id="recordingTime">0:00</div>
+        <button class="record-btn" id="recordBtn" title="Click to record">
+          <i class="ph ph-microphone"></i>
+        </button>
+        <div class="recording-status" id="recordingStatus">Tap to begin</div>
+      </div>
+
+      <div class="recordings-list" id="recordingsList" style="display: none;">
+        <h4><i class="ph ph-waveform"></i> Recordings</h4>
+        <div id="recordingsContainer"></div>
+      </div>
     </div>
 
-    <!-- Symbolic imagery or metaphor extraction -->
-    <label for="reflection-symbols_input">Symbols/Metaphors:</label>
-    <div class="tag-input-wrapper" id="reflection-symbols">
-      <ul class="chip-list">
-        <li><input type="text" id="reflection-symbols_input" class="chip-entry-input" placeholder="add tag" /></li>
-      </ul>
+    <details class="optional-text">
+      <summary><i class="ph ph-note"></i> Add written notes (optional)</summary>
+
+      <div class="metadata-row">
+        <div>
+          <label for="reflection-title">Title:</label>
+          <input type="text" id="reflection-title" placeholder="Optional title" />
+        </div>
+        <div>
+          <label for="reflection-date">Date:</label>
+          <input type="date" id="reflection-date" />
+        </div>
+      </div>
+
+      <label for="written-notes">Notes:</label>
+      <textarea id="written-notes" rows="4" placeholder="Anything you want to capture in writing..."></textarea>
+    </details>
+
+    <fieldset id="save-options" style="margin-top: 2rem;">
+      <legend><i class="ph ph-eye"></i> Visibility</legend>
+      <div class="visibility-options">
+        <label class="radio-label">
+          <input type="radio" name="visibility" value="private" checked />
+          <i class="ph ph-lock"></i> Private
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="visibility" value="public" />
+          <i class="ph ph-globe"></i> Public
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="form-actions" style="margin-top: 1.5rem;">
+      <button id="save-reflection-btn" class="btn btn-primary">
+        <i class="ph ph-floppy-disk"></i> Save Reflection
+      </button>
     </div>
 
-    <label for="date">Date:</label>
-    <input type="date" id="reflection-date" />
-
-    <!-- Reflection content sections -->
-    <label for="insights">Key insights:</label>
-    <textarea id="insights" required placeholder="What themes, patterns, or learnings emerged?"></textarea>
-
-    <label for="challenges">Challenges/Tensions:</label>
-    <textarea id="challenges" required placeholder="What felt stuck, contradictory, or difficult?"></textarea>
-
-    <label for="shifts">Shifts in perspective:</label>
-    <textarea id="shifts" required placeholder="How did your view, mental state, or assumptions shift?"></textarea>
-
-    <label for="next-steps">Next steps or invitations:</label>
-    <textarea id="next-steps" required placeholder="What wants to emerge next? What’s your invitation to the field?"></textarea>
-  </details>
-
-  <!-- Save configuration (visibility + scrub) -->
-  <fieldset id="save-options">
-  <legend>Save entry options</legend>
-  <p>Select the visibility level for this entry:</p>
-  <div class="visibility-options">
-    <label>Public <input type="radio" name="visibility" value="public" checked /></label>
-    <label>Private <input type="radio" name="visibility" value="private" /></label>
-    <label>Both <input type="radio" name="visibility" value="both" /></label>
+    <div id="toast" class="toast hidden"></div>
   </div>
-  <div class="scrub-option">
-    <label><input type="checkbox" id="scrub-author" /> Remove author from public entry</label>
-  </div>
-</fieldset>
-  <button id="generate-reflection-btn">Generate and save entry</button>
-  <div id="toast" class="hidden"></div>
-  <pre id="reflection-output"></pre>
-</div>
-<script type="module">
-  /**
-   * Reflection entry generation and saving logic.
-   * - Extracts values from form fields.
-   * - Builds structured Markdown with frontmatter.
-   * - Sends result to appropriate save paths based on visibility.
-   * - Displays user feedback via toast.
-   */
-  import { generateReflectionMarkdown } from './js/modules/generateReflectionMarkdown.js';
-  import { showToast } from './js/modules/ui.js';
-  import { initTagInput, getTags } from './js/modules/inputTags.js';
 
-  document.addEventListener("DOMContentLoaded", () => {
-    initTagInput("reflection-themes");
-    initTagInput("reflection-symbols");
+  <script type="module">
+    import { showToast } from './js/modules/ui.js';
 
-    document.getElementById("generate-reflection-btn").addEventListener("click", () => {
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordings = [];
+    let recordingStartTime = null;
+    let timerInterval = null;
+
+    const recordBtn = document.getElementById('recordBtn');
+    const recordingStatus = document.getElementById('recordingStatus');
+    const recordingTime = document.getElementById('recordingTime');
+    const recordingsList = document.getElementById('recordingsList');
+    const recordingsContainer = document.getElementById('recordingsContainer');
+
+    // Set default date
+    document.getElementById('reflection-date').value = new Date().toISOString().split('T')[0];
+
+    recordBtn.addEventListener('click', toggleRecording);
+
+    async function toggleRecording() {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        stopRecording();
+      } else {
+        await startRecording();
+      }
+    }
+
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => {
+          audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          addRecording(audioBlob);
+          stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorder.start();
+        recordingStartTime = Date.now();
+
+        recordBtn.classList.add('recording');
+        recordBtn.innerHTML = '<i class="ph ph-stop"></i>';
+        recordingStatus.textContent = 'Recording...';
+        recordingStatus.classList.add('active');
+
+        timerInterval = setInterval(updateTimer, 1000);
+      } catch (err) {
+        console.error('Could not start recording:', err);
+        showToast('Could not access microphone');
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        clearInterval(timerInterval);
+
+        recordBtn.classList.remove('recording');
+        recordBtn.innerHTML = '<i class="ph ph-microphone"></i>';
+        recordingStatus.textContent = 'Tap to record another';
+        recordingStatus.classList.remove('active');
+        recordingTime.textContent = '0:00';
+      }
+    }
+
+    function updateTimer() {
+      const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+      const mins = Math.floor(elapsed / 60);
+      const secs = elapsed % 60;
+      recordingTime.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function addRecording(blob) {
+      const url = URL.createObjectURL(blob);
       const timestamp = new Date().toISOString();
-      const title = document.getElementById("reflection-title").value.trim();
-      const author = document.getElementById("reflection-author").value.trim();
-      const themes = getTags("reflection-themes");
-      const symbols = getTags("reflection-symbols");
-      const tensions = document.getElementById("challenges").value.trim().split('\n').filter(Boolean);
-      const body = [
-        "## Insights",
-        document.getElementById("insights").value.trim(),
-        "",
-        "## Shifts",
-        document.getElementById("shifts").value.trim(),
-        "",
-        "## Next Steps",
-        document.getElementById("next-steps").value.trim()
-      ].join("\n");
+      recordings.push({ blob, url, timestamp });
 
-      const visibility = document.querySelector('input[name="visibility"]:checked')?.value || "public";
-      const scrub = document.getElementById('scrub-author')?.checked;
+      recordingsList.style.display = 'block';
 
-      generateReflectionMarkdown({
-        title,
-        author,
-        timestamp,
-        themes,
-        tensions,
-        symbols,
-        body,
-        visibility
-      }).then(targets => {
-        Promise.all(targets.map(({ path, content }) =>
-          fetch("/save-entry", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ path, content })
-          })
-        ))
-        .then(() => {
-          document.getElementById("reflection-output").textContent = targets.map(t => `Saved to: ${t.path}`).join("\n");
-          showToast("Reflection saved.");
-        })
-        .catch((err) => {
-          console.error("Save error:", err);
-          showToast("Error saving reflection.");
-        });
+      const item = document.createElement('div');
+      item.className = 'recording-item';
+      item.innerHTML = `
+        <audio controls src="${url}"></audio>
+        <button class="delete-btn" title="Delete recording">
+          <i class="ph ph-trash"></i>
+        </button>
+      `;
+
+      item.querySelector('.delete-btn').addEventListener('click', () => {
+        const idx = recordings.findIndex(r => r.url === url);
+        if (idx > -1) {
+          URL.revokeObjectURL(url);
+          recordings.splice(idx, 1);
+          item.remove();
+          if (recordings.length === 0) {
+            recordingsList.style.display = 'none';
+          }
+        }
       });
+
+      recordingsContainer.appendChild(item);
+    }
+
+    // Save reflection
+    document.getElementById('save-reflection-btn').addEventListener('click', async () => {
+      if (recordings.length === 0 && !document.getElementById('written-notes').value.trim()) {
+        showToast('Record or write something first');
+        return;
+      }
+
+      const visibility = document.querySelector('input[name="visibility"]:checked').value;
+      const title = document.getElementById('reflection-title').value.trim() || 'Reflection';
+      const date = document.getElementById('reflection-date').value;
+      const notes = document.getElementById('written-notes').value.trim();
+      const timestamp = new Date().toISOString();
+      const id = `reflection-${Date.now()}`;
+
+      // Save audio files
+      for (let i = 0; i < recordings.length; i++) {
+        const recording = recordings[i];
+        const audioPath = `entries/reflections/${visibility === 'private' ? '_private' : 'public'}/${id}-audio-${i + 1}.webm`;
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64 = reader.result.split(',')[1];
+          await fetch('/save-entry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              path: audioPath,
+              content: base64,
+              encoding: 'base64'
+            })
+          });
+        };
+        reader.readAsDataURL(recording.blob);
+      }
+
+      // Save metadata/notes as markdown
+      const markdown = [
+        '---',
+        `title: "${title}"`,
+        `date: ${date}`,
+        `timestamp: ${timestamp}`,
+        `audio_files: ${recordings.length}`,
+        `visibility: ${visibility}`,
+        '---',
+        '',
+        notes ? `## Notes\n\n${notes}` : '*Voice recording - transcription pending*'
+      ].join('\n');
+
+      const mdPath = `entries/reflections/${visibility === 'private' ? '_private' : 'public'}/${id}.md`;
+
+      try {
+        await fetch('/save-entry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: mdPath, content: markdown })
+        });
+        showToast('Reflection saved');
+
+        // Clear form
+        recordings.forEach(r => URL.revokeObjectURL(r.url));
+        recordings = [];
+        recordingsContainer.innerHTML = '';
+        recordingsList.style.display = 'none';
+        document.getElementById('written-notes').value = '';
+        document.getElementById('reflection-title').value = '';
+      } catch (err) {
+        console.error('Save error:', err);
+        showToast('Error saving reflection');
+      }
     });
-  });
-</script>
-  <script type="module" src="js/modules/breadcrumb.js"></script>
+  </script>
+
+  <script type="module" src="js/modules/navigation.js"></script>
+</body>
+</html>

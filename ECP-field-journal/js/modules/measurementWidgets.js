@@ -497,10 +497,9 @@ export function initMeasurementFrameworks(container = document) {
       }
       
       .scale-value {
-        background: #007acc;
-        color: white;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--accent-color, #8b5e3c);
         min-width: 2rem;
         text-align: center;
       }

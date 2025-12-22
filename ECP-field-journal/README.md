@@ -34,7 +34,7 @@ npm start
 
 Then open your browser to:
 ```
-http://localhost:3000
+http://localhost:3141
 ```
 
 ---
