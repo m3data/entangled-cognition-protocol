@@ -15,3 +15,6 @@ ECP-field-journal/node_modules/
 .claude/
 CLAUDE.md
 /claude-dev-files
+
+# Local idiosyncratic documentation
+docs/

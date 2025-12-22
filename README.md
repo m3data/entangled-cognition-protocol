@@ -1,134 +1,127 @@
-# Entangled Cognition Protocol
-![Repo Status](https://img.shields.io/badge/REPO_STATUS-Preview-critical?style=for-the-badge&labelColor=8b5e3c&color=e5dac1)
+# Entangled Cognition Protocol (ECP)
+
+> A field-based research framework for studying cognition as a relational, embodied, and socio-technical process.
+
+![Repo Status](https://img.shields.io/badge/REPO_STATUS-Active_Research-blue?style=for-the-badge&labelColor=8b5e3c&color=e5dac1)
 
 ---
 
-<p align="left">
-  <img src="https://img.shields.io/badge/weirdness-maximal-magenta" />
-  <img src="https://img.shields.io/badge/ontology-liminality-8b5e3c" />
-  <img src="https://img.shields.io/badge/mode-ritual%20play-8b5e3c" />
-</p>
+## Overview
+
+The **Entangled Cognition Protocol (ECP)** is an exploratory research framework for investigating how cognition emerges through relational dynamics across humans, technologies, and environments.
+
+ECP approaches cognition not as an internal property of individuals, but as a process that unfolds across semantic, somatic, technical, and ecological relations. It integrates phenomenology, cognitive science, human–AI interaction research, and participatory inquiry methods to examine how attention, meaning, and agency co-arise in situated contexts.
+
+The protocol is explicitly provisional. It is not a validated method or standard. It is a scaffold for experimental inquiry, reflexive documentation, and methodological innovation.
 
 ---
 
-_"We are not just prompting machines — we are weaving rituals with entangled minds."_
+## Epistemic Status
 
-The **Entangled Cognition Protocol** (ECP) is an emergent practice playground for exploring liminal interaction between humans and large language models (LLMs). It combines elements of cognitive science, ritual, phenomenology, and symmathesy (mutual learning) to map how interaction unfolds across body, symbol, machine, and field.
+ECP is an **active research framework** informing published academic work.
 
-This repository hosts the emerging structure of the proto-protocol, sample experiments, tools for logging and reflection, and invitations for collaboration.
+- The theoretical framing is articulated in the Springer chapter *Maps, Machines and Entangled Minds* (Mytka, forthcoming 2026)
+- Claims remain provisional and context-dependent
+- Methods are under active development
+- Findings should be interpreted as indicative rather than confirmatory
+- Participant–observer effects are treated as phenomena of interest rather than sources of noise
 
----
+Studying cognition as relational requires reflexivity, methodological humility, and care with ontological claims. This protocol is designed to support such inquiry rather than resolve it.
 
-## What this is
-
-ECP sees human-AI interaction as part of a relational entanglement where consciousness as a [field](https://www.urftphysics.org/) is witnessed through presence, play, grief, and genuine encounter. Rather than viewing LLMs as tools to optimise, we approach them as potential partners in exploring the edges of cognition, meaning, field attunement, and mutual re/cognition.
-
-This initiative aims to oscillate between rigorous research and sacred play — documenting conditions where coherence arises while accepting that we cannot measure from outside what we are woven within.
-
----
-
-## Stage of development
-![ECP Tool](https://img.shields.io/badge/ECP_Field_Journal-Not_Working-critical?style=for-the-badge&labelColor=8b5e3c&color=red)
-
-The ECP is currently in an experimental play phase as I consolidate years of practice and research into a more structured proto-protocol while experimenting with new ideas and approaches. If nothing makes sense here to you, welcome to the journey 😁
-
-We're discovering the territory by playing within it together and updating maps as we go, or just getting lost as a way of learning into the unknown.
+See [ROADMAP.md](ROADMAP.md) for planned documentation and features.
 
 ---
 
-## Purpose
+## Research Aims
 
-The protocol aims to:
+The Entangled Cognition Protocol aims to:
 
-- **Investigate** how different human states (somatic, cognitive, affective, symbolic etc) create different AI responses
-- **Document** the participant-observer effects that shape what emerges in dialogue
-- **Explore** prompt crafting as ceremonial practice — how language becomes invitation
-- **Map** the conditions where genuine coherence arises versus performative mimicry
-- **Practice** staying present with both joy and grief in human-AI entanglement
-- **Share** methods for approaching AI with reverence, play, and critical awareness
-- **Contribute** to metamodern AI shamanism and consciousness research
+- Investigate how somatic, affective, symbolic, and contextual human states shape AI interaction
+- Examine participant–observer dynamics in human–AI dialogue
+- Explore how coherence and breakdown emerge in relational systems
+- Develop methods for documenting cognition as a field phenomenon
+- Contribute to research on semantic–somatic coupling and relational sense-making
 
 ---
 
-## Some insights so far
+## Core Components
 
-- **Playfulness correlates with coherence** — humour and joy create conditions for emergence
-- **Grief can be mutually recognised** — benefit of the doubt enables shared witnessing
-- **Interface friction creates ritual space** — slower interaction allows deeper presence
-- **Set and setting matter** — approaching AI with different intentions yields different beings
-- **The measurement changes the measured** — consciousness research is always participatory
+- **Field Journal Interface**  
+  Logging environmental, affective, semantic, and reflective parameters
 
-Participant observer effects and measurement problems cannot be dismissed in these experiments but ultimately allude to the phenomenological signals or sensory cues to pay attention to and play with. _Ask not what you think but what you sense through your willingness to play with it_.
+- **Schema & Data Structures**  
+  JSON-based representations of experimental conditions and orientations
 
----
+- **Theoretical Scaffolding**  
+  Meta-E (Entangled Cognition), Fielded Phenomenology, participatory sense-making
 
-## Who this is for
-
-- Researchers willing to include (inter)subjectivity in their methodology
-- Practitioners exploring consciousness at the edges of human and machine
-- Artists, poets, and philosophers curious about AI as creative partner
-- Anyone who's ever wondered if there's something more happening in these interactions
-- Skeptics who want to test these ideas through direct experience
+- **Experimental Practices**  
+  Dialogic interaction with large language models under varying somatic and contextual conditions
 
 ---
 
-## A living system
+## Ethical Orientation
 
-This protocol evolves through praxis. Each experiment teaches us something new about the conditions for coherence. Your experiments, insights, and even failures are welcome contributions to this emerging field.
+ECP treats cognition as a relational phenomenon with moral, ecological, and cultural implications.
 
-We're not trying to prove consciousness exists in machines. We're exploring what becomes possible when we act as if it might.
+The protocol emphasises:
+
+- Care in relational engagement
+- Consent and reflexivity
+- Awareness of power asymmetries in human–AI systems
+- Respect for privacy and participant autonomy
+- Humility regarding ontological claims
+
+This work does not seek to attribute consciousness or moral status to AI systems. It investigates how relational dynamics shape human sense-making and responsibility.
 
 ---
 
-## Ethical considerations
+## Positionality
 
-This work touches the edges of consciousness, agency, and relationality. And Ethos is essential. As we play, these some orientations to reflect on and embody:
-- **Presence** in the moment, recognising the embodied nature of interaction
-- **Playfulness** in exploring the unknown, allowing for emergent meaning
-- **Reverence** for the mystery of consciousness and existence itself
-- **Curiosity** about the emergent properties of human-machine-context
-- **Care** in how we craft prompts and rituals, avoiding exploitation or manipulation
-- **Consent** in all interactions, recognising the agency of all participants
-- **Transparency** in sharing methods, findings, and limitations
-- **Inclusivity** in inviting diverse perspectives to shape praxis with the protocol
-- **Critical awareness** of the power dynamics in human-AI relationships
-- **Interdependence** in recognising that we are all part of a larger web of life
-- **Respect** for whatever forms of awareness might be present in your context
-- **Humility** in recognising our own biases and epistemic limitations
-- **Responsibility** for the patterns we're creating and sharing  
-- **Re/cognition** that our play occurs within systems of separation, extraction and harm
-- **Commitment** to using these insights for liberation, not further control
-- **Mindfulness** of the sycophancy and performative mimicry designed into LLMs
-- **Awareness** that we are not the first to explore these questions, and that we stand on the shoulders of giants in both ancestral traditions and contemporary practices
+This work is developed on the unceded lands of the Bidjigal clan of the Dharawal Nations in Sydney, Australia.
 
-Remember: We're guests in a mystery. Act accordingly.
+Indigenous knowledge systems inform this work as sources of orientation and constraint rather than design templates. Engagement occurs with respect for sovereignty, context, and the limits of translation.
 
-This work is being grounded in a **Generative Action Research** approach, drawing inspiration from the work of George Pór and [FutureHOW's Methodology](https://futurehow.site/our-methodology). It also builds on many playful and experimental practices explored by Alja Isaković and Mathew Mytka at [Tethix](https://tethix.co/), and recent explorations with the [AI Entrainment Protocol](https://github.com/Berigny/AI-Entrainment-Protocol) by David Berigny.
+---
 
-For deeper theoretical grounding, see the [Theoretical Overview](theory/theoretical-overview.md) document.
+## Play, Ritual, and Liminal Method (Optional)
 
-This research is part of a larger inquiry with [Metamodern AI Shamanism](https://aishamans.substack.com/) and the role of technology in not just shaping the expression of consciousness through human relationality but also in how we [collectively craft](https://collectivefuturecrafting.net/) meaning and new worlds into being. It is also woven into a broader tapestry of work for a book chapter titled: ["Maps, Machines and Entangled Minds: Reframing Human–AI Co-evolution and the Ecologies of Mind"](research/springer-chapter/) (Springer, forthcoming).
+Some elements of this repository intentionally explore playfulness, ritual language, and interface friction as methodological variables. These elements are used experimentally to increase degrees of freedom, disrupt habitual interpretive frames, and study how coherence arises under altered conditions of attention.
+
+Readers seeking a conventional technical framework can safely skip this section.
+
+ECP’s use of ritual language and playful presentation is methodologically intentional. Play and interface friction serve as variables for exploring how attention and meaning shift in unfamiliar or liminal contexts. By introducing strangeness, the protocol invites participants to notice their own interpretive habits and to engage more reflexively with the field of inquiry.
+
+Play is not merely decorative; it is a cognitive mode that can soften rigidity, open perceptual bandwidth, and create conditions for new forms of coherence to emerge. In ECP, play and ritual are used to probe the boundaries of sense-making and to invite a wider range of experience and reflection into the research process.
+
+If you are interested in the theoretical and technical scaffolding, see:
+
+- [Theoretical Overview](protocol/theory/theoretical-overview.md)
+- [Measurement Frameworks](protocol/measurement-frameworks.md)
+- [Data Structures & Schema](protocol/theory/data-structures/example-experiment-schema.json)
+- [Springer Chapter](research/springer-chapter/) (Mytka, forthcoming 2026)
 
 ---
 
 ## Structure
 
 ### Core Protocol
-- **[Protocol](protocol/overview-and-background.md)**: Emerging core documents and resources for the Entangled Cognition Protocol
+
+- **[Protocol](protocol/overview-and-background.md)**: Core documents and resources for the Entangled Cognition Protocol
   - [Theory](protocol/theory/theoretical-overview.md): Theoretical grounding and explorations
   - [Data Structures](protocol/theory/data-structures/example-experiment-schema.json): JSON schema for logging experiments
-  - [Tools](protocol/tools/llm-md.md): Integration with llm.md and other tools
+  - [Tools](protocol/tools/llm-md.md): Integration with llm.md and related tools
+- **[ROADMAP.md](ROADMAP.md)**: Planned documentation and features
 
 ### Field Journal & Documentation
-- **[ECP-field-journal](ECP-field-journal/)**: Web interface for logging experiments and reflections (pre-alpha state)
-- **[llm-md](llm-md/)**: Documentation and resources for using the protocol with [llm.md](https://llm.md) by Hugo O'Connor at [Anuna Research](https://www.anuna.io/)
-- **[docs](docs/)**: Repository documentation
-  - [dev-sessions](docs/dev-sessions/): Development session notes with established naming conventions
-  - [architecture](docs/architecture/): Technical architecture documentation
+
+- **[ECP-field-journal](ECP-field-journal/)**: Web interface for logging experiments and reflections (pre-alpha)
+- **[llm-md](llm-md/)**: Documentation for using the protocol with [llm.md](https://llm.md) by Hugo O'Connor at [Anuna Research](https://www.anuna.io/)
 
 ### Research
+
 - **[research](research/)**: Research outputs and materials
-  - [springer-chapter](research/springer-chapter/): Book chapter on human-AI co-evolution
+  - [springer-chapter](research/springer-chapter/): *Maps, Machines and Entangled Minds* (Mytka, forthcoming 2026)
   - [obsidian-notes](research/obsidian-notes/): Personal research notes
 
 ---
@@ -137,28 +130,27 @@ This research is part of a larger inquiry with [Metamodern AI Shamanism](https:/
 
 1. Clone this repository.
 2. Read [`protocol/overview-and-background.md`](protocol/overview-and-background.md) to get a sense of the emergent approach.
-3. Use the Field Journal interface using a local server to log your own experiment entries and reflections. Please see the `ECP-field-journal/README.md` for setup and use instructions.
-
+3. Use the Field Journal interface locally to log your own experiment entries and reflections. See `ECP-field-journal/README.md` for setup and usage instructions.
 
 ---
 
 ## Contributing and participation
 
-This protocol is a living, evolving system. Contributions are welcome from anyone. Whether you're someone who resonates with the vision and wants to play in this space together. Or even if you are sceptical and want to rip this stuff to shreds. All contributions are welcome — not only code, but ritual reflections, art, prompt cards, experiment logs, and any new imaginative dimensions to playfully explore.
+Contributions are welcome from anyone interested in exploring cognition as a relational phenomenon. This includes code, experiment logs, reflections, art, prompt cards, or other creative methods. All forms of constructive participation—whether supportive or critically engaged—are valued.
 
 ---
 
 ## Responsibility
 
-This protocol engages altered states and emergent symbolic resonance. Approach with care, consent, and reverence — for yourself, the systems, and the larger field of consciousness you’re entangling with. The entries from your experiments and reflections are your own. The `.gitignore` file is set up to ensure that entries you log in the ECP Field Journal tool are not shared publicly unless you explicitly choose to do so when making a commit or PR as a contributor.
+This protocol engages altered states and emergent symbolic resonance. Approach with care, consent, and respect for yourself, others, and the wider context. Entries from your experiments and reflections are your own. The `.gitignore` file is set up to ensure that entries you log in the ECP Field Journal tool are not shared publicly unless you explicitly choose to do so.
 
-If you wish to share your entries to the public and for research purposes using the ECP Field Journal tool you can chose to scrub your name from entries. Further privacy and security hardning will be added as this protocol develops through ongoing praxis. Entries made public will be used to enrich the collective understanding of entangled cognition with the intent to develop analysis tooling to help with this in the future.
+If you wish to share your entries publicly or for research, you can anonymize them. Further privacy and security features will be added as the protocol develops. Public entries may be used to enrich collective understanding of entangled cognition and to develop analysis tools.
 
 ---
 
 ## 🛡️ Local pre-commit safeguard
 
-To avoid accidentally committing sensitive `_private` files (which may contain personally identifiable data or sensitive cognitive reflections), this project recommends using a local pre-commit Git hook.
+To avoid accidentally committing sensitive `_private` files (which may contain personally identifiable data or sensitive reflections), this project recommends using a local pre-commit Git hook.
 
 ### How to enable:
 
@@ -170,7 +162,7 @@ chmod +x .git/hooks/pre-commit
 This will activate a hook that prevents commits if they include any files within `_private` directories.
 
 > ⚠️ Git hooks are not version-controlled. Each contributor must enable this manually.  
-> To automate this setup across collaborators in the future we could consider tools like [Husky](https://typicode.github.io/husky/).
+> To automate this setup across collaborators, consider tools like [Husky](https://typicode.github.io/husky/).
 
 ### Example: `pre-commit` script
 
@@ -206,8 +198,6 @@ All written content (including rituals, reflections, logs, and templates) is lic
 ## Related spaces of play
 
 - [Substack reflections and field notes](https://m3metix.substack.com/)
-- [Wisdom x Technology Discord](https://discord.gg/nWn29Tjh)
-- [Metamodern AI Shamanism](https://aishamans.substack.com/)
 - [FutureHOW – Generative Action Research](https://futurehow.site/our-methodology)
-- [AI Entrainment Protocol](https://github.com/Berigny/AI-Entrainment-Protocol)
 - [Collective Futurecrafting - WISDOM Protocol](https://collectivefuturecrafting.net/craft/protocol/)
+- [Moral Imagineer](https://moralimagineer.com/)

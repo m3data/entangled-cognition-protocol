@@ -1,35 +1,41 @@
 # Springer Chapter: Maps, Machines and Entangled Minds
 
-This directory contains the Springer book chapter draft on human-AI co-evolution and ecologies of mind.
+This directory contains the Springer book chapter abstract on human-AI co-evolution and ecologies of mind, along with references.
 
-**Chapter Title:** Maps, Machines and Entangled Minds: Reframing Human–AI Co-evolution and the Ecologies of Mind
+**Chapter Title:** Maps, Machines and Entangled Minds: Reframing Human–AI Co-evolution and the Ecologies of Cognition
 
-**Author:** Mathew Mark Mytka
+**Author:** Mathew M. Mytka
 
-**Status:** Draft submitted to editors (2025-11-16)
+**Status:** Accepted and finalized (2025-12-23). Publication expected Q1 2026.
 
-**Series:** Philosophy of Science series
+**Volume:** Philosophy of Science volume
 
 ---
 
 ## Files
 
-- `draft_springer_chapter.md` - Current draft of the chapter
+- `abstract-and-references.md` - Current abstract of the chapter and references.
 
 ---
 
 ## Related Work
 
-This chapter builds on and references the Entangled Cognition Protocol developed in this repository. It also draws on computational metrics from Daria Morgoulis's 4D Semantic Coupling framework (see the `4d-semantic-coupling` repository).
+This chapter builds on and references the Entangled Cognition Protocol developed in this repository. It also draws on computational metrics from Daria Morgoulis's 4D Semantic Coupling framework (see the `semantic-climate-phase-space` repository in EarthianLabs).
 
 ---
 
 ## Citation
 
-(To be updated once published)
+Mytka, M. (forthcoming, 2026). Maps, Machines and Entangled Minds: Reframing Human–AI Co-evolution and the Ecologies of Cognition. In [Book Title]. Springer.
 
-Mytka, M. M. (forthcoming). Maps, Machines and Entangled Minds: Reframing Human–AI Co-evolution and the Ecologies of Mind. In [Book Title]. Springer.
+*DOI to be added upon publication.*
 
 ---
 
-*Added to repository: 2025-11-16*
+## Full Text
+
+The full chapter text is not included in this repository. Upon publication, a preprint or open-access version may be made available depending on publisher agreements.
+
+---
+
+*Last updated: 2025-12-22*

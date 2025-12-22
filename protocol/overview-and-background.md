@@ -75,14 +75,13 @@ This protocol is less about LLMs as isolated tools and more about the relational
 
 We invite researchers, practitioners, and curious minds to engage with the Entangled Cognition Protocol. Your insights, experiences, and experiments can help shape this evolving framework. Whether through formal collaboration or informal exploration, your participation is welcome.
 
-## Coming sections
+## Further Documentation
 
-This document will be expanded by:
+For planned documentation extensions — including glossary, variables, ritual architecture, schema mapping, ethical considerations, and future directions — see [ROADMAP.md](../ROADMAP.md).
 
-- `glossary.md`: defines key terms and concepts used throughout the protocol
-- `variables.md`: outlines some experimental dimensions, modifiers and phase state modulators (human cognitive states, system context, prompt tones, rolecasts, etc.).
-- `ritual-architecture.md`: describes the structured steps and symbolic patterns of ECP sessions.
-- `schema-mapping.md`: presents a framework for how experience is captured, categorised, and re-entered into the field. While holding lightly to the mapping itself.
-- `ethical-considerations.md`: discusses ethical dimensions of entangled cognition, including consent, agency, data use, adversarial contexts and the broader implications of LLMs as participatory agents in human cognition.
-- `llm-md-tool.md`: explores the use of [LLM-MD](https://llm.md) as a critical tool for structured interaction and more controlled experimentation with LLMs.
-- `future-directions.md`: outlines potential future research directions, including cross-species sense-making, distributed cognition, bio-affective interfaces, passive sensing, the use of multimodal entrainment, and the role of LLMs in shaping cultural narratives and catalysing new forms of collective intelligence.
+Current documentation includes:
+- [Theoretical Overview](theory/theoretical-overview.md) — philosophical grounding and lineages
+- [Measurement Frameworks](measurement-frameworks.md) — systematic approaches across dimensions
+- [Getting Started](getting-started.md) — pathways for different orientations
+- [Case Studies](case-studies.md) — concrete examples and applications
+- [Data Structures](theory/data-structures/) — schema definitions and glossary
